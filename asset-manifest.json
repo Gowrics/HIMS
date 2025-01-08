@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/HIMS/static/css/main.ed151658.css",
+    "main.js": "/HIMS/static/js/main.7a8c8868.js",
+    "static/media/banner-img.png": "/HIMS/static/media/banner-img.8eab52a23f3b4af0cfbd.png",
+    "static/media/dept2.jpg": "/HIMS/static/media/dept2.7928cfdc9715465df6b7.jpg",
+    "static/media/dept4.jpg": "/HIMS/static/media/dept4.62a6dfdf0ca7a5aafbaf.jpg",
+    "static/media/download copy.jpg": "/HIMS/static/media/download copy.d7a7282a6e6ae4d81f97.jpg",
+    "static/media/dept3.jpg": "/HIMS/static/media/dept3.fa2c3ebf2e77d2686a02.jpg",
+    "static/media/doctersimg.jpg": "/HIMS/static/media/doctersimg.8df3a9696c4d9156efdb.jpg",
+    "static/media/dept6.jpg": "/HIMS/static/media/dept6.73148d4b3d56d55b8947.jpg",
+    "static/media/dept5.jpg": "/HIMS/static/media/dept5.88c7cb90575990fc03eb.jpg",
+    "static/media/dept1.jpg": "/HIMS/static/media/dept1.a13379d347d31ca49ace.jpg",
+    "static/media/healthcare.png": "/HIMS/static/media/healthcare.106172eb1d57cfd2a396.png",
+    "static/media/logo.svg": "/HIMS/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/HIMS/index.html",
+    "main.ed151658.css.map": "/HIMS/static/css/main.ed151658.css.map",
+    "main.7a8c8868.js.map": "/HIMS/static/js/main.7a8c8868.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ed151658.css",
+    "static/js/main.7a8c8868.js"
+  ]
+}
