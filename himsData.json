@@ -1,0 +1,216 @@
+{
+  "nationality": [
+    {
+      "nationality": "American ",
+      "nationalityFl": "أمريكي ",
+      "nationalityCode": 1,
+      "id": "027d"
+    },
+    {
+      "id": "dec7",
+      "nationality": "Canadian ",
+      "nationalityFl": "كندي",
+      "nationalityCode": 2
+    },
+    {
+      "id": "0337",
+      "nationality": "Indian ",
+      "nationalityFl": "هندي ",
+      "nationalityCode": 3
+    },
+    {
+      "id": "35d5",
+      "nationality": "Australian ",
+      "nationalityFl": "أسترالي",
+      "nationalityCode": 4
+    },
+    {
+      "nationality": "German",
+      "nationalityFl": "ألماني ",
+      "nationalityCode": "5",
+      "id": "51bc"
+    }
+  ],
+  "departments": [
+    {
+      "deptCode": 1,
+      "deptName": "Cardiology",
+      "deptNameFl": "القلب",
+      "deptImage": "https://example.com/images/cardiology-department.jpg",
+      "deptGeneral": "N",
+      "id": "183a"
+    },
+    {
+      "id": "49d3",
+      "deptCode": 2,
+      "deptName": "Neurology",
+      "deptNameFl": "الأعصاب",
+      "deptImage": "https://example.com/images/neurology-department.jpg",
+      "deptGeneral": "N",
+      "deptImg": "f"
+    },
+    {
+      "id": "cd0f",
+      "deptCode": 3,
+      "deptName": "Orthopedics",
+      "deptNameFl": "العظام",
+      "deptImage": "https://example.com/images/orthopedics-department.jpg",
+      "deptGeneral": "Y"
+    },
+    {
+      "deptCode": 4,
+      "deptName": "Pediatrics",
+      "deptNameFl": "الأطفال",
+      "deptImage": "https://example.com/images/pediatrics-department.jpg",
+      "deptGeneral": "N",
+      "id": "976c"
+    },
+    {
+      "id": "5075",
+      "deptCode": 5,
+      "deptName": "Dermatology",
+      "deptNameFl": "الجلدية",
+      "deptImage": "https://example.com/images/dermatology-department.jpg",
+      "deptGeneral": "N"
+    },
+    {
+      "id": "3ede",
+      "deptCode": 6,
+      "deptName": "Radiology",
+      "deptNameFl": "القلب",
+      "deptImage": "https://example.com/images/radiology-department.jpg",
+      "deptGeneral": "N"
+    }
+  ],
+  "docters": [
+    {
+      "deptCode": "34456",
+      "doctorName": "Ravi Saisa",
+      "doctorNameFl": "الدكتور جون دو",
+      "doctorImg": "data:image/jpeg;base64,/9j/4AAQ",
+      "licenseNo": "4353",
+      "doctorDesignation": "General Dentist",
+      "doctorDesignationFl": "طبيب أسنان عام",
+      "doctorQualifications": "BDS-FRCS",
+      "doctorQualificationsFl": "34456",
+      "gender": "Female",
+      "sortOrder": 2,
+      "nationalityCode": 56,
+      "costCenterCode": "300",
+      "active": "N",
+      "id": "bf72"
+    },
+    {
+      "deptCode": "34455",
+      "doctorName": "Dr. Mary Doe",
+      "doctorNameFl": "الدكتور جون دو",
+      "doctorImg": "https://www.istockphoto.com/search/2/image-film?phrase=indian+doctor",
+      "licenseNo": "5555",
+      "doctorDesignation": "General Dentist",
+      "doctorDesignationFl": "طبيب أسنان عام",
+      "doctorQualifications": "BDS-FRCS",
+      "doctorQualificationsFl": "34455",
+      "gender": "Female",
+      "sortOrder": 2,
+      "nationalityCode": 56,
+      "costCenterCode": "303",
+      "active": "Y",
+      "id": "9433"
+    },
+    {
+      "id": "9433",
+      "deptCode": "34454",
+      "doctorName": "Dr. John Doe",
+      "doctorNameFl": "الدكتور جون دو",
+      "doctorImg": "https://www.istockphoto.com/search/2/image-film?phrase=indian+doctor",
+      "licenseNo": "3434",
+      "doctorDesignation": "General Dentist",
+      "doctorDesignationFl": "طبيب أسنان عام",
+      "doctorQualifications": "BDS-FRCS",
+      "doctorQualificationsFl": "34454",
+      "gender": "Male",
+      "sortOrder": 1,
+      "nationalityCode": 56,
+      "costCenterCode": "303",
+      "active": "Y"
+    },
+    {
+      "id": "1234",
+      "deptCode": "4",
+      "doctorName": "Dr. Jane Smith",
+      "doctorNameFl": "الدكتورة جين سميث",
+      "doctorImg": "https://www.istockphoto.com/search/2/image-film?phrase=female+doctor",
+      "licenseNo": "67890",
+      "doctorDesignation": "Pediatrician",
+      "doctorDesignationFl": "طبيب ب",
+      "doctorQualifications": "MBBS-MD",
+      "doctorQualificationsFl": "بطبيبب",
+      "gender": "Female",
+      "sortOrder": 3,
+      "nationalityCode": 3,
+      "costCenterCode": "505",
+      "active": "Y"
+    },
+    {
+      "id": "ba1a",
+      "doctorCode": "",
+      "deptCode": "2",
+      "doctorName": "gowri",
+      "drNameFl": "",
+      "drImg": "",
+      "drLicNo": "",
+      "drDesignation": "",
+      "drDesignationFl": "",
+      "drQualifications": "",
+      "drQualificationsFl": "",
+      "drGender": "",
+      "drSrtOrd": 0,
+      "nationalityCode": 2,
+      "costCenterCode": "303",
+      "drActive": "Y",
+      "doctorNameFl": "الدكتور جون دو",
+      "gender": "Male",
+      "licenseNo": "43544",
+      "doctorDesignation": "General Dentist",
+      "doctorDesignationFl": "طبيب أسنان عام",
+      "doctorQualifications": "BDS-FRCS",
+      "doctorQualificationsFl": " الملكية للجراحين",
+      "sortOrder": 2,
+      "doctorImg": "https://www.istockphoto.com/search/2/image-film?phrase=indian+doctor",
+      "active": "N"
+    },
+    {
+      "id": "0ebc",
+      "doctorName": "Dr. Mary Doe",
+      "drNameFl": "",
+      "drImg": "",
+      "drActive": "",
+      "drLicNo": "",
+      "drDesignation": "",
+      "drDesignationFl": "",
+      "drQualifications": "",
+      "drQualificationsFl": "",
+      "drGender": "",
+      "drSrtOrd": 0,
+      "costCenterCode": "303",
+      "department": {
+        "deptCode": 0
+      },
+      "nationality": {
+        "nationalityCode": 0
+      },
+      "deptCode": "1",
+      "gender": "Male",
+      "doctorNameFl": "الدكتور جون دو",
+      "licenseNo": "LIsds",
+      "doctorDesignation": "General Dentist",
+      "doctorDesignationFl": "طبيب أسssنان عام",
+      "doctorQualifications": "BDS-FRCS",
+      "doctorQualificationsFl": " الملكة للجراحين",
+      "sortOrder": 2,
+      "nationalityCode": 2,
+      "doctorImg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA0QMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAAAAQIGAwQFBwj/xAA9EAABAwMCAwQIBQMCBwEAAAABAAIDBAUREiEGMUETIlFhBxQycYGRobEjUlPB0UJy8CRDJTNigpPh8RX/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAgEDBAX/xAAdEQEBAAMAAwEBAAAAAAAAAAAAAQIDERIhMUEi/9oADAMBAAIRAxEAPwD2JJNJUwljcMrIkQgxNapBqkEwgQapaUwmgjpRhSWtcq6nttDNW1knZwwtLnOPggVXUQ0kLpqiRkcbRlznnAA81QLj6WrFT1MkFFBUV+n/AHIsBhPkTzXmHHPG1fxhWlh1QW6NxEMDTz83eJ+i4fqzw1oiONlFqpHszfSrRkj/AIZNp6/jNBXes3Gtiu5bEyq9XqCcdjUDST7jyPwK+ec1MLm9o0gHqASF0RI58GvMbg38mxCzqvF9L4BRpXlvo143drjs91mMjHHTTVDzu0/kd5eBXqmQeSqVNnCDU9KfVNaxDSgtU0FYMelLSshSKDHpUNKylRQYy1R0rKVEoMelNSQg6iSaSpgSKaCggmhMIGhJCBrxn08cRv7SmsFO/uFva1AB6dAfv8F7HK/RG5x6BfKXG1zdd+KrjWFxcx0xazP5W7D/ADzWVTSp8ZBz5K38K2NlbpnrS4x5wGcsqk0xc+VjR4r0yz10FDSxMk16iNmsbqJPkFw22yenfTjLfa/2u0W0wBkdHCGf25WWt4KsNcMyULY3Ee3CdB+i5",
+      "active": "N"
+    }
+  ]
+}

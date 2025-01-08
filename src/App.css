@@ -1,0 +1,309 @@
+.App {
+  text-align: center;
+}
+body {
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+
+
+/* home */
+h6{
+  color:#E22454 ;
+}
+.home{
+  height: fit-content;
+  background-image: url("./assets/download.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+section .firsthead h6 {
+  color: #E22454;
+  font-size: 30px;
+}
+.pagehead h6 {
+  color: #E22454;
+  font-size: 30px;
+}
+.pagehead h1 {
+  color: white;
+  font-weight:bold;
+  font-size: 50px;
+}
+section .firsthead p {
+  color:black;
+  font-size:25px 
+}
+section .firsthead .btn {
+  position: relative; /* Ensure proper positioning for pseudo-element */
+  background-color: #122738; /* Default background */
+  color: white; /* Default text color */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  overflow: hidden; /* Prevent pseudo-element from overflowing */
+  z-index: 1; /* Keeps the text above the pseudo-element */
+  transition: color 0.5s; /* Smooth transition for text, if needed */
+}
+
+section .firsthead .btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%; /* Initially off-screen */
+  width: 100%;
+  height: 100%;
+  background-color: red; /* Red background color for hover */
+  z-index: -1; /* Places the background below the text */
+  transition: left 0.5s; /* Smooth sliding animation */
+}
+
+section .firsthead .btn:hover::before {
+  left: 0; /* Slide the red background into view */
+}
+
+section .firsthead .btn:hover {
+  color: #122738;
+  
+  font-weight: bold; /* Ensure text remains white on hover */
+}
+
+
+.firsthead .col-md-6, 
+.firsthead .col-md-4 {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: start;
+}
+.quality{
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+.quality  .row .cards{
+  display: flex;
+  flex-direction: row;
+  gap: 300px;
+}
+/* home */
+/* cards quality */
+
+.cards {
+  margin-top: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cards .card {
+  border: none;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cards .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cards .card img {
+  width: 20%; 
+  
+  transition: transform 0.5s ease-in-out;
+}
+
+.cards .card img:hover {
+  transform: rotate(360deg);
+}
+
+
+.cards .card-body {
+  padding: 15px;
+  text-align: center;
+}
+
+.cards .card-body h6.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.cards .card-body .card-text {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+
+/* quality */
+
+
+/* deptview */
+
+.deptview{
+  background-color: #F4F9FD;
+}
+.deptview .card {
+  border: none;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.deptview .col .card .card-body:hover{
+  background-color:#122738;
+  color: white;
+}
+
+
+.deptview .col .card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: .75em;
+  padding-right: .75em;
+  }
+  .card-registration .select-arrow {
+  top: 13px;
+  }
+  /* ------------------navbar--------- */
+  
+.navbar{
+  background-color: #E22454;
+  
+  /* z-index: 1000; */
+}
+.page-content{
+  padding-top: 100px;
+}
+.nav-link {
+  color: white !important;
+  margin-right: 70px !important;
+  font-size: 20px !important;
+}
+
+
+.text-white{
+  font-size: 20px;
+}
+.navbar-brand{
+  display: flex;
+  flex-direction: row;
+  
+  align-items: center;
+  justify-content: center;
+}
+.btns{
+  display: flex;
+  flex-direction: row;
+}
+
+
+.full-width-table {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+
+   .banner{
+     width: 70%; /* Adjust width for smaller screens */ }
+     }
+
+
+     /* ==============bread grumbs================= */
+     
+/*  background*/
+
+.bgg-2 {
+  display: block;
+  height: 43vh;
+  text-align: left;
+  background-image: url('./assets/download\ copy.jpg');
+  font-family: "Montserrat", sans-serif;
+  background-size: cover;
+  padding: 160px 20px;
+}
+/* Overlay to create transparent effect */
+.bgg-2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height:  43vh;
+  background: #000;
+  opacity: 0.8;
+}
+h1{
+  font-size: 56px;
+  color: #fff ;
+  line-height: 96px;
+  text-transform: uppercase;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+}
+
+@media (max-width: 412px) {
+  .bgg-2 {
+      height: 50vh; /* Be cautious with fixed heights, as they might cause overflow issues */
+  }
+  .bgg-2::before {
+      height:  50vh;    
+  }
+  .bgg-2 .text-lg{  
+      line-height: 76px;
+      font-size: 33px;
+  }
+
+
+}
+/* ==============bread grumbs================= */
+/* styles.css or a similar CSS file */
+.breadcrumb {
+  background-color: #f8f9fa; /* Light gray background */
+  padding: 10px;   
+  margin-top: 90px;  
+  position: fixed;       /* Padding around the breadcrumb */
+  border-radius: 5px;   
+  z-index: 3;    /* Rounded corners */
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+  color: #6c757d; /* Dark gray separator */
+  padding: 0 5px;
+}
+
+.breadcrumb a {
+  color: #007bff; /* Blue text for links */
+}
+
+.breadcrumb-item.active {
+  color: #6c757d; /* Dark gray text for the active item */
+}
+
+.footerfirst{
+  background-color:#122738 ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.footersecond{
+  background-color:#070D1A ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
