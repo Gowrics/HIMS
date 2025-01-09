@@ -22,7 +22,7 @@ const DocterView = () => {
     setDeptDocters(doctors);
   }
   return (
-    <div className="page-content">
+    <div className="page-content ">
       <PageHead
         heading="Our Doctor's"
         title="Our Expert Doctor's"
@@ -31,9 +31,9 @@ const DocterView = () => {
       {deptDocters.length === 0 ? (
         <p>No doctors available for this department.</p>
       ) : (
-        <div className="row deptview row-cols-md-3 m-5 g-5">
+        <div className="row deptview row-cols-md-3 m-5 g-5 ">
           {deptDocters.map((doctor) => (
-            <div className="col" key={doctor.id}>
+            <div className="col slide-up" key={doctor.id}>
               <div className="card">
                 <img
                   src={doctor.doctorImg} // Make sure to use doctorImg as per your data

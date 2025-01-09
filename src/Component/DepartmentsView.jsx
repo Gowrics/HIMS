@@ -7,7 +7,7 @@ import PageHead from "./PageHead";
 const DepartmentsView = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   return (
-    <section className="page-content">
+    <section className="page-content slide-up">
       <PageHead
         heading="About Us"
         title="Tackle The Challenge Of Delivering Health Care"

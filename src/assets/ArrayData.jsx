@@ -11,43 +11,170 @@ import dept6 from "../assets/dept6.jpg";
 import docter1 from "../assets/docter1.jpg";
 import docter2 from "../assets/docter2.jpg";
 import docter3 from "../assets/docter3.jpg";
-import docter4 from "../assets/docter4.jpg";
+import docter4 from "../assets/doctor4.jpg";
+import docter5 from "../assets/doctor5.jpg";
+import docter6 from "../assets/doctor6.jpg";
 
-export const nationality = [
-  "American",
-  "Indian",
-  "Chinese",
-  "Brazilian",
-  "Mexican",
-  "Russian",
-  "Japanese",
-  "German",
-  "French",
-  "British",
+export const nationalityData = [
+  {
+    nationality: "American",
+    nationalityCode: 1,
+    nationalityFl: "هندي",
+  },
+  {
+    nationality: "British",
+    nationalityCode: 2,
+    nationalityFl: "بريطاني",
+  },
+  {
+    nationality: "Australian",
+    nationalityCode: 3,
+    nationalityFl: "أسترالي",
+  },
+  {
+    nationality: "Indian",
+    nationalityCode: 4,
+    nationalityFl: "أمريكي",
+  },
 ];
-export const nationalityFl = [
-  "أمريكي",
-  "هندي",
-  "صيني",
-  "برازيلي",
-  "مكسيكي",
-  "روسي",
-  "ياباني",
-  "ألماني",
-  "فرنسي",
-  "بريطاني",
+
+export const departmentData = [
+  {
+    deptCode: 1,
+    deptGeneral: "N",
+    deptImage: dept1,
+    deptName: "Neurology",
+    deptNameFl: "طب الأعصاب",
+  },
+  {
+    deptCode: 2,
+    deptGeneral: "Y",
+    deptImage: dept2,
+    deptName: "Dermatology",
+    deptNameFl: "الأمراض الجلدية",
+  },
+  {
+    deptCode: 3,
+    deptGeneral: "N",
+    deptImage: dept3,
+    deptName: "Pediatrics",
+    deptNameFl: "طب الأطفال",
+  },
+  {
+    deptCode: 4,
+    deptGeneral: "Y",
+    deptImage: dept4,
+    deptName: "Cardiology",
+    deptNameFl: "القلب",
+  },
 ];
-export const nationalityCode = [
-  1, // American
-  2, // Indian
-  3, // Chinese
-  4, // Brazilian
-  5, // Mexican
-  6, // Russian
-  7, // Japanese
-  8, // German
-  9, // French
-  10, // British
+export const docterData = [
+  {
+    doctorCode: 1,
+    doctorName: "Dr. John Doe",
+    drNameFl: "الدكتور جون دو",
+    drImg: docter1,
+    drActive: "Y",
+    drLicNo: "123456",
+    drDesignation: "Cardiologist",
+    drDesignationFl: "طبيب قلب",
+    drQualifications: "MD, PhD",
+    drQualificationsFl: "دكتوراه في الطب",
+    drGender: "Male",
+    drSrtOrd: 1,
+    costCenterCode: "CC001",
+    department: {
+      deptCode: 0,
+    },
+    nationality: {
+      nationalityCode: 0,
+    },
+  },
+  {
+    doctorCode: 2,
+    doctorName: "Dr. Jane Smith",
+    drNameFl: "الدكتورة جين سميث",
+    drImg: docter2,
+    drActive: "Y",
+    drLicNo: "654321",
+    drDesignation: "Neurologist",
+    drDesignationFl: "طبيب أعصاب",
+    drQualifications: "MD, DM",
+    drQualificationsFl: "دكتوراه في الطب، دكتوراه في الطب",
+    drGender: "Female",
+    drSrtOrd: 2,
+    costCenterCode: "CC002",
+    department: {
+      deptCode: 1,
+    },
+    nationality: {
+      nationalityCode: 1,
+    },
+  },
+  {
+    doctorCode: 3,
+    doctorName: "Dr. Ahmed Hassan",
+    drNameFl: "الدكتور أحمد حسن",
+    drImg: docter3,
+    drActive: "N",
+    drLicNo: "789012",
+    drDesignation: "Dermatologist",
+    drDesignationFl: "طبيب الأمراض الجلدية",
+    drQualifications: "MD, DVL",
+    drQualificationsFl: "دكتوراه في الطب، دكتوراه في الأمراض الجلدية",
+    drGender: "Male",
+    drSrtOrd: 3,
+    costCenterCode: "CC003",
+    department: {
+      deptCode: 2,
+    },
+    nationality: {
+      nationalityCode: 2,
+    },
+  },
+  {
+    doctorCode: 4,
+    doctorName: "Dr. Emily Brown",
+    drNameFl: "الدكتورة إميلي براون",
+    drImg: docter4,
+    drActive: "Y",
+    drLicNo: "345678",
+    drDesignation: "Pediatrician",
+    drDesignationFl: "طبيب أطفال",
+    drQualifications: "MD, FAAP",
+    drQualificationsFl:
+      "دكتوراه في الطب، زميل الأكاديمية الأمريكية لطب الأطفال",
+    drGender: "Female",
+    drSrtOrd: 4,
+    costCenterCode: "CC004",
+    department: {
+      deptCode: 3,
+    },
+    nationality: {
+      nationalityCode: 3,
+    },
+  },
+  {
+    doctorCode: 5,
+    doctorName: "Dr. Laura Davis",
+    drNameFl: "الدكتورة لورا ديفيس",
+    drImg: docter5,
+    drActive: "Y",
+    drLicNo: "567890",
+    drDesignation: "Ophthalmologist",
+    drDesignationFl: "طبيب عيون",
+    drQualifications: "MD, FRCS",
+    drQualificationsFl: "دكتوراه في الطب، زميل الكلية الملكية للجراحين",
+    drGender: "Female",
+    drSrtOrd: 5,
+    costCenterCode: "CC005",
+    department: {
+      deptCode: 0,
+    },
+    nationality: {
+      nationalityCode: 0,
+    },
+  },
 ];
 
 export const quality = [
@@ -188,7 +315,7 @@ export const doctors = [
     deptCode: 2,
     doctorName: "Ravi Raj",
     doctorNameFl: "الدكتور جون دو",
-    doctorImg: docter2,
+    doctorImg: docter5,
     licenseNo: "43544",
     doctorDesignation: "Neurology",
     doctorDesignationFl: "طبيب أسنان عام",
@@ -204,7 +331,7 @@ export const doctors = [
     deptCode: 2,
     doctorName: "Dr. Mary Doe",
     doctorNameFl: "الدكتور جون دو",
-    doctorImg: docter2,
+    doctorImg: docter6,
     licenseNo: "LIsds",
     doctorDesignation: "Neurology",
     doctorDesignationFl: "طبيب أسssنان عام",

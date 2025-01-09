@@ -3,11 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import DocterFormComponent from "../Component/DocterFormComponent";
 import { FormContext } from "../FormContext";
 import { useNavigate } from "react-router-dom";
-
 import DataTable from "react-data-table-component";
+import { docterData } from "../assets/ArrayData";
 const DoctorForm = () => {
   const {
-    docterData,
+    // docterData,
     setDocterData,
     formData,
     setFormData,

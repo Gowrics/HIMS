@@ -7,6 +7,23 @@ body {
 
 
 
+/* styles.css */
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-up {
+  animation: slideUp 1s ease-out;
+}
+
+
 /* home */
 h6{
   color:#E22454 ;
@@ -16,23 +33,36 @@ h6{
   background-image: url("./assets/download.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  
+
 }
 section .firsthead h6 {
   color: #E22454;
   font-size: 30px;
 }
+.pagehead{
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+}
 .pagehead h6 {
   color: #E22454;
-  font-size: 30px;
+  font-size: 27px;
 }
 .pagehead h1 {
   color: white;
   font-weight:bold;
-  font-size: 50px;
+  font-size: 40px;
+}
+
+.pagehead P {
+    font-size: 20px;
+    width: 80%;
 }
 section .firsthead p {
   color:black;
-  font-size:25px 
+  font-size:25px;
 }
 section .firsthead .btn {
   position: relative; /* Ensure proper positioning for pseudo-element */
@@ -75,7 +105,7 @@ section .firsthead .btn:hover {
   flex-direction: column;
   gap: 30px;
   justify-content: center;
-  align-items: start;
+  align-items: center;
 }
 .quality{
   margin-top: 100px;
@@ -156,7 +186,7 @@ section .firsthead .btn:hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.deptview .col .card .card-body:hover{
+.deptview .col .card:hover{
   background-color:#122738;
   color: white;
 }
@@ -245,14 +275,6 @@ section .firsthead .btn:hover {
   background: #000;
   opacity: 0.8;
 }
-h1{
-  font-size: 56px;
-  color: #fff ;
-  line-height: 96px;
-  text-transform: uppercase;
-  font-family: "Barlow Condensed", sans-serif;
-  font-weight: 700;
-}
 
 @media (max-width: 412px) {
   .bgg-2 {
@@ -292,13 +314,16 @@ h1{
 .breadcrumb-item.active {
   color: #6c757d; /* Dark gray text for the active item */
 }
-
+ .footerfirst h3{
+  color:#E22454 ;
+}
 .footerfirst{
   background-color:#122738 ;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+  padding: 30px;
 }
 .footersecond{
   background-color:#070D1A ;
@@ -306,4 +331,49 @@ h1{
   justify-content: center;
   align-items: center;
   color: white;
+}.list-inline-item {
+  
+  width: 35px; 
+  height: 35px; 
+  background-color: #E22454;
+  border-radius: 50%; 
+  color: white; 
+  font-size: 20px; 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+ }
+ .list-inline-item a{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+ }
+/* Media Query for Small Screens (e.g., phones) */
+@media (max-width: 576px) {
+  .list-inline-item {
+    width: 30px; /* Smaller size for small screens */
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px; /* Adjust font size */
+  }
+}
+
+/* Media Query for Extra Small Screens (e.g., very small phones) */
+@media (max-width: 360px) {
+  .list-inline-item {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px; /* Further reduce font size */
+  }
+}
+@media (max-width: 576px) {
+ .footerfirst{
+  text-align: center;
+ }
+ .time h5 {
+  font-size: 14px;
+ }
 }

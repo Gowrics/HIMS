@@ -3,10 +3,15 @@ import React, { useContext, useEffect, useState } from "react";
 
 import DataTable from "react-data-table-component";
 import { FormContext } from "../FormContext";
+import { departmentData } from "../assets/ArrayData";
 
 const Departments = () => {
-  const { departmentData, setDepartmentData, isEditMode, setIsEditMode } =
-    useContext(FormContext);
+  const {
+    //  departmentData,
+    setDepartmentData,
+    isEditMode,
+    setIsEditMode,
+  } = useContext(FormContext);
 
   const [formData, setFormData] = useState({
     deptCode: 0,

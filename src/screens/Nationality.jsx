@@ -2,10 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FormContext } from "../FormContext";
 import DataTable from "react-data-table-component";
+import { nationalityData } from "../assets/ArrayData";
 
 const Nationality = () => {
-  const { nationalityData, setNationalityData, isEditMode, setIsEditMode } =
-    useContext(FormContext);
+  const {
+    //  nationalityData,
+    setNationalityData,
+    isEditMode,
+    setIsEditMode,
+  } = useContext(FormContext);
   const [formData, setFormData] = useState({
     nationality: "",
     nationalityFl: "",
@@ -128,7 +133,6 @@ const Nationality = () => {
   return (
     <div className="container page-content mt-5">
       <h2 className="mb-4">Nationality Form</h2>
-
       <form className="submit" onSubmit={handleSubmit}>
         <div className="row">
           <div className="col mb-3">
@@ -185,6 +189,7 @@ const Nationality = () => {
           </button>
         )}
       </form>
+      <h1>Nationality Data</h1>
       <DataTable
         className="table table-striped"
         columns={[
@@ -230,27 +235,6 @@ const Nationality = () => {
         pagination
         paginationPerPage={10}
         paginationRowsPerPageOptions={[5, 10, 15, 20]}
-        customStyles={{
-          header: {
-            style: {
-              backgroundColor: "#343a40",
-              color: "#ffffff",
-            },
-          },
-          headCells: {
-            style: {
-              fontWeight: "bold",
-              backgroundColor: "#6c757d",
-              color: "#ffffff",
-            },
-          },
-          cells: {
-            style: {
-              paddingLeft: "8px",
-              paddingRight: "8px",
-            },
-          },
-        }}
       />
     </div>
   );

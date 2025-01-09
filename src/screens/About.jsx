@@ -7,13 +7,13 @@ import BreadCrumbs from "../Component/BreadCrumbs";
 const About = () => {
   return (
     <div>
-      <section className=" quality">
+      <section className=" quality slide-up">
         <div className="row firsthead">
           <div className="container col-md-5 mt-5">
             <PageHead
               heading="About Us"
-              title="     Tackle The Challenge Of Delivering Health Care"
-              text=" Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo
+              title="Tackle The Challenge Of Delivering Health Care"
+              text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo
               alias earum recusandae ipsa cum? Inventore totam eius expedita
               sint asperiores eos, corrupti, distinctio fuga reiciendis
               possimus, dolore labore. Rerum, esse?"
