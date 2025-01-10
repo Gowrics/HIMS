@@ -53,11 +53,6 @@ const Navbar = () => {
                 Departments
               </Link>
             </li>{" "}
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/docterview">
-                Docters
-              </Link>
-            </li>{" "}
             {UserAuth ? (
               <li className="nav-item dropdown">
                 <Link
@@ -97,7 +92,7 @@ const Navbar = () => {
               <div></div>
             )}
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/about">
+              <Link className="nav-link text-white" to="/docterview">
                 About
               </Link>
             </li>

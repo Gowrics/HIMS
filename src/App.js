@@ -27,6 +27,7 @@ function App() {
       <Breadcrumbs/>
       <Routes>
         <Route path="/" element={<Home/>} />
+        <Route path="/HIMS" element={<Home/>} />
         <Route path="/nationality" element={<Nationality/>} />
         <Route path="/department" element={<Departments/>} />
         <Route path="/docters" element={<Doctors/>} />

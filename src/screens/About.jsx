@@ -15,6 +15,7 @@ const About = () => {
               title="Tackle The Challenge Of Delivering Health Care"
               text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo
               alias earum recusandae ipsa cum? Inventore totam eius expedita
+              
               sint asperiores eos, corrupti, distinctio fuga reiciendis
               possimus, dolore labore. Rerum, esse?"
             />
