@@ -9,7 +9,7 @@ const About = () => {
     <div>
       <section className=" quality slide-up">
         <div className="row firsthead">
-          <div className="container col-md-5 mt-5">
+          <div className="container col-md-5 mt-5 mb-5 ">
             <PageHead
               heading="About Us"
               title="Tackle The Challenge Of Delivering Health Care"
@@ -18,7 +18,7 @@ const About = () => {
               sint asperiores eos, corrupti, distinctio fuga reiciendis
               possimus, dolore labore. Rerum, esse?"
             />
-            <div>
+            <div className="text-center">
               <Link className="btn btn-lg me-4" to="/departmentview">
                 View Departments
               </Link>

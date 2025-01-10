@@ -14,6 +14,8 @@ import DepartmentsView from './Component/DepartmentsView';
 import DocterView from './screens/DocterView';
 import Footer from './Component/Footer';
 import Breadcrumbs from './Component/BreadCrumbs';
+import Signin from './Users/Signin';
+import Signup from './Users/Signup';
 
 function App() {
   const {
@@ -32,7 +34,8 @@ function App() {
         <Route path="/departmentview" element={<DepartmentsView/>} />
         <Route path="/docterview/:id" element={<DocterView/>} />
         <Route path="/docterview" element={<DocterView/>} />
-        <Route path="*" element={<Home />}  />
+        <Route path="/signin" element={<Signin />}  />
+        <Route path="/signup" element={<Signup />}  />
       </Routes>
       <Footer/>
     </BrowserRouter>

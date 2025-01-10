@@ -60,6 +60,7 @@ section .firsthead h6 {
     font-size: 20px;
     width: 80%;
 }
+
 section .firsthead p {
   color:black;
   font-size:25px;
@@ -213,7 +214,7 @@ section .firsthead .btn:hover {
   /* z-index: 1000; */
 }
 .page-content{
-  padding-top: 100px;
+  padding-top: 140px;
 }
 .nav-link {
   color: white !important;
@@ -370,8 +371,8 @@ section .firsthead .btn:hover {
   }
 }
 @media (max-width: 576px) {
- .footerfirst{
-  text-align: center;
+ .footerfirst,.footersecond{
+  text-align: start;
  }
  .time h5 {
   font-size: 14px;

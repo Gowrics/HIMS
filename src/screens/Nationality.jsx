@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { FormContext } from "../FormContext";
+import { FormContext, UserContext } from "../FormContext";
 import DataTable from "react-data-table-component";
 import { nationalityData } from "../assets/ArrayData";
 
@@ -11,6 +11,19 @@ const Nationality = () => {
     isEditMode,
     setIsEditMode,
   } = useContext(FormContext);
+
+  const { singleUser } = useContext(UserContext);
+  // useEffect(() => {
+  //   if (!singleUser) {
+  //     alert("You need to be logged in to view this page.");
+  //     navigate("/signin");
+  //   }
+  // }, [singleUser, navigate]);
+  // if (!singleUser) {
+  //   return null;
+  //   // Optionally, you can return a placeholder or a loading spinner
+  // }
+
   const [formData, setFormData] = useState({
     nationality: "",
     nationalityFl: "",

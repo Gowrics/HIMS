@@ -1,0 +1,34 @@
+{
+  "userData": [
+    {
+      "id": "42fb",
+      "name": "Mani",
+      "email": "gowrics2012@gmail.com",
+      "password": "gowrics23",
+      "confirmPassword": "gowrics23"
+    },
+    {
+      "id": "2502",
+      "name": "Mani",
+      "email": "gowrics2012@gmail.com",
+      "password": "gowrics23",
+      "confirmPassword": "gowrics23"
+    },
+    {
+      "id": "7f7f",
+      "name": "Mani",
+      "username": "gowrics",
+      "email": "gowrics2012@gmail.com",
+      "password": "dfdfdf",
+      "confirmPassword": "dfdfdf"
+    },
+    {
+      "id": "3a7e",
+      "name": "ravi",
+      "username": "raviji",
+      "email": "gowrice2012@gmail.com",
+      "password": "ravisai",
+      "confirmPassword": "ravisai"
+    }
+  ]
+}
