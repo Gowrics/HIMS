@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/HIMS/static/css/main.11ae6c01.css",
-    "main.js": "/HIMS/static/js/main.d9e36816.js",
+    "main.js": "/HIMS/static/js/main.a9fdf8b9.js",
     "static/media/banner-img.png": "/HIMS/static/media/banner-img.8eab52a23f3b4af0cfbd.png",
     "static/media/dept2.jpg": "/HIMS/static/media/dept2.7928cfdc9715465df6b7.jpg",
     "static/media/dept4.jpg": "/HIMS/static/media/dept4.62a6dfdf0ca7a5aafbaf.jpg",
@@ -21,10 +21,10 @@
     "static/media/logo.svg": "/HIMS/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/HIMS/index.html",
     "main.11ae6c01.css.map": "/HIMS/static/css/main.11ae6c01.css.map",
-    "main.d9e36816.js.map": "/HIMS/static/js/main.d9e36816.js.map"
+    "main.a9fdf8b9.js.map": "/HIMS/static/js/main.a9fdf8b9.js.map"
   },
   "entrypoints": [
     "static/css/main.11ae6c01.css",
-    "static/js/main.d9e36816.js"
+    "static/js/main.a9fdf8b9.js"
   ]
 }
