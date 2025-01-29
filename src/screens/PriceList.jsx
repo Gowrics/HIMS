@@ -21,6 +21,7 @@ const PriceList = () => {
     active: "",
   };
   const [formData, setFormData] = useState(initialFormData);
+  
   const clearForm = () => {
     setFormData(initialFormData);
   };
@@ -30,7 +31,6 @@ const PriceList = () => {
   
     console.log("Form Data:", formData);
     
-    // Make the POST request without async/await
     axios
       .post("http://192.168.91.201:8082/priceList/create", formData)
       .then((response) => {
@@ -83,7 +83,7 @@ const PriceList = () => {
   const handleUpdateData = (id) => {
     console.log(id);
     const itemToUpdate = priceListData.find(
-      (item) => item.priceListCode === id
+      (item) => item.priceListCode === id 
     );
 
     if (itemToUpdate) {
@@ -124,9 +124,15 @@ const PriceList = () => {
           })
           .catch((err) => console.log("Error fetching data:", err));
       })
-      .catch((err) =>
-        alert("The data is already present in another child table.", err)
-      );
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          console.log(err.response.data)
+          setValidtationMessage("Price List name must be unique. This value already exists!"); // Custom message for 500 errors
+          setShowModal(true);
+        } else {
+          console.log("Error submitting form:", err);
+        }
+      });
   };
 
   return (
@@ -140,7 +146,7 @@ const PriceList = () => {
         <div className="row mb-3">
           <div className="col-md-4">
             <label htmlFor="priceListName" className="form-label">
-              priceListName
+              Price List Name
             </label>
             <input
               type="text"

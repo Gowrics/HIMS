@@ -265,11 +265,7 @@ export const subTypePatientColumn = (handleUpdateData, handleDelete) => [
     selector: (row) => row.headCharge.hchgCode,
     sortable: true,
   },
-  {
-    name: "hchgCode name",
-    selector: (row) => row.headCharge.hchgName,
-    sortable: true,
-  },
+ 
   {
     name: "Schg Name",
     selector: (row) => row.schaName,
@@ -370,45 +366,16 @@ export const mainTypePatientColumn = (handleUpdateData, handleDelete) => [
 
 export const thirdPartyHeadDataColumn = (handleUpdateData, handleDelete) => [
   {
-    name: "tpaName",
-    selector: (row) => row.tpaName,
-    sortable: true,
-  },
-  {
     name: "tpaCode",
     selector: (row) => row.tpaCode,
     sortable: true,
   },
-  ///
   {
-    name: "hchgCode",
-    selector: (row) => row.subcharge.headCharge.hchgCode,
+    name: "tpaName",
+    selector: (row) => row.tpaName,
     sortable: true,
   },
-  {
-    name: "hchgName",
-    selector: (row) => row.subcharge.headCharge.hchgName,
-    sortable: true,
-  },
-  //
-  {
-    name: "schaName",
-    selector: (row) => row.subcharge.schaName,
-    sortable: true,
-  },
-  {
-    name: "icdVersion",
-    selector: (row) => row.subcharge.icdVersion,
-    sortable: true,
-  },
-
-  {
-    name: "toothSystem",
-    selector: (row) => row.subcharge.toothSystem,
-    sortable: true,
-  },
-  //
-  {
+     {
     name: "schgCode",
     selector: (row) => row.subcharge.schgCode,
     sortable: true,
@@ -461,11 +428,11 @@ export const policiesSubPatientDataColumn = (
     selector: (row) => row.subCharge.schgCode,
     sortable: true,
   },
-  // {
-  //   name: "tpaCode",
-  //   selector: (row) => row.tpahead.tpaCode,
-  //   sortable: true,
-  // },
+  {
+    name: "tpaCode",
+    selector: (row) => row.tpaHead.tpaCode,
+    sortable: true,
+  },
 
   {
     name: "policyNo",
@@ -474,10 +441,14 @@ export const policiesSubPatientDataColumn = (
   },
   {
     name: "policyExpDate",
-    selector: (row) => row.policyExpDate,
+    selector: (row) => {
+      const date = new Date(row.policyExpDate);
+      const options = { year: 'numeric', month: 'short', day: '2-digit' };
+      return date.toLocaleDateString('en-GB', options).toUpperCase();
+    },
     sortable: true,
   },
-
+  
   {
     name: "active",
     selector: (row) => row.active,
@@ -592,7 +563,7 @@ export const coPaymentCoverageDataColumn = (
   },
   {
     name: "covered",
-    selector: (row) => row.covered,
+    selector: (row) => row.covered||"-",
     sortable: true,
   },
   {
@@ -667,6 +638,11 @@ export const priceListDetailsColumn = (
   handleUpdateData,
   handleDelete
 ) => [
+  {
+    name: "Id",
+    selector: (row) => row.id,
+    sortable: true,
+  },
  {
    name: "grossAfmt",
    selector: (row) => row.grossAmt,
@@ -733,7 +709,7 @@ export const priceListDepRuleDataColumn = (
 ) => [
  {
    name: "depRuleNo",
-   selector: (row) => row.depRuleNO,
+   selector: (row) => row.depRuleNo,
    sortable: true,
  },
  {
@@ -1054,3 +1030,21 @@ export const serviceMasterColumn = (
     button: true,
   },
 ];
+
+export const trimFormData = (data) => {
+  const trimmedData = { ...data };
+
+  // Trim all string fields in the top level of the formData
+  for (const key in trimmedData) {
+    if (typeof trimmedData[key] === "string") {
+      trimmedData[key] = trimmedData[key].trim();
+    }
+
+    // If the field is an object (like subCharge or tpaHead), recursively trim its string fields
+    if (typeof trimmedData[key] === "object" && trimmedData[key] !== null) {
+      trimmedData[key] = trimFormData(trimmedData[key]); // recursive trimming
+    }
+  }
+
+  return trimmedData;
+};

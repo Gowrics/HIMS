@@ -6,17 +6,16 @@ import { policiesSubPatientDataColumn, priceListDetailsColumn } from "../assets/
 import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
 const PriceListDetails = () => {
   const {
-    policiesSubPatientData, priceListData,
+   priceListData,
     serviceMasterData, priceListDetailsData,
-    setPriceListDeatilsData, setPoliciesSubPatient,
-    thirdPartyHeadData, patientsSubTypeData,
+    setPriceListDeatilsData,
     setIsEditMode,isEditMode,
     searchTerm, setSearchTerm,
   } = useContext(FormContext);
   const initialFormData = {
     grossAmt: null,
     discountAmt: null,
-    covered: "",
+    covered: null,
     coPaymentPercent: null,
     coPaymentAmt: null,
     serviceMaster: {
@@ -32,43 +31,6 @@ const PriceListDetails = () => {
   // Clear the form
   const clearForm = () => {
     setFormData(initialFormData);
-  };
-  console.log(priceListDetailsData)
-  const handleUpdateData = (id) => {
-    console.log(id);
-
-    const itemToUpdate = priceListDetailsData.find(
-      (item) => item.id === id
-    );
-
-    if (itemToUpdate) {
-      setFormData({
-        id:itemToUpdate.id,
-        grossAmt: itemToUpdate.grossAmt,
-        discountAmt: itemToUpdate.discountAmt,
-        covered: itemToUpdate.covered,
-        coPaymentAmt: itemToUpdate.coPaymentAmt,
-        coPaymentPercent: itemToUpdate.coPaymentPercent,
-        serviceMaster: {
-          serviceCode: itemToUpdate.serviceMaster?.serviceCode || "",
-        },
-        priceList: {
-          priceListCode: itemToUpdate.priceList?.priceListCode || null,
-        },
-      });
-      setIsEditMode(true); // Show update form
-    } else {
-      console.log("Item not found!");
-    }
-   };
-
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
   };
 
   // Handle patientMainTypeData changes (for select input)
@@ -101,53 +63,56 @@ const PriceListDetails = () => {
       }));
     }
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      const updatedFormData = {
-        ...formData,
-        // serviceMaster: {
-        //   ...formData.serviceMaster,
-        //   serviceCode: Number(formData.serviceMaster.serviceCode),
-        // },
-        priceList: {
-          ...formData.priceList,
-          priceListCode: formData.priceList.priceListCode
+  
+    const updatedFormData = {
+      ...formData,
+      priceList: {
+        ...formData.priceList,
+        priceListCode: formData.priceList.priceListCode
           ? Number(formData.priceList.priceListCode)
           : null,
-        
-        },
-        grossAmt:Number(formData.grossAmt),
-        discountAmt:Number(formData.discountAmt),
-        coPaymentAmt:Number(formData.coPaymentAmt),
-        coPaymentPercent:Number(formData.coPaymentPercent)
-      };
-
-      console.log("Payload sent to API:", updatedFormData);
-
-      const response = await axios.post(
-        "http://192.168.91.201:8082/priceDetails/create",
-        updatedFormData
-      );
-      clearForm();
-      alert("Form submitted successfully");
-
-      const { data } = await axios.get(
-        "http://192.168.91.201:8082/priceDetails/getAll"
-      );
-
-      setPriceListDeatilsData(data);
-      console.log(priceListDetailsData);
-
-     
-    } catch (err) {
-      console.error("Error details:", err.response?.data || err.message);
-      alert(
-        "Error submitting form: " +
-          (err.response?.data?.message || "Check console for details")
-      );
-    }
+      },
+      grossAmt: Number(formData.grossAmt),
+      discountAmt: Number(formData.discountAmt),
+      coPaymentAmt: Number(formData.coPaymentAmt),
+      coPaymentPercent: Number(formData.coPaymentPercent),
+    };
+  
+    console.log("Payload sent to API:", updatedFormData);
+  
+    axios
+      .post("http://192.168.91.201:8082/priceDetails/create", updatedFormData)
+      .then(() => {
+        alert("Form submitted successfully");
+        clearForm();
+  
+        return axios.get("http://192.168.91.201:8082/priceDetails/getAll");
+      })
+      .then((response) => {
+        setPriceListDeatilsData(response.data);
+        setIsEditMode(false)
+        clearForm();
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.error("Error details:", err.response?.data || err.message);
+        alert(
+          "Error submitting form: " +
+            (err.response?.data?.message || "Check console for details")
+        );
+      });
+  };
+  
+  
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleDelete = (id) => {
@@ -159,6 +124,34 @@ const PriceListDetails = () => {
       itemKey: "id", // Key to identify the item in the dataset
     });
   };
+  
+  const handleUpdateData = (id) => {
+    console.log(id);
+
+    const itemToUpdate = priceListDetailsData.find(
+      (item) => item.id === id
+    );
+
+    if (itemToUpdate) {
+      setFormData({
+        id:itemToUpdate.id,
+        grossAmt: itemToUpdate.grossAmt,
+        discountAmt: itemToUpdate.discountAmt,
+        covered: itemToUpdate.covered,
+        coPaymentAmt: itemToUpdate.coPaymentAmt,
+        coPaymentPercent: itemToUpdate.coPaymentPercent,
+        serviceMaster: {
+          serviceCode: itemToUpdate.serviceMaster?.serviceCode || null
+        },
+        priceList: {
+          priceListCode: itemToUpdate.priceList?.priceListCode || null,
+        },
+      });
+      setIsEditMode(true); // Show update form
+    } else {
+      console.log("Item not found!");
+    }
+   };
 
   const handleUpdate = () => {
     const {
@@ -171,6 +164,13 @@ const PriceListDetails = () => {
       serviceMaster: { serviceCode },
       priceList: { priceListCode },
     } = formData;
+  
+    // Check if ID exists before updating
+    if (!id) {
+      alert("Invalid ID");
+      return;
+    }
+  
     const updatedData = {
       id,
       grossAmt,
@@ -181,9 +181,9 @@ const PriceListDetails = () => {
       serviceMaster: { serviceCode },
       priceList: { priceListCode },
     };
-    console.log(formData);
-    console.log(updatedData);
-
+  
+    console.log("Updated Data:", updatedData);
+  
     axios
       .put(
         `http://192.168.91.201:8082/priceDetails/update/${formData.id}`,
@@ -191,14 +191,15 @@ const PriceListDetails = () => {
       )
       .then((res) => {
         console.log("Updated successfully:", res.data);
+  
+        // Fetch updated list after the update
         axios
           .get("http://192.168.91.201:8082/priceDetails/getAll")
           .then((res) => {
+            // Clear form and reset the state
             clearForm();
             setPriceListDeatilsData(res.data);
-          
             setIsEditMode(false); // Hide update form after successful update
-            clearForm();
           })
           .catch((err) => console.log("Error fetching data:", err));
       })
@@ -206,17 +207,18 @@ const PriceListDetails = () => {
         alert("The data is already present in another child table.", err)
       );
   };
+  
 
   return (
     <>
       <div className="container page-content">
-        <h2>HOLDS THE PRICES FOR EACH SERVICE CODE FOR A PRICE LIST</h2>
+        <h2>HOLDS THE PRICES FOR EACH SERVICE CODE FOR A PRICE LIST (not updatable)</h2>
         <form onSubmit={handleSubmit}>
           {/* Row 1 */}
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="grossAmt" className="form-label">
-              grossAmt
+              Gross Amt
               </label>
               <input
               type="number"
@@ -231,7 +233,7 @@ const PriceListDetails = () => {
 
             <div className="col-md-4">
             <label htmlFor="discountAmt" className="form-label">
-            discountAmt
+            Discount Amt
               </label>
               <input
                type="number"
@@ -254,6 +256,7 @@ const PriceListDetails = () => {
                   name="priceListCode"
                   value={formData.priceList.priceListCode}
                   onChange={handlePatientTypeChange}
+                  required
                 >
                   <option value="">Select an option</option>
                   {priceListData.map((option) => (
@@ -272,12 +275,12 @@ const PriceListDetails = () => {
                 Service Master (serviceCode)
               </label>
                <select
-                className="form-control"
+                className="form-control"  
                 id="serviceCode"
                 name="serviceCode"
                 value={formData.serviceMaster.serviceCode}
                 onChange={handlePatientTypeChange}
-               //required
+               required
               >
                 <option value="">Select an option</option>
                 {serviceMasterData.map((option) => (
@@ -291,12 +294,14 @@ const PriceListDetails = () => {
 
             <div className="col-md-2">
               <label htmlFor="policyNo" className="form-label">
-              coPaymentPercent
+              Co Payment Percent
               </label>
               <input
                type="number"
                 className="form-control"
                 id="coPaymentPercent"
+                min="1"
+                max="100"
                 name="coPaymentPercent"
                 value={formData.coPaymentPercent}
                 onChange={handleChange}
@@ -304,7 +309,7 @@ const PriceListDetails = () => {
             </div>
             <div className="col-md-2">
               <label htmlFor="coPaymentAmt" className="form-label">
-              coPaymentAmt
+              Co Payment Amt
               </label>
               <input
                 type="number" // Corrected here
@@ -318,15 +323,14 @@ const PriceListDetails = () => {
             </div>
              <div className="col-md-2">
               <label htmlFor="coverd" className="form-label">
-              coverd
+              Coverd
               </label>
               <select
                 className="form-control"
                 id="covered"
                 name="covered"
                 value={formData.covered}
-                onChange={handleChange}
-              
+                onChange={handleChange}           
               >
                  <option value="">Select an option</option>
                 <option value="YES">Y</option>
@@ -349,6 +353,8 @@ const PriceListDetails = () => {
             >
               Update
             </button>
+            
+            
           )}
         </form>
         <CustomDataTable

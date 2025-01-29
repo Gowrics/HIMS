@@ -2,10 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FormContext } from "../FormContext";
 import CustomDataTable from "../ReusableComponent/CustomDataTable";
-import {
-  subTypePatientColumn,
-  thirdPartyHeadDataColumn,
-} from "../assets/ArrayData";
+import {subTypePatientColumn,thirdPartyHeadDataColumn,trimFormData} from "../assets/ArrayData";
 import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
 const ThirdPartyHead = () => {
  
@@ -91,11 +88,12 @@ const ThirdPartyHead = () => {
       },
     };
   
-    console.log("Payload sent to API:", updatedFormData);
+    const trimmedData = trimFormData(updatedFormData);
+        console.log("Payload sent to API:", trimmedData);
   
     // Submit form data to the API
     axios
-      .post("http://192.168.91.201:8082/tpahead/create", updatedFormData)
+      .post("http://192.168.91.201:8082/tpahead/create", trimmedData)
       .then((res) => {
         console.log("Form submitted successfully:", res.data);
         alert("Form Submitted Successfully..");
@@ -177,7 +175,7 @@ const ThirdPartyHead = () => {
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="tpaName" className="form-label">
-                tpaName Name
+                Tpa Name
               </label>
               <input
                 className="form-control"
@@ -209,9 +207,9 @@ const ThirdPartyHead = () => {
 
           {/* Patient Main Type (schgCode) Row */}
           <div className="row mb-3">
-            <div className="col-md-12">
+            <div className="col-md-4">
               <label htmlFor="schgCode" className="form-label">
-                Patient Main Type (schgCode)
+                Patient Sub Type (schgCode)
               </label>
               <select
                 className="form-control"

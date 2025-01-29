@@ -7,10 +7,9 @@ import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
 
 const CptCodes = () => {
   const {
-    setIsEditMode,
-    isEditMode,
-    cptCodesData,
-    setCptCodesData,
+    setIsEditMode, isEditMode,
+    cptCodesData,   setCptCodesData,
+    validtationMessage,setValidtationMessage, showModal, setShowModal,
   } = useContext(FormContext);
 
   const initialFormData = {
@@ -44,37 +43,41 @@ const CptCodes = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      console.log("Form Data:", formData);
-      const response = await axios.post(
-        "http://192.168.91.201:8082/cptCodes/create",
-        formData
-      );
-
-      console.log("API Response:", response.data);
-      alert("CPT Code created successfully!");
-      fetchCptCodesData();
-      clearForm();
-    } catch (error) {
-      console.error(
-        "Error creating CPT Code:",
-        error.response?.data || error.message
-      );
-      alert(
-        "Failed to create CPT Code. Please check the console for more details."
-      );
-    }
+  
+    console.log("Form Data:", formData);
+  
+    axios
+      .post("http://192.168.91.201:8082/cptCodes/create", formData)
+      .then((response) => {
+        console.log("API Response:", response.data);
+        alert("CPT Code created successfully!");
+  
+        // Fetch updated CPT codes data
+        fetchCptCodesData();
+  
+        // Clear form
+        clearForm();
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 500) {
+          console.log(err.response.data)
+          setValidtationMessage("Cpt code must be unique. This value already exists!"); // Custom message for 500 errors
+          setShowModal(true);
+        } else {
+          console.log("Error submitting form:", err);
+        }
+      });
   };
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+    setShowModal(false);
   };
 
   const handleDelete = (id) => {
@@ -126,6 +129,10 @@ const CptCodes = () => {
   return (
     <div className="container page-content">
       <h2>CPT CODES HANDLING</h2>
+      <div  tabIndex="-1"  className={`alert alert-danger border border-danger small p-2 mt-2 ${
+    showModal ? "d-block" : "d-none" }`} role="alert">
+  <h6 className="m-0">{validtationMessage}</h6>
+</div>
       <form onSubmit={handleSubmit}>
         <div className="row mb-3">
           <div className="col-md-4">

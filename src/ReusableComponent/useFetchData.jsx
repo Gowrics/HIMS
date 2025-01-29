@@ -8,8 +8,7 @@ const useFetchData = (url, setData) => {
       try {
         const response = await axios.get(url);
         setData(response.data);
-        console.log(data);
-      } catch (error) {
+          } catch (error) {
         console.error("Error fetching data:", error);
       }
     };

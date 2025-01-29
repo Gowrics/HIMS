@@ -81,6 +81,7 @@ const Empty = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://192.168.91.201:8082/policySubCharge/delete/${id}`);
+
       alert("Deleted successfully");
       fetchSubPoliciesPatientData();
     } catch (error) {

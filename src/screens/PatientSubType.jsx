@@ -263,6 +263,20 @@ const PatientSubType = () => {
                 <option value="NO">NO</option>
               </select>
             </div>
+             <div className="col-md-4">
+              <label htmlFor="toothSystem" className="form-label">
+                Tooth System
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="toothSystem"
+                name="toothSystem"
+                value={formData.toothSystem}
+                onChange={handleChange}
+                required
+              />
+            </div>
           </div>
 
           {/* Row 2 */}
@@ -352,47 +366,9 @@ const PatientSubType = () => {
               />
             </div>
 
-            <div className="col-md-4">
-              <label htmlFor="toothSystem" className="form-label">
-                Tooth System
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="toothSystem"
-                name="toothSystem"
-                value={formData.toothSystem}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-
-          {/* Patient Main Type (hchgCode) Row */}
-          <div className="row mb-3">
-            <div className="col-md-12">
-              <label htmlFor="hchgCode" className="form-label">
-                Patient Main Type (hchgCode)
-              </label>
-              <select
-                className="form-control"
-                id="hchgCode"
-                name="hchgCode"
-                value={formData.headCharge.hchgCode}
-                onChange={handlePatientTypeChange}
-                required
-              >
-                <option value="">Select an option</option>
-                {patientsMainTypeData.map((option) => (
-                  <option key={option.hchgCode} value={option.hchgCode}>
-                    {option.hchgCode}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="col-md-12">
+            <div className="col-md-3">
               <label htmlFor="priceList" className="form-label">
-                Patient Main Type (priceList)
+                Price List (priceListcode)
               </label>
               <select
                 className="form-control"
@@ -413,22 +389,49 @@ const PatientSubType = () => {
                 ))}
               </select>
             </div>
+
           </div>
 
-          {!isEditMode && (
-            <button type="submit" className="btn btn-primary">
-              Create+
-            </button>
-          )}
-          {isEditMode && (
-            <button
-              type="button"
-              onClick={handleUpdate}
-              className="btn btn-success"
-            >
-              Update
-            </button>
-          )}
+          {/* Patient Main Type (hchgCode) Row */}
+          <div className="row mb-3">
+            <div className="col-md-4">
+              <label htmlFor="hchgCode" className="form-label">
+                Patient Main Type (hchgCode)
+              </label>
+              <select
+                className="form-control"
+                id="hchgCode"
+                name="hchgCode"
+                value={formData.headCharge.hchgCode}
+                onChange={handlePatientTypeChange}
+                required
+              >
+                <option value="">Select an option</option>
+                {patientsMainTypeData.map((option) => (
+                  <option key={option.hchgCode} value={option.hchgCode}>
+                    {option.hchgCode}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {!isEditMode ? (
+  <button type="submit" className="btn btn-primary">
+    Create+
+  </button>
+) : (
+  <>
+    <button type="button" onClick={handleUpdate} className="btn btn-success">
+      Update
+    </button>
+    <button type="button" onClick={() => {setIsEditMode(false);clearForm()}} className=" ms-4 btn btn-secondary">
+      Cancel
+    </button>
+  </>
+)}
+
+          
         </form>
         <CustomDataTable
           columns={subTypePatientColumn(handleUpdateData, handleDelete)}

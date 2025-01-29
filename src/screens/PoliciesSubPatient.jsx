@@ -2,10 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FormContext } from "../FormContext";
 import CustomDataTable from "../ReusableComponent/CustomDataTable";
-import {
-  policiesSubPatientDataColumn,
- 
-} from "../assets/ArrayData";
+import { policiesSubPatientDataColumn, trimFormData} from "../assets/ArrayData";
 import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
 const PoliciesSubPatient = () => {
   const {
@@ -116,11 +113,11 @@ const PoliciesSubPatient = () => {
       tpaCode: Number(formData.tpaHead.tpaCode),
     },
   };
-
-  console.log("Payload sent to API:", updatedFormData);
+  const trimmedData = trimFormData(updatedFormData);
+  console.log("Payload sent to API:", formData);
 
   axios
-    .post("http://192.168.91.201:8082/policiesCharge/create", updatedFormData)
+    .post("http://192.168.91.201:8082/policiesCharge/create", trimmedData)
     .then((response) => {
       alert("Form submitted successfully");
 
@@ -193,9 +190,15 @@ const PoliciesSubPatient = () => {
           })
           .catch((err) => console.log("Error fetching data:", err));
       })
-      .catch((err) =>
-        alert("The data is already present in another child table.", err)
-      );
+      .catch((error) => {
+        console.error(
+          "Error creating price list:",
+          error.response?.data || error.message
+        );
+        alert(
+          "Failed to create price list. Please check the console for more details."
+        );
+      });
   };
 
   return (
@@ -286,7 +289,7 @@ const PoliciesSubPatient = () => {
 
             <div className="col-md-4">
               <label htmlFor="policyNo" className="form-label">
-                policyNo Name
+                Policy No
               </label>
               <input
                 className="form-control"
@@ -308,7 +311,7 @@ const PoliciesSubPatient = () => {
                 name="policyExpDate"
                 value={formData.policyExpDate}
                 onChange={handleChange}
-                required
+              
               />
             </div>
           </div>

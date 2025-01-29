@@ -7,12 +7,10 @@ import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
 const SubPoliciesPatient = () => {
   const {
     policiesSubPatientData,
-    
     subPoliciesPatientData, setSubPoliciesPatientData,
-    setIsEditMode,
-    isEditMode,
-    searchTerm,
-    setSearchTerm,  
+    validtationMessage,setValidtationMessage, showModal, setShowModal,
+    setIsEditMode,isEditMode,
+    searchTerm, setSearchTerm,  
   } = useContext(FormContext);
   const initialFormData = {
     policySubCode: 0,
@@ -53,6 +51,7 @@ const SubPoliciesPatient = () => {
       ...prevData,
       [name]: value,
     }));
+    setShowModal(false);
   };
 
   // Handle patientMainTypeData changes (for select input)
@@ -68,13 +67,11 @@ const SubPoliciesPatient = () => {
   };
   // Clear the form
   const clearForm = () => {
-    setFormData(initialFormData);
+    setFormData(initialFormData);    
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
   
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
     const updatedFormData = {
       ...formData,
       policiesCharge: {
@@ -83,30 +80,36 @@ const handleSubmit = async (e) => {
       },
       policySubCode: Number(formData.policySubCode),
     };
-
+  
     console.log("Payload sent to API:", updatedFormData);
-
-    const response = await axios.post(
-      "http://192.168.91.201:8082/policySubCharge/create",
-      updatedFormData
-    );
-
-    alert("Form submitted successfully");
-
-    const { data } = await axios.get(
-      "http://192.168.91.201:8082/policySubCharge/getAll"
-    );
-
-    setSubPoliciesPatientData(data); // Make sure this is defined in the same component
-    clearForm();
-  } catch (err) {
-    console.error("Error details:", err.response?.data || err.message);
-    alert(
-      "Error submitting form: " +
-        (err.response?.data?.message || "Check console for details")
-    );
-  }
-};
+  
+    // Send POST request to the API
+    axios
+      .post("http://192.168.91.201:8082/policySubCharge/create", updatedFormData)
+      .then((response) => {
+        alert("Form submitted successfully");
+  
+        // Fetch updated data after form submission
+        axios
+          .get("http://192.168.91.201:8082/policySubCharge/getAll")
+          .then((res) => {
+            setSubPoliciesPatientData(res.data); // Make sure this is defined in the same component
+            clearForm();
+          })
+          .catch((err) => {
+            console.error("Error fetching data:", err);
+          });
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 500) {
+          setValidtationMessage("policySubCode  must be unique. This value already exists!"); // Custom message for 500 errors
+          setShowModal(true);
+        } else {
+          console.log("Error submitting form:", err);
+        }
+      });
+  };
+  
 
   const handleDelete = (id) => {
     handleDeleteItem({
@@ -160,12 +163,17 @@ const handleSubmit = async (e) => {
     <>
       <div className="container page-content">
         <h2>SUB POLICY TYPES UNDER A SUB CLASSIFIED PATIENT TYPE</h2>
+        <div  tabIndex="-1"  className={`alert alert-danger border border-danger small p-2 mt-2 ${
+    showModal ? "d-block" : "d-none" }`} role="alert">
+  <h6 className="m-0">{validtationMessage}</h6>
+</div>
+
         <form onSubmit={handleSubmit}>
           {/* Row 1 */}
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="policySubCode" className="form-label">
-                policySubCode
+                Policy Sub Code
               </label>
               <input
                 type="number"
@@ -201,7 +209,7 @@ const handleSubmit = async (e) => {
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="chargeCode" className="form-label">
-                Patient Sub Type (chargeCode)
+                Policy sub Patient Type (chargeCode)
               </label>
               <select
                 className="form-control"
@@ -222,7 +230,7 @@ const handleSubmit = async (e) => {
 
             <div className="col-md-4">
               <label htmlFor="active" className="form-label">
-                maternityCovered
+                Maternity Covered
               </label>
               <select
                 className="form-control"
@@ -231,7 +239,7 @@ const handleSubmit = async (e) => {
                 value={formData.maternityCovered}
                 onChange={handleChange}
                 
-              >
+              ><option value="">Select an option</option>
                 <option value="YES">Y</option>
                 <option value="NO">N</option>
               </select>

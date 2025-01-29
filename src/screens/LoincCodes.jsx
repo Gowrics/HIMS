@@ -7,12 +7,10 @@ import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
 
 const LoincCodes = () => {
   const {
-    setIsEditMode,
-    isEditMode,
-    loincCodesData,
-    setLoincCodesData,
-    searchTerm,
-    setSearchTerm,
+    setIsEditMode,   isEditMode,
+    loincCodesData,    setLoincCodesData,
+    validtationMessage,setValidtationMessage, showModal, setShowModal,
+    searchTerm,    setSearchTerm,
   } = useContext(FormContext);
 
   const initialFormData = {
@@ -45,31 +43,34 @@ const LoincCodes = () => {
       console.error("Error fetching LOINC codes data:", error);
     }
   };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      console.log("Form Data:", formData);
-      const response = await axios.post(
-        "http://192.168.91.201:8082/loincCodes/create",
-        formData
-      );
-
-      console.log("API Response:", response.data);
-      alert("LOINC Code created successfully!");
-      fetchLoincCodesData();
-      clearForm();
-    } catch (error) {
-      console.error(
-        "Error creating LOINC Code:",
-        error.response?.data || error.message
-      );
-      alert(
-        "Failed to create LOINC Code. Please check the console for more details."
-      );
-    }
+  
+    console.log("Form Data:", formData);
+  
+    axios
+      .post("http://192.168.91.201:8082/loincCodes/create", formData)
+      .then((response) => {
+        console.log("API Response:", response.data);
+        alert("LOINC Code created successfully!");
+  
+        // Fetch updated LOINC codes data
+        fetchLoincCodesData();
+  
+        // Clear form
+        clearForm();
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 500) {
+          console.log(err.response.data)
+          setValidtationMessage("loinc code must be unique. This value already exists!"); // Custom message for 500 errors
+          setShowModal(true);
+        } else {
+          console.log("Error submitting form:", err);
+        }
+      });
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,6 +78,7 @@ const LoincCodes = () => {
       ...prevData,
       [name]: value,
     }));
+    setShowModal(false);
   };
 
   const handleDelete = (id) => {
@@ -128,6 +130,10 @@ const LoincCodes = () => {
   return (
     <div className="container page-content">
       <h2>LOINC CODES HANDLING</h2>
+      <div  tabIndex="-1"  className={`alert alert-danger border border-danger small p-2 mt-2 ${
+    showModal ? "d-block" : "d-none" }`} role="alert">
+  <h6 className="m-0">{validtationMessage}</h6>
+</div>
       <form onSubmit={handleSubmit}>
         <div className="row mb-3">
           <div className="col-md-4">

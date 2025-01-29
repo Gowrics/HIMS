@@ -82,12 +82,12 @@ const PationMainType = () => {
           .catch((err) => console.log("Error fetching data:", err));
       })
       .catch((err) => {
-        if (err.response && err.response.status === 500) {
-          setValidtationMessage("Hchg Name must be unique. This value already exists!"); // Custom message for 500 errors
-          setShowModal(true);
-        } else {
-          console.log("Error submitting form:", err);
-        }
+          if (err.response && err.response.status === 500) {
+            setValidtationMessage("Hchg Name must be unique. This value already exists!"); // Custom message for 500 errors
+            setShowModal(true);
+          } else {
+            console.log("Error submitting form:", err);
+          }
       });
   
     // Reset form fields
@@ -147,25 +147,20 @@ const PationMainType = () => {
       <div className="container page-content ">
     
         <h2 className="mb-4">MAIN CLASSIFICATION OF PATIENT TYPE </h2>
-        <div
-  tabIndex="-1"
-  className={`alert alert-danger border border-danger small p-2 mt-2 ${
-    showModal ? "d-block" : "d-none"
-  }`}
-  role="alert"
->
+        <div  tabIndex="-1"  className={`alert alert-danger border border-danger small p-2 mt-2 ${
+    showModal ? "d-block" : "d-none" }`} role="alert">
   <h6 className="m-0">{validtationMessage}</h6>
 </div>
 
         <form className="submit" onSubmit={handleSubmit}>
           <div className="row">
-            <div className="col mb-3">
+            <div className="col-md-4 mb-3">
               <label htmlFor="hchgName" className="form-label">
-                HchgName
+                Hchg Name
               </label>
               <input
                 type="text"
-                className={`form-control ${
+                className={`form-control  ${
                   errors.hchgName ? "is-invalid" : ""
                 }`}
                 id="hchgName"
@@ -194,7 +189,7 @@ const PationMainType = () => {
             </button>
           )}
         </form>
-        <h1>Main Classification of Patient type Data</h1>
+        <h4> Patient type Data</h4>
         <input
           type="text"
           placeholder="Search hchgName"

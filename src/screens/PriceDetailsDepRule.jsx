@@ -6,11 +6,9 @@ import { policiesSubPatientDataColumn, priceDetailsDepRuleColumn, priceListDetai
 import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
 const PriceDetailsDepRule = () => {
   const {
-    policiesSubPatientData,
-    priceDetailsDepRuleData, setPriceDetailsDepRuleData,
+        priceDetailsDepRuleData, setPriceDetailsDepRuleData,
     priceListDepRuleData,
-    priceListData,
-    serviceMasterData,
+        serviceMasterData,
     priceListDetailsData, setPriceListDeatilsData,
     setPoliciesSubPatient,
     thirdPartyHeadData,
@@ -29,7 +27,7 @@ const PriceDetailsDepRule = () => {
       serviceCode: "",
     },
     priceListDependency:  {
-      depRuleNO:null
+      depRuleNo:null
     }
   };
   
@@ -55,7 +53,7 @@ const PriceDetailsDepRule = () => {
           serviceCode: itemToUpdate.dependencyServiceCode?.serviceCode || "",
         },
         priceListDependency: {
-          depRuleNO: itemToUpdate.priceListDependency?.depRuleNO || null,
+          depRuleNo: itemToUpdate.priceListDependency?.depRuleNo || null,
         },
       });
       setIsEditMode(true); // Show update form
@@ -86,22 +84,14 @@ const PriceDetailsDepRule = () => {
           serviceCode: value,
         },
       }));
-      // setFormData((prevData) => ({
-      //   ...prevData,
-      //   dependencyServiceCode: {
-      //     ...prevData.dependencyServiceCode,
-      //     serviceCode: value,
-      //   },
-      // }));
-
-    } 
-    else if (name === "depRuleNO") {
+          } 
+    else if (name === "depRuleNo") {
       // Update priceListDependency
       setFormData((prevData) => ({
         ...prevData,
         priceListDependency: {
           ...prevData.priceListDependency,
-          depRuleNO: value,
+          depRuleNo: value,
         },
       }));
     }
@@ -132,14 +122,10 @@ const PriceDetailsDepRule = () => {
     try {
       const updatedFormData = {
         ...formData,
-        // serviceMaster: {
-        //   ...formData.serviceMaster,
-        //   serviceCode: Number(formData.serviceMaster.serviceCode),
-        // },
-        priceListDependency: {
+               priceListDependency: {
           ...formData.priceListDependency,
-          depRuleNO: formData.priceListDependency.depRuleNO
-          ? Number(formData.priceListDependency.depRuleNO)
+          depRuleNo: formData.priceListDependency.depRuleNo
+          ? Number(formData.priceListDependency.depRuleNo)
           : null,
               },
               numberOfDays:Number(formData.numberOfDays),
@@ -188,7 +174,7 @@ const PriceDetailsDepRule = () => {
       numberOfDays,
       serviceMaster: { serviceCode: serviceMasterCode },
       dependencyServiceCode: { serviceCode: dependencyServiceCode },
-      priceListDependency: { depRuleNO },
+      priceListDependency: { depRuleNo },
     } = formData;
   
     const updatedData = {
@@ -196,7 +182,7 @@ const PriceDetailsDepRule = () => {
       numberOfDays,
       dependencyServiceCode: { serviceCode: dependencyServiceCode },
       serviceMaster: { serviceCode: serviceMasterCode },
-      priceListDependency: { depRuleNO },
+      priceListDependency: { depRuleNo },
     };
     console.log(formData.id);
     console.log(updatedData);
@@ -235,20 +221,21 @@ const PriceDetailsDepRule = () => {
            
             {/* TPA head Type (priceListCode) Row */}
             <div className="col-md-4">
-              <label htmlFor="depRuleNO" className="form-label">
-                Price List (depRuleNO)
+              <label htmlFor="depRuleNo" className="form-label">
+                Price List (depRuleNo)
               </label>
               <select
                 className="form-control"
-                id="depRuleNO"
-                name="depRuleNO"
-                value={formData.priceListDependency.depRuleNO}
+                id="depRuleNo"
+                name="depRuleNo"
+                value={formData.priceListDependency.depRuleNo}
                 onChange={handlePatientTypeChange}
+                required
               >
                 <option value="">Select an option</option>
                 {priceListDepRuleData.map((option) => (
-                  <option key={option.depRuleNO} value={option.depRuleNO}>
-                    {option.depRuleNO}
+                  <option key={option.depRuleNo} value={option.depRuleNo}>
+                    {option.depRuleNo}
                   </option>
                 ))}
               </select>
@@ -267,7 +254,7 @@ const PriceDetailsDepRule = () => {
                 name="serviceMaster"
                 value={formData.serviceMaster.serviceCode}
                 onChange={handlePatientTypeChange}
-               //required
+               required
               >
                 <option value="">Select an option</option>
                 {serviceMasterData.map((option) => (
@@ -289,7 +276,7 @@ const PriceDetailsDepRule = () => {
                 name="dependencyServiceCode"
                 value={formData.dependencyServiceCode.serviceCode}
                 onChange={handlePatientTypeChange}
-               //required
+              required
               >
                 <option value="">Select an option</option>
                 {serviceMasterData.map((option) => (

@@ -10,15 +10,14 @@ import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
 const PriceListDepRule = () => {
   const {
     setIsEditMode,
+    validtationMessage,setValidtationMessage, showModal, setShowModal,
     priceListDepRuleData, setPriceListDepRuleData,
     isEditMode,
-    priceListData,
-    setPriceListData,
-    searchTerm,
+       searchTerm,
     setSearchTerm,
   } = useContext(FormContext);
   const initialFormData = {
-    depRuleNo:null,
+    depRuleNo:0,
     depRuleName: "",
    
   };
@@ -26,38 +25,36 @@ const PriceListDepRule = () => {
   const clearForm = () => {
     setFormData(initialFormData);
   };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      console.log("Form Data:", formData);
-      const response = await axios.post(
-        "http://192.168.91.201:8082/priceListDependency/create",
-        formData
-      );
-
-      console.log("API Response:", response.data);
-      axios
-        .get("http://192.168.91.201:8082/priceListDependency/getAll")
-        .then((res) => {
-          setPriceListDepRuleData(res.data);
-          setIsEditMode(false); // Hide update form after successful update
-          clearForm();
-        })
-        .catch((err) => console.log("Error fetching data:", err));
-      alert("Price List created successfully!");
-      clearForm();
-    } catch (error) {
-      console.error(
-        "Error creating price list:",
-        error.response?.data || error.message
-      );
-      alert(
-        "Failed to create price list. Please check the console for more details."
-      );
-    }
+  
+    console.log("Form Data:", formData);
+  
+    axios
+      .post("http://192.168.91.201:8082/priceListDependency/create", formData)
+      .then((response) => {
+        console.log("API Response:", response.data);
+        alert("Price List created successfully!");
+  
+        // Fetch updated price list data
+        return axios.get("http://192.168.91.201:8082/priceListDependency/getAll");
+      })
+      .then((res) => {
+        setPriceListDepRuleData(res.data);
+        setIsEditMode(false); // Hide update form after successful update
+        clearForm();
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 500) {
+          console.log(err.response.data)
+          setValidtationMessage("depRuleno must be unique. This value already exists!"); // Custom message for 500 errors
+          setShowModal(true);
+        } else {
+          console.log("Error submitting form:", err);
+        }
+      });
   };
+  
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,6 +62,7 @@ const PriceListDepRule = () => {
       ...prevData,
       [name]: value,
     }));
+    setShowModal(false);
   };
 
   const handleDelete = (id) => {
@@ -126,6 +124,10 @@ const PriceListDepRule = () => {
   return (
     <div className="container page-content">
       <h2>Price List Dependency Rules</h2>
+      <div  tabIndex="-1"  className={`alert alert-danger border border-danger small p-2 mt-2 ${
+    showModal ? "d-block" : "d-none" }`} role="alert">
+  <h6 className="m-0">{validtationMessage}</h6>
+</div>
       <form onSubmit={handleSubmit}>
         <div className="row mb-3">
           <div className="col-md-4">

@@ -20,9 +20,9 @@ const CoPaymentCoverage = () => {
 
   const initialFormData = {
     // policyCopayId: 0,
-    covered: "",
-    coPaymentPercent: 0,
-    coPaymentAmt: 0,
+    covered: null,
+    coPaymentPercent: null,
+    coPaymentAmt: null,
     policiesCharge: {
       chargeCode: "",
     },
@@ -230,14 +230,14 @@ const CoPaymentCoverage = () => {
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="coPaymentPercent" className="form-label">
-                coPaymentPercent
+                Co Payment Percent
               </label>
               <input
                 className="form-control"
                 type="number"
                 id="coPaymentPercent"
                 name="coPaymentPercent"
-                min="0.1"
+                min="1"
                 max="100"
                 value={formData.coPaymentPercent}
                 onChange={handleChange}
@@ -246,7 +246,7 @@ const CoPaymentCoverage = () => {
 
             <div className="col-md-4">
               <label htmlFor="covered" className="form-label">
-              covered
+              Covered
               </label>
               <select
                 className="form-control"
@@ -290,7 +290,7 @@ const CoPaymentCoverage = () => {
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="chargeCode" className="form-label">
-                policies Sub Type (chargeCode)
+              Policy sub Patient Type (chargeCode)
               </label>
               <select
                 className="form-control"
@@ -311,7 +311,7 @@ const CoPaymentCoverage = () => {
 
             <div className="col-md-4">
               <label htmlFor="" className="form-label">
-              serviceCategory Type (policySubCode)
+              Service Category Type (serviceCategoryCode)
               </label>
               <select
                 className="form-control"
@@ -335,7 +335,7 @@ const CoPaymentCoverage = () => {
 
             <div className="col-md-4">
               <label htmlFor="coPaymentAmt" className="form-label">
-                coPaymentAmt
+                Co Payment Amt
               </label>
               <input
                 className="form-control"
