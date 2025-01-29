@@ -1,29 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { FormContext } from "./FormContext";
 import axios from "axios";
+import useFetchData from "./ReusableComponent/useFetchData";
 
 export const FormProvider = ({ children }) => {
+  
   const [nationalityData, setNationalityData] = useState([]);
   const [departmentData, setDepartmentData] = useState([]); // Ensure it's an array
   const [docterData, setDocterData] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false); // New state to track form visibility
-  // const [formData, setFormData] = useState({
-  //   deptCode: "",
-  //   doctorName: "",
-  //   doctorNameFl: "",
-  //   doctorImg: "",
-  //   licenseNo: "",
-  //   doctorDesignation: "",
-  //   doctorDesignationFl: "",
-  //   doctorQualifications: "",
-  //   doctorQualificationsFl: "",
-  //   gender: "",
-  //   sortOrder: 0,
-  //   nationalityCode: 0,
-  //   costCenterCode: "",
-  //   active: "Y", // Default to "Y" (active)
-  // });
+  const [searchTerm, setSearchTerm] = useState("");
 
+  const [patientsMainTypeData, setPatientMainTypeData] = useState([]);
+  const [patientsSubTypeData, setPatientsSubTypeData] = useState([]);
+  const [thirdPartyHeadData, setThirdPartyHead] = useState([]);
+  const [policiesSubPatientData, setPoliciesSubPatient] = useState([]);
+  const [subPoliciesPatientData, setSubPoliciesPatientData] = useState([]);
+
+  const [priceListData, setPriceListData] = useState([]);
+  const [priceListDetailsData, setPriceListDeatilsData] = useState([]);
+  const [coPaymentCoverageData, setCoPaymentCoverageData] = useState([]);
+  const [serviceCategoryData, setserviceCategoryData] = useState([]);
+  const [serviceMasterData, setServiceMasterData] = useState([]);
+  const [priceListDepRuleData, setPriceListDepRuleData] = useState([]);
+  const [priceDetailsDepRuleData, setPriceDetailsDepRuleData] = useState([]);
+  const [cptCodesData, setCptCodesData] = useState([]);
+  const [loincCodesData, setLoincCodesData] = useState([]);
+  
+  const [validtationMessage,setValidtationMessage]  =useState("");
+  const [showModal, setShowModal] = useState(false);
+    const handleShowModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
+  
+ 
   const [formData, setFormData] = useState({
     docterCode: 0,
     doctorName: "",
@@ -46,54 +55,117 @@ export const FormProvider = ({ children }) => {
     },
   });
 
-  // {
+  
+  useFetchData(
+    " http://192.168.91.201:8082/loincCodes/getAll",
+    setLoincCodesData
+  );
+  useFetchData(
+    " http://192.168.91.201:8082/policySubCopay/getAll",
+    setCoPaymentCoverageData
+  );
+  
+  useFetchData(
+    " http://192.168.91.201:8082/cptCodes/getAll",
+    setCptCodesData
+  );
+  
+  useFetchData(
+    " http://192.168.91.201:8082/detailsDependency/getAll",
+    setPriceDetailsDepRuleData
+  );
 
-  //   "doctorName": "Dr. Alice Johnson",
-  //   "drNameFl": "डॉ. एलीस जॉनसन",
-  //   "drImg": "https://example.com/images/dr_alice_johnson.jpg",
-  //   "drActive": "NO",
-  //   "drLicNo": "LIC987654321",
-  //   "drDesignation": "Consultant Neurologist",
-  //   "drDesignationFl": "कंसल्टेंट न्यूरोलॉजिस्ट",
-  //   "drQualifications": "MBBS, MD (Neurology)",
-  //   "drQualificationsFl": "एमबीबीएस, एमडी (न्यूरोलॉजी)",
-  //   "drGender": "Female",
-  //   "drSrtOrd": 2,
-  //   "costCenterCode": "CC456",
-  //   "department": {
-  //     "deptCode": 1
+  useFetchData(
+    " http://192.168.91.201:8082/priceListDependency/getAll",
+    setPriceListDepRuleData
+  );
+  
+  useFetchData(
+    " http://192.168.91.201:8082/priceDetails/getAll",
+    setPriceListDeatilsData
+  );
+  useFetchData(
+    " http://192.168.91.201:8082/priceList/getAll",
+    setPriceListData
+  );
 
-  //   },
-  //   "nationality": {
-  //     "nationalityCode": 2
+  useFetchData(
+    "http://192.168.91.201:8082/serviceMaster/getAll",   
+    setServiceMasterData
+  );
 
-  //   }
-  // }
-  useEffect(() => {
-    axios
-      .get("http://192.168.91.201:8082/nationality/getAll")
-      .then((res) => {
-        setNationalityData(res.data);
-      })
-      .catch((err) => console.log("Error fetching data:", err));
-  }, []);
+  useFetchData(
+    "http://192.168.91.201:8082/headcharge/getAll",
+    setPatientMainTypeData
+  );
 
-  useEffect(() => {
-    axios
-      .get("http://192.168.91.201:8082/department/getAll")
-      .then((res) => {
-        setDepartmentData(res.data); // Set the nationality data as an array
-        console.log(departmentData);
-      })
-      .catch((err) => console.log("Error fetching data:", err));
-  }, []); // Empty array ensures this runs only once when the component mounts
+  useFetchData(
+    "http://192.168.91.201:8082/policySubCharge/getAll",
+    setSubPoliciesPatientData
+  );
+
+  useFetchData(
+    "http://192.168.91.201:8082/subcharge/getAll",
+    setPatientsSubTypeData
+  );
+  useFetchData(
+    "http://192.168.91.201:8082/nationality/getAll",
+    setNationalityData
+  );
+
+  useFetchData(
+    "http://192.168.91.201:8082/department/getAll",
+    setDepartmentData
+  );
+
+  useFetchData("http://192.168.91.201:8082/tpahead/getAll", setThirdPartyHead);
+
+  useFetchData(
+    "http://192.168.91.201:8082/policiesCharge/getAll",
+    setPoliciesSubPatient
+  );
+  
+  useFetchData(
+    "http://192.168.91.201:8082/serviceCategory/getAll",   
+    setserviceCategoryData
+  );
+  
+
+  useFetchData("http://192.168.91.201:8082/doctor/getAll", setDocterData);
+
   return (
     <FormContext.Provider
       value={{
         nationalityData,
         setNationalityData,
+        patientsMainTypeData,
+        validtationMessage,setValidtationMessage,
+        showModal, setShowModal, handleCloseModal,handleShowModal,
+        setPatientMainTypeData,
         departmentData,
+        searchTerm,
+        setSearchTerm,
+        patientsSubTypeData,
+        subPoliciesPatientData,
+        coPaymentCoverageData,
+        cptCodesData, setCptCodesData,
+        loincCodesData, setLoincCodesData,
+        setCoPaymentCoverageData,
+        priceListData,
+        setPriceListData,
+        setSubPoliciesPatientData,
+        setPatientsSubTypeData,
         setDepartmentData,
+        thirdPartyHeadData,
+        priceListDepRuleData, setPriceListDepRuleData,
+        priceListDetailsData, setPriceListDeatilsData,
+        priceDetailsDepRuleData, setPriceDetailsDepRuleData,
+        setThirdPartyHead,
+        policiesSubPatientData,
+        serviceMasterData, setServiceMasterData,
+        serviceCategoryData,
+        setserviceCategoryData,
+        setPoliciesSubPatient,
         isEditMode,
         setIsEditMode,
         docterData,

@@ -2,28 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FormContext, UserContext } from "../FormContext";
 import DataTable from "react-data-table-component";
-import { nationalityData } from "../assets/ArrayData";
+import Breadcrumbs from "../Component/BreadCrumbs";
+import useFetchData from "../ReusableComponent/useFetchData";
+import { nationalityColumn } from "../assets/ArrayData";
+import CustomDataTable from "../ReusableComponent/CustomDataTable";
 
 const Nationality = () => {
   const {
-    //  nationalityData,
+    nationalityData,
+    searchTerm,
+    setSearchTerm,
     setNationalityData,
     isEditMode,
     setIsEditMode,
   } = useContext(FormContext);
-
-  const { singleUser } = useContext(UserContext);
-  // useEffect(() => {
-  //   if (!singleUser) {
-  //     alert("You need to be logged in to view this page.");
-  //     navigate("/signin");
-  //   }
-  // }, [singleUser, navigate]);
-  // if (!singleUser) {
-  //   return null;
-  //   // Optionally, you can return a placeholder or a loading spinner
-  // }
-
   const [formData, setFormData] = useState({
     nationality: "",
     nationalityFl: "",
@@ -34,14 +26,6 @@ const Nationality = () => {
     nationalityFl: false,
     nationalityCode: false,
   });
-
-  useEffect(() => {
-    // Fetch data from a mock API or your backend
-    axios
-      .get("http://192.168.91.201:8082/nationality/getAll")
-      .then((response) => setNationalityData(response.data))
-      .catch((err) => console.log("Error fetching data:", err));
-  }, []);
 
   console.log(nationalityData);
 
@@ -109,147 +93,129 @@ const Nationality = () => {
     });
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     const { nationality, nationalityFl, nationalityCode } = formData;
+
     const updatedData = {
       nationality,
       nationalityFl,
       nationalityCode,
     };
-    console.log(formData);
-    console.log(updatedData);
-
-    axios
-      .put(
+    try {
+      console.log("Updating data:", updatedData);
+      await axios.put(
         `http://192.168.91.201:8082/nationality/update/${formData.nationalityCode}`,
         updatedData
-      )
-      .then((res) => {
-        console.log("Updated successfully:", res.data);
-        axios
-          .get("http://192.168.91.201:8082/nationality/getAll")
-          .then((res) => {
-            setNationalityData(res.data);
-            setIsEditMode(false); // Hide update form after successful update
-            setFormData({
-              nationality: "",
-              nationalityFl: "",
-            });
-          })
-          .catch((err) => console.log("Error fetching data:", err));
-      })
-      .catch((err) =>
-        alert("The data is already present in another child table.", err)
       );
+      console.log("Update successful");
+      setIsEditMode(false);
+      setFormData({
+        nationality: "",
+        nationalityFl: "",
+        nationalityCode: "",
+      });
+      axios
+        .get("http://192.168.91.201:8082/nationality/getAll")
+        .then((response) => {
+          setNationalityData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching updated data:", error);
+        });
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  };
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
+  // Filter nationality data based on the search term
+  const filteredNationalities = nationalityData.filter(
+    (item) =>
+      item.nationality.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.nationalityFl.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="container page-content mt-5">
-      <h2 className="mb-4">Nationality Form</h2>
-      <form className="submit" onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col mb-3">
-            <label htmlFor="nationality" className="form-label">
-              Nationality
-            </label>
-            <input
-              type="text"
-              className={`form-control ${
-                errors.nationality ? "is-invalid" : ""
-              }`}
-              id="nationality"
-              name="nationality"
-              value={formData.nationality}
-              onChange={handleChange}
-              required
-            />
-            {errors.nationality && (
-              <div className="invalid-feedback">Nationality is required</div>
-            )}
+    <>
+      <div className="container page-content ">
+        <h2 className="mb-4">Nationality Form</h2>
+        <form className="submit" onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col mb-3">
+              <label htmlFor="nationality" className="form-label">
+                Nationality
+              </label>
+              <input
+                type="text"
+                className={`form-control ${
+                  errors.nationality ? "is-invalid" : ""
+                }`}
+                id="nationality"
+                name="nationality"
+                value={formData.nationality}
+                onChange={handleChange}
+                required
+              />
+              {errors.nationality && (
+                <div className="invalid-feedback">Nationality is required</div>
+              )}
+            </div>
+            <div className="col mb-3">
+              <label htmlFor="nationalityFl" className="form-label">
+                Nationality FL
+              </label>
+              <input
+                type="text"
+                className={`form-control ${
+                  errors.nationalityFl ? "is-invalid" : ""
+                }`}
+                id="nationalityFl"
+                name="nationalityFl"
+                value={formData.nationalityFl}
+                onChange={handleChange}
+                required
+              />
+              {errors.nationalityFl && (
+                <div className="invalid-feedback">
+                  Nationality FL is required
+                </div>
+              )}
+            </div>
           </div>
-          <div className="col mb-3">
-            <label htmlFor="nationalityFl" className="form-label">
-              Nationality FL
-            </label>
-            <input
-              type="text"
-              className={`form-control ${
-                errors.nationalityFl ? "is-invalid" : ""
-              }`}
-              id="nationalityFl"
-              name="nationalityFl"
-              value={formData.nationalityFl}
-              onChange={handleChange}
-              required
-            />
-            {errors.nationalityFl && (
-              <div className="invalid-feedback">Nationality FL is required</div>
-            )}
-          </div>
-        </div>
-        {!isEditMode && (
-          <button type="submit" className="btn btn-primary">
-            Create+
-          </button>
-        )}
-        {isEditMode && (
-          <button
-            type="button"
-            onClick={handleUpdate}
-            className="btn btn-success"
-          >
-            Update
-          </button>
-        )}
-      </form>
-      <h1>Nationality Data</h1>
-      <DataTable
-        className="table table-striped"
-        columns={[
-          {
-            name: "Nationality",
-            selector: (row) => row.nationality,
-            sortable: true,
-          },
-          {
-            name: "Nationality (FL)",
-            selector: (row) => row.nationalityFl,
-            sortable: true,
-          },
-          {
-            name: "Nationality Code",
-            selector: (row) => row.nationalityCode,
-            sortable: true,
-          },
-          {
-            name: "Action",
-            cell: (row) => (
-              <>
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => handleUpdateData(row.nationalityCode)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(row.nationalityCode)}
-                >
-                  Delete
-                </button>
-              </>
-            ),
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
-          },
-        ]}
-        data={nationalityData}
-        pagination
-        paginationPerPage={10}
-        paginationRowsPerPageOptions={[5, 10, 15, 20]}
-      />
-    </div>
+          {!isEditMode && (
+            <button type="submit" className="btn btn-primary">
+              Create+
+            </button>
+          )}
+          {isEditMode && (
+            <button
+              type="button"
+              onClick={handleUpdate}
+              className="btn btn-success"
+            >
+              Update
+            </button>
+          )}
+        </form>
+        <h1>Nationality Data</h1>
+        <input
+          type="text"
+          placeholder="Search Nationality"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="form-control my-2"
+        />
+        <CustomDataTable
+          columns={nationalityColumn(handleUpdateData, handleDelete)} // Pass functions as arguments
+          data={nationalityData}
+          paginationPerPage={5}
+          paginationRowsPerPageOptions={[5, 10, 15, 20]}
+        />{" "}
+      </div>
+    </>
   );
 };
 

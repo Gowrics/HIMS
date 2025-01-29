@@ -4,12 +4,15 @@ import DocterFormComponent from "../Component/DocterFormComponent";
 import { FormContext } from "../FormContext";
 import { useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import { docterData } from "../assets/ArrayData";
+import Breadcrumbs from "../Component/BreadCrumbs";
+// import { docterData } from "../assets/ArrayData";
 const DoctorForm = () => {
   const {
-    // docterData,
+    docterData,
     setDocterData,
     formData,
+    searchTerm,
+    setSearchTerm,
     setFormData,
     isEditMode,
     setIsEditMode,
@@ -18,16 +21,16 @@ const DoctorForm = () => {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  useEffect(() => {
-    axios
-      .get("http://192.168.91.201:8082/doctor/getAll")
-      .then((res) => {
-        setDocterData(res.data);
-      })
-      .catch((err) => {
-        console.log("Error fetching data:", err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://192.168.91.201:8082/doctor/getAll")
+  //     .then((res) => {
+  //       setDocterData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error fetching data:", err);
+  //     });
+  // }, []);
 
   const handleUpdateData = (id) => {
     handleCloseModal(); //when i am edit the button it go to update form
@@ -75,9 +78,22 @@ const DoctorForm = () => {
     }
   };
 
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Filter nationality data based on the search term
+  const filteredDocter = docterData.filter(
+    (item) =>
+      item.doctorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.drNameFl.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.drDesignation.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
-      <div className="container mt-5">
+      <div className="container page-content">
         <h2>Doctor Form</h2>
         <DocterFormComponent handleShowModal={handleShowModal} />
 
@@ -101,6 +117,14 @@ const DoctorForm = () => {
               {/* Modal Body */}
               <div className="modal-body">
                 <div className="table-responsive">
+                  <h1>Docters Data</h1>
+                  <input
+                    type="text"
+                    placeholder="Search docter by docter name, docter designation"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className="form-control my-2"
+                  />
                   <DataTable
                     className="table table-striped"
                     columns={[
@@ -202,7 +226,7 @@ const DoctorForm = () => {
                         button: true,
                       },
                     ]}
-                    data={docterData}
+                    data={filteredDocter}
                     pagination
                     paginationPerPage={5}
                     paginationRowsPerPageOptions={[3, 5, 10, 15, 20]}
@@ -228,113 +252,6 @@ const DoctorForm = () => {
                       },
                     }}
                   />
-                  {/* <table className="table table-striped table-hover full-width-table">
-                    <thead>
-                      <tr>
-                        <th className="bg-secondary text-white" scope="col">
-                          Doctor Code
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Department Code
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Doctor Name
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Doctor Name (FL)
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Gender
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          License No
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Doctor Designation
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Doctor Designation (FL)
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Doctor Qualifications
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Doctor Qualifications (FL)
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Sort Order
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Nationality Code
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Doctor Image (URL)
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Cost Center Code
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Active
-                        </th>
-                        <th className="bg-secondary text-white" scope="col">
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {docterData.length > 0 ? (
-                        docterData.map((item) => (
-                          <tr key={item.id}>
-                            <td>{item.doctorCode}</td>
-                            <td>{item.department?.deptCode || "N/A"}</td>
-                            <td>{item.doctorName}</td>
-                            <td>{item.drNameFl}</td>
-                            <td>{item.drGender}</td>
-                            <td>{item.drLicNo}</td>
-                            <td>{item.drDesignation}</td>
-                            <td>{item.drDesignationFl}</td>
-                            <td>{item.drQualifications}</td>
-                            <td>{item.drQualificationsFl}</td>
-                            <td>{item.drSrtOrd}</td>
-                            <td>
-                              {item.nationality?.nationalityCode || "N/A"}
-                            </td>
-                            <td>
-                              <img
-                                src={item.drImg}
-                                alt={item.doctorName}
-                                style={{ width: "50px", height: "50px" }}
-                              />
-                            </td>
-                            <td>{item.costCenterCode}</td>
-                            <td>{item.drActive}</td>
-                            <td>
-                              <div className="btns">
-                                <button
-                                  className="btn btn-primary btn-sm me-2"
-                                  onClick={() =>
-                                    handleUpdateData(item.doctorCode)
-                                  }
-                                >
-                                  Edit
-                                </button>
-                                <button
-                                  className="btn btn-danger btn-sm"
-                                  onClick={() => handleDelete(item.doctorCode)}
-                                >
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={16}>No data found</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table> */}
                 </div>
               </div>
               {/* Modal Footer */}

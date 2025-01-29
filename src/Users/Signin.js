@@ -10,6 +10,7 @@ const Signin = () => {
         isSubmitted,
         userData, setUserData
       } = useContext(UserContext);
+
       const navigate =useNavigate();
 
   const handleChange = (e) => {
@@ -24,7 +25,7 @@ const Signin = () => {
     if (handleLogin()) {
       setUserAuth(true);
         setUserData({
-            username: "",
+            email: "",
             password: "",
           });
       navigate("/"); // Navigate to home page on successful login
@@ -33,21 +34,21 @@ const Signin = () => {
 
  
   return (
-    <div className="container page-content   mt-5">
+    <div className="container page-content signin   mt-5">
       <h2 className="text-center">Login</h2>
       <form onSubmit={onSubmit} >
         {/* Name Field */}
         <div className="form-group">
-          <label htmlFor="name">User Name</label>
+          <label htmlFor="name">Email</label>
           <input
             type="text"
-            id="username"
-            name="username"
-            className={`form-control ${errors.username ? "is-invalid" : ""}`}
-            value={userData.username}
+            id="email"
+            name="email"
+            className={`form-control ${errors.email ? "is-invalid" : ""}`}
+            value={userData.eamil}
             onChange={handleChange}
           />
-          {errors.username && <div className="invalid-feedback">{errors.username}</div>}
+          {errors.email && <div className="invalid-feedback">{errors.email}</div>}
         </div>
           {/* user Name Field */}
         <div className="form-group">

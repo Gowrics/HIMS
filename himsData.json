@@ -212,5 +212,111 @@
       "doctorImg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA0QMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAAAAQIGAwQFBwj/xAA9EAABAwMCAwQIBQMCBwEAAAABAAIDBAUREiEGMUETIlFhBxQycYGRobEjUlPB0UJy8CRDJTNigpPh8RX/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAgEDBAX/xAAdEQEBAAMAAwEBAAAAAAAAAAAAAQIDERIhMUEi/9oADAMBAAIRAxEAPwD2JJNJUwljcMrIkQgxNapBqkEwgQapaUwmgjpRhSWtcq6nttDNW1knZwwtLnOPggVXUQ0kLpqiRkcbRlznnAA81QLj6WrFT1MkFFBUV+n/AHIsBhPkTzXmHHPG1fxhWlh1QW6NxEMDTz83eJ+i4fqzw1oiONlFqpHszfSrRkj/AIZNp6/jNBXes3Gtiu5bEyq9XqCcdjUDST7jyPwK+ec1MLm9o0gHqASF0RI58GvMbg38mxCzqvF9L4BRpXlvo143drjs91mMjHHTTVDzu0/kd5eBXqmQeSqVNnCDU9KfVNaxDSgtU0FYMelLSshSKDHpUNKylRQYy1R0rKVEoMelNSQg6iSaSpgSKaCggmhMIGhJCBrxn08cRv7SmsFO/uFva1AB6dAfv8F7HK/RG5x6BfKXG1zdd+KrjWFxcx0xazP5W7D/ADzWVTSp8ZBz5K38K2NlbpnrS4x5wGcsqk0xc+VjR4r0yz10FDSxMk16iNmsbqJPkFw22yenfTjLfa/2u0W0wBkdHCGf25WWt4KsNcMyULY3Ee3CdB+i5",
       "active": "N"
     }
+  ],
+  "patientMainTypeData": [
+    {
+      "id": "df4f",
+      "hchgName": "CORPORATE-CASH",
+      "hchgCode": 0
+    },
+    {
+      "id": "9389",
+      "hchgName": "CORPORATE-CASH"
+    },
+    {
+      "id": "3b66",
+      "hchgName": "REGULAR"
+    }
+  ],
+  "patientSubTypeData": [
+    {
+      "id": "c4c5",
+      "schgCode": "22",
+      "schaName": "YES",
+      "active": "YES",
+      "clinicCredit": "NO",
+      "phCredit": "YES",
+      "optCredit": "YES",
+      "otherCredit": "YES",
+      "icdVersion": "10AM",
+      "toothSystem": "System 1",
+      "patientMainTypeData": {
+        "hchgCode": "1"
+      }
+    },
+    {
+      "id": "eee1",
+      "schgCode": "23",
+      "schaName": "YES",
+      "active": "NO",
+      "clinicCredit": "YES",
+      "phCredit": "YES",
+      "optCredit": "YES",
+      "otherCredit": "NO",
+      "icdVersion": "10AM",
+      "toothSystem": "System 1",
+      "patientMainTypeData": {
+        "hchgCode": "2"
+      }
+    },
+    {
+      "id": "cd30",
+      "schgCode": "23",
+      "schaName": "YES",
+      "active": "NO",
+      "clinicCredit": "YES",
+      "phCredit": "YES",
+      "optCredit": "YES",
+      "otherCredit": "NO",
+      "icdVersion": "10AM",
+      "toothSystem": "System 1",
+      "patientMainTypeData": {
+        "hchgCode": "2"
+      }
+    },
+    {
+      "id": "16bd",
+      "schgCode": "2",
+      "schaName": "NO",
+      "active": "YES",
+      "clinicCredit": "NO",
+      "phCredit": "NO",
+      "optCredit": "NO",
+      "otherCredit": "YES",
+      "icdVersion": "10AM",
+      "toothSystem": "System 1",
+      "patientMainTypeData": {
+        "hchgCode": "2"
+      }
+    },
+    {
+      "id": "b87f",
+      "schgCode": 0,
+      "schaName": "YES",
+      "active": "NO",
+      "clinicCredit": "YES",
+      "phCredit": "YES",
+      "optCredit": "YES",
+      "otherCredit": "NO",
+      "icdVersion": "df",
+      "toothSystem": "System 1",
+      "patientMainTypeData": {
+        "hchgCode": "11"
+      }
+    },
+    {
+      "id": "e19b",
+      "schaName": "YES",
+      "active": "NO",
+      "clinicCredit": "YES",
+      "phCredit": "YES",
+      "optCredit": "YES",
+      "otherCredit": "NO",
+      "icdVersion": "10AM",
+      "toothSystem": "System 1",
+      "headCharge": {
+        "hchgCode": 13
+      }
+    }
   ]
 }

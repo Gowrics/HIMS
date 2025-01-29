@@ -4,61 +4,12 @@
 body {
   overflow-x: hidden; /* Prevent horizontal overflow */
 }
-/* ----------------------------------------app.css layout styles------------------------------- */
-  /* Navbar */
-.navbar {
-  height: 10vh;
-}
 
-/* Footer */
-.footer {
-  height: 10vh;
-  background-color: #f8f9fa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Main Content Layout */
-.main-content-wrapper {
-  height: 80vh; /* Remaining height */
-  display: flex;
-}
-
-.left-sidebar {
-  width: 15%; /* 15% of total width */
-  background-color: #e9ecef;
-  padding: 0.3rem;
-}
-
-@media (max-width: 360px) {
-  .navbar .container-fluid .nav {
-    margin-left: -60px;
-  }
-}
-@media (max-width: 412px) {
-  .navbar .container-fluid .nav {
-    margin-left: -60px;
-  }
-}
-
-.right-sidebar {
-  width: 15%; /* 15% of total width */
-  background-color: #e9ecef;
-  padding: 1rem;
-}
-
-.main-content {
-  width: 70%; /* Remaining 70% */
-  padding: 1rem;
-  background-color: #fff;
-  overflow-y: auto; /* Allow scrolling if content overflows */
-}
+  
 
 
-/* ----------------------------------------app.css layout styles------------------------------- */
 
-                       /*--------------- styles.css ------------------*/
+/* styles.css */
 @keyframes slideUp {
   from {
     transform: translateY(50px);
@@ -74,18 +25,19 @@ body {
   animation: slideUp 1s ease-out;
 }
 
-                               /*--------------- styles.css ------------------*/
-                       
-                               /* -----------------home -----------------------------*/
+
+/* home */
 h6{
   color:#E22454 ;
 }
-/* .home{
+.home{
   height: fit-content;
   background-image: url("./assets/download.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-} */
+  
+
+}
 section .firsthead h6 {
   color: #E22454;
   font-size: 30px;
@@ -167,9 +119,8 @@ section .firsthead .btn:hover {
   flex-direction: row;
   gap: 300px;
 }
-                      /* -----------------home -----------------------------*/
-
-                       /*------------------ cards quality------------------- */
+/* home */
+/* cards quality */
 
 .cards {
   margin-top: 200px;
@@ -220,13 +171,12 @@ section .firsthead .btn:hover {
   color: #555;
   margin-bottom: 15px;
 }
-                       /*------------------ cards quality------------------- */
 
 
 /* quality */
 
 
-                       /* ----------------------------------deptview -------------------------------------*/
+/* deptview */
 
 .deptview{
   background-color: #F4F9FD;
@@ -258,10 +208,13 @@ section .firsthead .btn:hover {
   .card-registration .select-arrow {
   top: 13px;
   }
-                         /* ----------------------------------deptview -------------------------------------*/
-
   /* ------------------navbar--------- */
   
+.navbar{
+  background-color: white;
+  
+  /* z-index: 1000; */
+}
 .page-content{
   padding-top: 140px;
 }
@@ -270,12 +223,15 @@ section .firsthead .btn:hover {
   margin-right: 50px !important;
   font-size: 17px !important;
 }
+
+
 .text-white{
   font-size: 20px;
 }
 .navbar-brand{
   display: flex;
   flex-direction: row;
+  
   align-items: center;
   justify-content: center;
 }
@@ -289,7 +245,6 @@ section .firsthead .btn:hover {
   width: 100%;
 }
 
-
 .navbar-nav .dropdown:hover > .dropdown-menu {
   display: block;
   margin-top: 0; /* Adjust if necessary for alignment */
@@ -298,6 +253,8 @@ section .firsthead .btn:hover {
 .navbar-nav .dropdown:hover > .nav-link {
   color: #f8f9fa; /* Optional: Change color on hover */
 }
+
+
 
 
 
@@ -353,11 +310,11 @@ section .firsthead .btn:hover {
   padding: 30px;
 }
 .footersecond{
-  background-color:white;
+  background-color:#070D1A ;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: white;
 }.list-inline-item {
   
   width: 35px; 

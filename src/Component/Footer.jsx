@@ -13,7 +13,7 @@ import logo from "../assets/healthcare.png";
 const Footer = () => {
   return (
     <>
-      <div className=" footerfirst container-fluid">
+      {/* <div className=" footerfirst container-fluid">
         <div className="row footerfirst">
           <div className="col-12 col-md-6 col-lg-3">
             <div className="d-flex">
@@ -194,7 +194,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className=" footersecond  p-3">
         <h6>
           Copyright @ 2024 Medic - HTML Website Template. All rights reserved.

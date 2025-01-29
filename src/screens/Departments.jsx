@@ -3,12 +3,15 @@ import React, { useContext, useEffect, useState } from "react";
 
 import DataTable from "react-data-table-component";
 import { FormContext } from "../FormContext";
-import { departmentData } from "../assets/ArrayData";
+import Breadcrumbs from "../Component/BreadCrumbs";
+// import { departmentData } from "../assets/ArrayData";
 
 const Departments = () => {
   const {
-    //  departmentData,
+    departmentData,
     setDepartmentData,
+    searchTerm,
+    setSearchTerm,
     isEditMode,
     setIsEditMode,
   } = useContext(FormContext);
@@ -139,191 +142,216 @@ const Departments = () => {
     });
   };
 
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Filter nationality data based on the search term
+  const filteredDepartments = departmentData.filter(
+    (item) =>
+      item.deptName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.deptNameFl.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.deptImage.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="container mt-5 page-content">
-      <h2>Department Form</h2>
+    <>
+      <div className="container  page-content">
+        <h2>Department Form</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          {/* Dept Name */}
-          <div className="col-md-3 mb-3">
-            <label htmlFor="deptName" className="form-label">
-              Department Name
-            </label>
-            <input
-              type="text"
-              className={`form-control ${errors.deptName ? "is-invalid" : ""}`}
-              id="deptName"
-              name="deptName"
-              value={formData.deptName}
-              onChange={handleChange}
-              required
-            />
-            {errors.deptName && (
-              <div className="invalid-feedback">
-                Department Name is required.
-              </div>
-            )}
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            {/* Dept Name */}
+            <div className="col-md-3 mb-3">
+              <label htmlFor="deptName" className="form-label">
+                Department Name
+              </label>
+              <input
+                type="text"
+                className={`form-control ${
+                  errors.deptName ? "is-invalid" : ""
+                }`}
+                id="deptName"
+                name="deptName"
+                value={formData.deptName}
+                onChange={handleChange}
+                required
+              />
+              {errors.deptName && (
+                <div className="invalid-feedback">
+                  Department Name is required.
+                </div>
+              )}
+            </div>
+
+            {/* Dept Name (FL) */}
+            <div className="col-md-3 mb-3">
+              <label htmlFor="deptNameFl" className="form-label">
+                Department Name (FL)
+              </label>
+              <input
+                type="text"
+                className={`form-control ${
+                  errors.deptNameFl ? "is-invalid" : ""
+                }`}
+                id="deptNameFl"
+                name="deptNameFl"
+                value={formData.deptNameFl}
+                onChange={handleChange}
+                required
+              />
+              {errors.deptNameFl && (
+                <div className="invalid-feedback">
+                  Department Name (FL) is required.
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Dept Name (FL) */}
-          <div className="col-md-3 mb-3">
-            <label htmlFor="deptNameFl" className="form-label">
-              Department Name (FL)
-            </label>
-            <input
-              type="text"
-              className={`form-control ${
-                errors.deptNameFl ? "is-invalid" : ""
-              }`}
-              id="deptNameFl"
-              name="deptNameFl"
-              value={formData.deptNameFl}
-              onChange={handleChange}
-              required
-            />
-            {errors.deptNameFl && (
-              <div className="invalid-feedback">
-                Department Name (FL) is required.
-              </div>
-            )}
-          </div>
-        </div>
+          <div className="row">
+            {/* Dept Img */}
+            <div className="col-md-4 mb-3">
+              <label htmlFor="deptImage" className="form-label">
+                Department Image (URL)
+              </label>
+              <input
+                type="url"
+                className={`form-control ${
+                  errors.deptImage ? "is-invalid" : ""
+                }`}
+                id="deptImage"
+                name="deptImage"
+                value={formData.deptImage}
+                onChange={handleChange}
+                required
+              />
+              {errors.deptImage && (
+                <div className="invalid-feedback">
+                  Department Image URL is required.
+                </div>
+              )}
+            </div>
 
-        <div className="row">
-          {/* Dept Img */}
-          <div className="col-md-4 mb-3">
-            <label htmlFor="deptImage" className="form-label">
-              Department Image (URL)
-            </label>
-            <input
-              type="url"
-              className={`form-control ${errors.deptImage ? "is-invalid" : ""}`}
-              id="deptImage"
-              name="deptImage"
-              value={formData.deptImage}
-              onChange={handleChange}
-              required
-            />
-            {errors.deptImage && (
-              <div className="invalid-feedback">
-                Department Image URL is required.
-              </div>
-            )}
+            {/* Dept General */}
+            <div className="col-md-4 mb-3">
+              <label htmlFor="deptGeneral" className="form-label">
+                Department General
+              </label>
+              <select
+                className="form-control"
+                id="deptGeneral"
+                name="deptGeneral"
+                value={formData.deptGeneral}
+                onChange={handleChange}
+              >
+                <option value="YES">Yes</option>
+                <option value="NO">No</option>
+              </select>
+            </div>
           </div>
-
-          {/* Dept General */}
-          <div className="col-md-4 mb-3">
-            <label htmlFor="deptGeneral" className="form-label">
-              Department General
-            </label>
-            <select
-              className="form-control"
-              id="deptGeneral"
-              name="deptGeneral"
-              value={formData.deptGeneral}
-              onChange={handleChange}
+          {!isEditMode && (
+            <button type="submit" className="btn btn-primary">
+              Create+
+            </button>
+          )}
+          {isEditMode && (
+            <button
+              type="button"
+              onClick={() => handleUpdate()}
+              className="btn btn-success"
             >
-              <option value="YES">Yes</option>
-              <option value="NO">No</option>
-            </select>
-          </div>
-        </div>
-        {!isEditMode && (
-          <button type="submit" className="btn btn-primary">
-            Create+
-          </button>
-        )}
-        {isEditMode && (
-          <button
-            type="button"
-            onClick={() => handleUpdate()}
-            className="btn btn-success"
-          >
-            Update
-          </button>
-        )}
-      </form>
+              Update
+            </button>
+          )}
+        </form>
+        <h1>Department Data</h1>
+        <input
+          type="text"
+          placeholder="Search department"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="form-control my-2"
+        />
+        <DataTable
+          className="table table-striped"
+          columns={[
+            {
+              name: "Department Code",
+              selector: (row) => row.deptCode,
+              sortable: true,
+            },
+            {
+              name: "Department Name",
+              selector: (row) => row.deptName,
+              sortable: true,
+            },
+            {
+              name: "Department Name (FL)",
+              selector: (row) => row.deptNameFl,
+              sortable: true,
+            },
+            {
+              name: ",Department Image",
+              selector: (row) => row.deptImage,
+              sortable: true,
+            },
+            {
+              name: ",Department General",
+              selector: (row) => row.deptGeneral,
+              sortable: true,
+            },
+            {
+              name: "Action",
+              cell: (row) => (
+                <>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => handleUpdateData(row.deptCode)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(row.deptCode)}
+                  >
+                    Delete
+                  </button>
+                </>
+              ),
+              ignoreRowClick: true,
+              allowOverflow: true,
+              button: true,
+            },
+          ]}
+          data={filteredDepartments}
+          pagination
+          paginationPerPage={5}
+          paginationRowsPerPageOptions={[5, 10, 15, 20]}
+          customStyles={{
+            header: {
+              style: {
+                backgroundColor: "#343a40",
+                color: "#ffffff",
+              },
+            },
+            headCells: {
+              style: {
+                fontWeight: "bold",
+                backgroundColor: "#6c757d",
+                color: "#ffffff",
+              },
+            },
+            cells: {
+              style: {
+                paddingLeft: "8px",
+                paddingRight: "8px",
+              },
+            },
+          }}
+        />
 
-      <DataTable
-        className="table table-striped"
-        columns={[
-          {
-            name: "Department Code",
-            selector: (row) => row.deptCode,
-            sortable: true,
-          },
-          {
-            name: "Department Name",
-            selector: (row) => row.deptName,
-            sortable: true,
-          },
-          {
-            name: "Department Name (FL)",
-            selector: (row) => row.deptNameFl,
-            sortable: true,
-          },
-          {
-            name: ",Department Image",
-            selector: (row) => row.deptImage,
-            sortable: true,
-          },
-          {
-            name: ",Department General",
-            selector: (row) => row.deptGeneral,
-            sortable: true,
-          },
-          {
-            name: "Action",
-            cell: (row) => (
-              <>
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => handleUpdateData(row.deptCode)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(row.deptCode)}
-                >
-                  Delete
-                </button>
-              </>
-            ),
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
-          },
-        ]}
-        data={departmentData}
-        pagination
-        paginationPerPage={5}
-        paginationRowsPerPageOptions={[5, 10, 15, 20]}
-        customStyles={{
-          header: {
-            style: {
-              backgroundColor: "#343a40",
-              color: "#ffffff",
-            },
-          },
-          headCells: {
-            style: {
-              fontWeight: "bold",
-              backgroundColor: "#6c757d",
-              color: "#ffffff",
-            },
-          },
-          cells: {
-            style: {
-              paddingLeft: "8px",
-              paddingRight: "8px",
-            },
-          },
-        }}
-      />
-
-      {/* 
+        {/* 
       <table className="table table-striped border">
         <thead>
           <tr>
@@ -367,7 +395,8 @@ const Departments = () => {
           )}
         </tbody>
       </table> */}
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -29,6 +29,14 @@
       "email": "gowrice2012@gmail.com",
       "password": "ravisai",
       "confirmPassword": "ravisai"
+    },
+    {
+      "id": "ed4f",
+      "name": "Mani",
+      "username": "gowrics",
+      "email": "manics213@gmail.com",
+      "password": "11aa11aa",
+      "confirmPassword": "11aa11aa"
     }
   ]
 }

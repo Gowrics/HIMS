@@ -1,13 +1,14 @@
+import { width } from "@fortawesome/free-solid-svg-icons/fa0";
 import doc1 from "../assets/Doc1.jpg";
 import doc2 from "../assets/Doc2.jpg";
 import doc3 from "../assets/Doc3.png";
 import doc4 from "../assets/Doc4.png";
-import dept1 from "../assets/dept1.jpg";
-import dept2 from "../assets/dept2.jpg";
-import dept3 from "../assets/dept3.jpg";
-import dept4 from "../assets/dept4.jpg";
-import dept5 from "../assets/dept5.jpg";
-import dept6 from "../assets/dept6.jpg";
+// import dept1 from "../assets/dept1.jpg";
+// import dept2 from "../assets/dept2.jpg";
+// import dept3 from "../assets/dept3.jpg";
+// import dept4 from "../assets/dept4.jpg";
+// import dept5 from "../assets/dept5.jpg";
+// import dept6 from "../assets/dept6.jpg";
 import docter1 from "../assets/docter1.jpg";
 import docter2 from "../assets/docter2.jpg";
 import docter3 from "../assets/docter3.jpg";
@@ -37,37 +38,37 @@ export const nationalityData = [
     nationalityFl: "أمريكي",
   },
 ];
-
 export const departmentData = [
   {
     deptCode: 1,
     deptGeneral: "N",
-    deptImage: dept1,
+    deptImage: "/assets/dept1.jpg",
     deptName: "Neurology",
     deptNameFl: "طب الأعصاب",
   },
   {
     deptCode: 2,
     deptGeneral: "Y",
-    deptImage: dept2,
+    deptImage: "/assets/dept2.jpg",
     deptName: "Dermatology",
     deptNameFl: "الأمراض الجلدية",
   },
   {
     deptCode: 3,
     deptGeneral: "N",
-    deptImage: dept3,
+    deptImage: "/assets/dept3.jpg",
     deptName: "Pediatrics",
     deptNameFl: "طب الأطفال",
   },
   {
     deptCode: 4,
     deptGeneral: "Y",
-    deptImage: dept4,
+    deptImage: "/assets/dept4.jpg",
     deptName: "Cardiology",
     deptNameFl: "القلب",
   },
 ];
+
 export const docterData = [
   {
     doctorCode: 1,
@@ -132,49 +133,7 @@ export const docterData = [
       nationalityCode: 2,
     },
   },
-  {
-    doctorCode: 4,
-    doctorName: "Dr. Emily Brown",
-    drNameFl: "الدكتورة إميلي براون",
-    drImg: docter4,
-    drActive: "Y",
-    drLicNo: "345678",
-    drDesignation: "Pediatrician",
-    drDesignationFl: "طبيب أطفال",
-    drQualifications: "MD, FAAP",
-    drQualificationsFl:
-      "دكتوراه في الطب، زميل الأكاديمية الأمريكية لطب الأطفال",
-    drGender: "Female",
-    drSrtOrd: 4,
-    costCenterCode: "CC004",
-    department: {
-      deptCode: 3,
-    },
-    nationality: {
-      nationalityCode: 3,
-    },
-  },
-  {
-    doctorCode: 5,
-    doctorName: "Dr. Laura Davis",
-    drNameFl: "الدكتورة لورا ديفيس",
-    drImg: docter5,
-    drActive: "Y",
-    drLicNo: "567890",
-    drDesignation: "Ophthalmologist",
-    drDesignationFl: "طبيب عيون",
-    drQualifications: "MD, FRCS",
-    drQualificationsFl: "دكتوراه في الطب، زميل الكلية الملكية للجراحين",
-    drGender: "Female",
-    drSrtOrd: 5,
-    costCenterCode: "CC005",
-    department: {
-      deptCode: 0,
-    },
-    nationality: {
-      nationalityCode: 0,
-    },
-  },
+ 
 ];
 
 export const quality = [
@@ -208,139 +167,890 @@ export const quality = [
 export const cards = [
   {
     id: 1,
-    img: dept1,
+    img: "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/dept1.jpg",
     title: "Cardiology",
     text: "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
   },
   {
     id: 2,
-    img: dept2,
+    img: "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/dept2.jpg",
     title: "Neurology",
     text: "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
   },
   {
     id: 3,
-    img: dept3,
+    img: "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/dept3.jpg",
     title: "Orthopedics",
     text: "This is a longer card with supporting text below as a natural lead-in to additional content.",
   },
   {
     id: 4,
-    img: dept4,
+    img: "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/dept4.jpg",
     title: "Pediatrics",
     text: "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
   },
   {
     id: 5,
-    img: dept5,
+    img: "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/dept5.jpg",
     title: "Dermatology",
     text: "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
   },
   {
-    id: 5,
-    img: dept6,
+    id: 6, // Fix the duplicate id issue here as well
+    img: "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/dept6.jpg",
     title: "Dermatology",
     text: "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
   },
 ];
+const imgArray = [
+  "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/docter1.jpg",
+  "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/docter2.jpg",
+  "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/docter3.jpg",
+  "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/docter4.jpg",
+  "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/docter3.jpg",
+  "https://raw.githubusercontent.com/Gowrics/HIMS/main/src/assets/docter1.jpg"
+];
 
-export const doctors = [
+   
+//nationality table coloumn
+export const nationalityColumn = (handleUpdateData, handleDelete) => [
   {
-    deptCode: 1,
-    doctorName: "Ravi Saisa",
-    doctorNameFl: "الدكتور جون دو",
-    doctorImg: docter1,
-    licenseNo: "4353",
-    doctorDesignation: "Cardiology",
-    doctorDesignationFl: "طبيب أسنان عام",
-    doctorQualifications: "BDS-FRCS",
-    doctorQualificationsFl: "34456",
-    gender: "Female",
-    sortOrder: 2,
-    nationalityCode: 56,
-    costCenterCode: "300",
-    active: "N",
-    id: "bf72",
+    name: "Nationality",
+    selector: (row) => row.nationality,
+    sortable: true,
   },
   {
-    deptCode: 3,
-    doctorName: "Dr. Mary Doe",
-    doctorNameFl: "الدكتور جون دو",
-    doctorImg: docter2,
-    licenseNo: "5555",
-    doctorDesignation: "Orthopedics",
-    doctorDesignationFl: "طبيب أسنان عام",
-    doctorQualifications: "BDS-FRCS",
-    doctorQualificationsFl: "34455",
-    gender: "Female",
-    sortOrder: 2,
-    nationalityCode: 56,
-    costCenterCode: "303",
-    active: "Y",
-    id: "9433",
+    name: "Nationality (FL)",
+    selector: (row) => row.nationalityFl,
+    sortable: true,
   },
   {
-    deptCode: 4,
-    doctorName: "Dr. John Doe",
-    doctorNameFl: "الدكتور جون دو",
-    doctorImg: docter3,
-    licenseNo: "3434",
-    doctorDesignation: "Pediatrics",
-    doctorDesignationFl: "طبيب أسنان عام",
-    doctorQualifications: "BDS-FRCS",
-    doctorQualificationsFl: "34454",
-    gender: "Male",
-    sortOrder: 1,
-    nationalityCode: 56,
-    costCenterCode: "303",
-    active: "Y",
+    name: "Nationality Code",
+    selector: (row) => row.nationalityCode,
+    sortable: true,
   },
   {
-    deptCode: 3,
-    doctorName: "Dr. Jane Smith",
-    doctorNameFl: "الدكتورة جين سميث",
-    doctorImg: docter4,
-    licenseNo: "67890",
-    doctorDesignation: "Orthopedics",
-    doctorDesignationFl: "طبيب ب",
-    doctorQualifications: "MBBS-MD",
-    doctorQualificationsFl: "بطبيبب",
-    gender: "Female",
-    sortOrder: 3,
-    nationalityCode: 3,
-    costCenterCode: "505",
-    active: "Y",
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.nationalityCode)}
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.nationalityCode)}
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+// patient sub type of patient
+export const subTypePatientColumn = (handleUpdateData, handleDelete) => [
+  {
+    name: "Schg Code",
+    selector: (row) => row.schgCode,
+    sortable: true,
   },
   {
-    deptCode: 2,
-    doctorName: "Ravi Raj",
-    doctorNameFl: "الدكتور جون دو",
-    doctorImg: docter5,
-    licenseNo: "43544",
-    doctorDesignation: "Neurology",
-    doctorDesignationFl: "طبيب أسنان عام",
-    doctorQualifications: "BDS-FRCS",
-    doctorQualificationsFl: " الملكية للجراحين",
-    gender: "Male",
-    sortOrder: 2,
-    nationalityCode: 2,
-    costCenterCode: "303",
-    active: "N",
+    name: "hchgCode Code",
+    selector: (row) => row.headCharge.hchgCode,
+    sortable: true,
   },
   {
-    deptCode: 2,
-    doctorName: "Dr. Mary Doe",
-    doctorNameFl: "الدكتور جون دو",
-    doctorImg: docter6,
-    licenseNo: "LIsds",
-    doctorDesignation: "Neurology",
-    doctorDesignationFl: "طبيب أسssنان عام",
-    doctorQualifications: "BDS-FRCS",
-    doctorQualificationsFl: " الملكة للجراحين",
-    gender: "Male",
-    sortOrder: 2,
-    nationalityCode: 2,
-    costCenterCode: "303",
-    active: "N",
+    name: "hchgCode name",
+    selector: (row) => row.headCharge.hchgName,
+    sortable: true,
+  },
+  {
+    name: "Schg Name",
+    selector: (row) => row.schaName,
+    sortable: true,
+  },
+  {
+    name: "Active",
+    selector: (row) => row.active,
+    sortable: true,
+  },
+  {
+    name: "Clinic Credit",
+    selector: (row) => row.clinicCredit,
+    sortable: true,
+  },
+  {
+    name: "Ph Credit",
+    selector: (row) => row.phCredit,
+    sortable: true,
+  },
+  {
+    name: "Other Credit",
+    selector: (row) => row.otherCredit,
+    sortable: true,
+  },
+  {
+    name: "Icd Version ",
+    selector: (row) => row.icdVersion,
+    sortable: true,
+  },
+  {
+    name: "Opt Credit",
+    selector: (row) => row.optCredit,
+    sortable: true,
+  },
+  {
+    name: "toothSystem",
+    selector: (row) => row.toothSystem,
+    sortable: true,
+  },
+  {
+    name: "Actions",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.schgCode)}
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.schgCode)}
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+export const mainTypePatientColumn = (handleUpdateData, handleDelete) => [
+  {
+    name: "hchgName",
+    selector: (row) => row.hchgName,
+    sortable: true,
+  },
+  {
+    name: "hchgCode",
+    selector: (row) => row.hchgCode,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.hchgCode)} // Use the passed function
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.hchgCode)} // Use the passed function
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+export const thirdPartyHeadDataColumn = (handleUpdateData, handleDelete) => [
+  {
+    name: "tpaName",
+    selector: (row) => row.tpaName,
+    sortable: true,
+  },
+  {
+    name: "tpaCode",
+    selector: (row) => row.tpaCode,
+    sortable: true,
+  },
+  ///
+  {
+    name: "hchgCode",
+    selector: (row) => row.subcharge.headCharge.hchgCode,
+    sortable: true,
+  },
+  {
+    name: "hchgName",
+    selector: (row) => row.subcharge.headCharge.hchgName,
+    sortable: true,
+  },
+  //
+  {
+    name: "schaName",
+    selector: (row) => row.subcharge.schaName,
+    sortable: true,
+  },
+  {
+    name: "icdVersion",
+    selector: (row) => row.subcharge.icdVersion,
+    sortable: true,
+  },
+
+  {
+    name: "toothSystem",
+    selector: (row) => row.subcharge.toothSystem,
+    sortable: true,
+  },
+  //
+  {
+    name: "schgCode",
+    selector: (row) => row.subcharge.schgCode,
+    sortable: true,
+  },
+  {
+    name: "active",
+    selector: (row) => row.active,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.tpaCode)} // Use the passed function
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.tpaCode)} // Use the passed function
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+export const policiesSubPatientDataColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+  {
+    name: "chargeCode",
+    selector: (row) => row.chargeCode,
+    sortable: true,
+  },
+  {
+    name: "chargeName",
+    selector: (row) => row.chargeName,
+    sortable: true,
+  },
+  {
+    name: "schgCode",
+    selector: (row) => row.subCharge.schgCode,
+    sortable: true,
+  },
+  // {
+  //   name: "tpaCode",
+  //   selector: (row) => row.tpahead.tpaCode,
+  //   sortable: true,
+  // },
+
+  {
+    name: "policyNo",
+    selector: (row) => row.policyNo,
+    sortable: true,
+  },
+  {
+    name: "policyExpDate",
+    selector: (row) => row.policyExpDate,
+    sortable: true,
+  },
+
+  {
+    name: "active",
+    selector: (row) => row.active,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.chargeCode)} // Use the passed function
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.chargeCode)} // Use the passed function
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+export const subPoliciesPatientDataColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+  {
+    name: "policySubCode",
+    selector: (row) => row.policySubCode,
+    sortable: true,
+  },
+  {
+    name: "active",
+    selector: (row) => row.active,
+    sortable: true,
+  },
+  {
+    name: "policiesCharge",
+    selector: (row) => row.policiesCharge.chargeCode,
+    sortable: true,
+  },
+  {
+    name: "maternityCovered",
+    selector: (row) => row.maternityCovered,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.policySubCode)} // Use the passed function
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.policySubCode)} // Use the passed function
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+
+export const coPaymentCoverageDataColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+  {
+    name: "policyCopayId",
+    selector: (row) => row.policyCopayId,
+    sortable: true,
+  },
+  {
+    name: "coPaymentAmt",
+    selector: (row) => row.coPaymentAmt,
+    sortable: true,
+  },
+  {
+    name: "coPaymentPercent",
+    selector: (row) => row.coPaymentPercent,
+    sortable: true,
+  },
+  {
+    name: "policiesCharge",
+    selector: (row) => row.policiesCharge.chargeCode,
+    sortable: true,
+  },
+  {
+    name: "policySubCharge",
+    selector: (row) => row.policySubCharge.policySubCode,
+    sortable: true,
+  },
+  {
+    name: "serviceCategory",
+    selector: (row) => row.serviceCategory.serviceCategoryCode,
+    sortable: true,
+  },
+  {
+    name: "covered",
+    selector: (row) => row.covered,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.policyCopayId)} // Use the passed function
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.policyCopayId)} // Use the passed function
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+
+export const priceListColumn = (
+   handleUpdateData,
+   handleDelete
+) => [
+  {
+    name: "priceListCode",
+    selector: (row) => row.priceListCode,
+    sortable: true,
+  },
+  {
+    name: "priceListName",
+    selector: (row) => row.priceListName,
+    sortable: true,
+  },
+  {
+    name: "active",
+    selector: (row) => row.active,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+           onClick={() => handleUpdateData(row.priceListCode)} // Use the passed function
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.priceListCode)} // Use the passed function
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+export const priceListDetailsColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+ {
+   name: "grossAfmt",
+   selector: (row) => row.grossAmt,
+   sortable: true,
+ },
+ {
+   name: "discountAmt",
+   selector: (row) => row.discountAmt,
+   sortable: true,
+ },
+ {
+   name: "covered",
+   selector: (row) => row.covered,
+   sortable: true,
+ },
+ {
+  name: "coPaymentPercent",
+  selector: (row) => row.coPaymentPercent,
+  sortable: true,
+},
+{
+  name: "coPaymentAmt",
+  selector: (row) => row.coPaymentAmt,
+  sortable: true,
+},
+{
+  name: "serviceCode",
+  selector: (row) => row.serviceMaster.serviceCode,
+  sortable: true,
+},
+{
+  name: "priceListCode",
+  selector: (row) => row.priceList.priceListCode,
+  sortable: true,
+},
+ {
+   name: "Action",
+   cell: (row) => (
+     <>
+       <button
+         className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.id)} // Use the passed function
+       >
+         Edit
+       </button>
+       <button
+         className="btn btn-danger btn-sm"
+         onClick={() => handleDelete(row.id)} // Use the passed function
+       >
+         Delete
+       </button>
+     </>
+   ),
+   ignoreRowClick: true,
+   allowOverflow: true,
+   button: true,
+ },
+];
+
+
+export const priceListDepRuleDataColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+ {
+   name: "depRuleNo",
+   selector: (row) => row.depRuleNO,
+   sortable: true,
+ },
+ {
+   name: "depRuleName",
+   selector: (row) => row.depRuleName,
+   sortable: true,
+ },
+ {
+   name: "Action",
+   cell: (row) => (
+     <>
+       <button
+         className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.depRuleNo)} // Use the passed function
+       >
+         Edit
+       </button>
+       <button
+         className="btn btn-danger btn-sm"
+         onClick={() => handleDelete(row.depRuleNo)} // Use the passed function
+       >
+         Delete
+       </button>
+     </>
+   ),
+   ignoreRowClick: true,
+   allowOverflow: true,
+   button: true,
+ },
+];
+
+export const priceDetailsDepRuleColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+  {
+    name: "id",
+    selector: (row) => row.id,
+    sortable: true,
+  },
+ {
+   name: "numberOfDays",
+   selector: (row) => row.numberOfDays,
+   sortable: true,
+ },
+ {
+   name: "depRuleNo",
+   selector: (row) => <row className="priceListDependency depRuleNo"></row>,
+   sortable: true,
+ },
+ 
+{
+  name: "serviceCode",
+  selector: (row) => row.serviceMaster.serviceCode,
+  sortable: true,
+},
+{
+  name: "serviceCode",
+  selector: (row) => row.dependencyServiceCode.serviceCode,
+  sortable: true,
+},
+ {
+   name: "Action",
+   cell: (row) => (
+     <>
+       <button
+         className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.id)} // Use the passed function
+       >
+         Edit
+       </button>
+       <button
+         className="btn btn-danger btn-sm"
+         onClick={() => handleDelete(row.id)} // Use the passed function
+       >
+         Delete
+       </button>
+     </>
+   ),
+   ignoreRowClick: true,
+   allowOverflow: true,
+   button: true,
+ },
+];
+
+
+export const serviceCategoryColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+  {
+    name: "serviceCategoryCode",
+    selector: (row) => row.serviceCategoryCode,
+    sortable: true,
+  },
+  {
+    name: "serviceCategoryName",
+    selector: (row) => row.serviceCategoryName,
+    sortable: true,
+  },
+ {
+   name: "serviceTypeCons",
+   selector: (row) => row.serviceTypeCons,
+   sortable: true,
+ },
+ {
+   name: "serviceTypeFollowup",
+   selector: (row) => row.serviceTypeFollowup,
+   sortable: true,
+ },
+ 
+{
+  name: "serviceFreeFollowup",
+  selector: (row) => row.serviceFreeFollowup,
+  sortable: true,
+},
+ {
+   name: "Action",
+   cell: (row) => (
+     <>
+       <button
+         className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.serviceCategoryCode)} // Use the passed function
+       >
+         Edit
+       </button>
+       <button
+         className="btn btn-danger btn-sm"
+         onClick={() => handleDelete(row.serviceCategoryCode)} // Use the passed function
+       >
+         Delete
+       </button>
+     </>
+   ),
+   ignoreRowClick: true,
+   allowOverflow: true,
+   button: true,
+ },
+];
+export const cptCodesColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+  {
+    name: "cptCode",
+    selector: (row) => row.cptCode,
+    sortable: true,
+  },
+  {
+    name: "cptName",
+    selector: (row) => row.cptName,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.cptCode)} // Use the passed function
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.cptCode)} // Use the passed function
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+export const loincCodesColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+  {
+    name: "loincCode",
+    selector: (row) => row.loincCode,
+    sortable: true,
+  },
+  {
+    name: "loincName",
+    selector: (row) => row.loincName,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.loincCode)}
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.loincCode)}
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+export const serviceMasterColumn = (
+  handleUpdateData,
+  handleDelete
+) => [
+  {
+    name: "Service Code",
+    selector: (row) => row.serviceCode,
+    sortable: true,
+    // width:"5%"
+  },
+  {
+    name: "Service Name",
+    selector: (row) => row.serviceName,
+    sortable: true,
+    //  width:"5%"
+  },
+  {
+    name: "Service Name (Arabic)",
+    selector: (row) => row.serviceNameAr,
+    sortable: true,
+    //  width:"5%"
+  },
+  {
+    name: "Service Category Code",
+    selector: (row) => row.serviceCategoryCode.serviceCategoryCode,
+    sortable: true,
+  },
+  {
+    name: "Service Notes",
+    selector: (row) => row.serviceNotes,
+    sortable: true,
+  },
+  {
+    name: "Filter 1",
+    selector: (row) => row.serviceFilt1,
+    sortable: true,
+  },
+  {
+    name: "Filter 2",
+    selector: (row) => row.serviceFilt2,
+    sortable: true,
+  },
+  {
+    name: "Total Visits",
+    selector: (row) => row.subscriptionTotalNoVisits,
+    sortable: true,
+  },
+  {
+    name: "Visits Per Month",
+    selector: (row) => row.subscriptionVisitsPerMonth,
+    sortable: true,
+  },
+  {
+    name: "Active",
+    selector: (row) => row.active,
+    sortable: true,
+  },
+  {
+    name: "Subscription Service",
+    selector: (row) => row.subscriptionService,
+    sortable: true,
+  },
+  {
+    name: "Tooth Mandatory",
+    selector: (row) => row.toothMandatory,
+    sortable: true,
+  },
+  {
+    name: "CPT Code",
+    selector: (row) => row.cptCodes.cptCode,
+    sortable: true,
+  },
+  {
+    name: "Loinc Code 1",
+    selector: (row) => row.loincCodes1.loincCode,
+    sortable: true,
+  },
+  {
+    name: "Loinc Code 2",
+    selector: (row) => row.loincCodes2.loincCode,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.serviceCode)}
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.serviceCode)}
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
   },
 ];

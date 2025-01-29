@@ -9,13 +9,14 @@ export const UserProvider = ({ children }) => {
 
   const [formData, setFormData] = useState({
     name: "",
-    username: "",
+    // username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
   const [userData, setUserData] = useState({
-    username: "",
+    // username: "",
+    email: "",
     password: "",
   });
 
@@ -29,9 +30,9 @@ export const UserProvider = ({ children }) => {
       newErrors.name = "Name is required.";
     }
 
-    if (!formData.username.trim()) {
-      newErrors.username = "User Name is required.";
-    }
+    // if (!formData.username.trim()) {
+    //   newErrors.username = "User Name is required.";
+    // }
 
     if (!formData.email) {
       newErrors.email = "Email is required.";
@@ -57,7 +58,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8004/userData")
+      .get("http://localhost:8084/users")
       .then((res) => {
         setUsercredential(res.data); // Update the userCredential state with the fetched data
         console.log("Fetched user data:", res.data); // Log the fetched data directly
@@ -65,13 +66,11 @@ export const UserProvider = ({ children }) => {
       .catch((err) => console.error("Error fetching user data:", err));
     console.log(userCredential);
   }, []);
-
   const handleLogin = () => {
     if (validateUser()) {
       const user = userCredential.find(
         (user) =>
-          user.username === userData.username &&
-          user.password === userData.password
+          user.email === userData.email && user.password === userData.password
       );
 
       if (user) {
@@ -79,19 +78,21 @@ export const UserProvider = ({ children }) => {
         setUserAuth(true); // Set authentication status
         console.log("Login successful:", user);
         setUserData({
-          username: "",
+          email: "",
           password: "",
         });
+        return true; // Indicate successful login
       } else {
         alert("Invalid username or password.");
+        return false; // Indicate login failure
       }
     }
+    return false; // Indicate validation failure
   };
 
   const validateUser = () => {
     const newErrors = {};
-    if (!userData.username.trim())
-      newErrors.username = "User Name is required.";
+    if (!userData.email.trim()) newErrors.email = "User Name is required.";
     if (!userData.password) {
       newErrors.password = "Password is required.";
     } else if (userData.password.length < 6) {

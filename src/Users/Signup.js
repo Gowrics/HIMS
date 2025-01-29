@@ -19,6 +19,7 @@ const Signup = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    
   };
 
   const handleSubmit = (e) => {
@@ -28,7 +29,7 @@ const Signup = () => {
       console.log("Form Data:", formData);
        
       axios
-      .post("http://localhost:8003/userdata",formData)
+      .post("http://localhost:8084/users",formData)
       .then((res)=>{
         console.log("form submitted",res.data)
       })
@@ -36,7 +37,7 @@ const Signup = () => {
       alert("Registration successful!");
       setFormData({
         name: "",
-        username:"",
+        
         email: "",
         password: "",
         confirmPassword: "",
@@ -62,7 +63,7 @@ const Signup = () => {
           {errors.name && <div className="invalid-feedback">{errors.name}</div>}
         </div>
           {/* user Name Field */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="username">User Name</label>
           <input
             type="text"
@@ -73,7 +74,7 @@ const Signup = () => {
             onChange={handleChange}
           />
           {errors.username && <div className="invalid-feedback">{errors.username}</div>}
-        </div>
+        </div> */}
 
         {/* Email Field */}
         <div className="form-group">

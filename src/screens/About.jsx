@@ -4,10 +4,11 @@ import { quality } from "../assets/ArrayData";
 import { Link } from "react-router";
 import PageHead from "../Component/PageHead";
 import BreadCrumbs from "../Component/BreadCrumbs";
+import Breadcrumbs from "../Component/BreadCrumbs";
 const About = () => {
   return (
     <div>
-      <section className=" quality slide-up">
+      <section className="page-content quality slide-up">
         <div className="row firsthead">
           <div className="container col-md-5 mt-5 mb-5 ">
             <PageHead
