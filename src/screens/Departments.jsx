@@ -93,7 +93,8 @@ const Departments = () => {
 const handleDelete = (id) => {
    handleDeleteItem({
           id,
-          url: "http://192.168.91.201:8082/department/delete",
+          url: `${BASE_URL}department/delete`,
+          setValidtationMessage,setShowModal,
           data: departmentData,
           setData: setDepartmentData,
           itemKey: "deptCode", // Key to identify the item in the dataset

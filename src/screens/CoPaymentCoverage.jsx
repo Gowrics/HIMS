@@ -139,7 +139,8 @@ const CoPaymentCoverage = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/policySubCopay/delete",
+      url: `${BASE_URL}policySubCopay/delete`,
+      setValidtationMessage,setShowModal,
       data: coPaymentCoverageData,
       setData: setCoPaymentCoverageData,
       itemKey: "policyCopayId", // Key to identify the item in the dataset
@@ -176,7 +177,7 @@ const CoPaymentCoverage = () => {
         <div tabIndex="-1" className={`alert alert-danger border border-danger small p-2 mt-2 ${showModal ? "d-block" : "d-none"}`} role="alert">
           <h6 className="m-0">{validtationMessage}</h6>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form   onSubmit={handleSubmit}   onClick={() => {setShowModal(false);}}>
           {/* Row 1 */}
           <div className="row mb-3">
             <div className="col-md-4">

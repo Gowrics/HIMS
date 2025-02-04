@@ -101,11 +101,9 @@ const PriceDetailsDepRule = () => {
       dependencyServiceCode: { serviceCode: dependencyServiceCode.serviceCode },
       priceListDependency: { depRuleNo: priceListDependency.depRuleNo },
     };
-
-    
-            const url = `${BASE_URL}detailsDependency/update`;
-                        const ids =formData.id; // The URL for form submission
-                        updateForm( url,ids,updatedData, setPriceDetailsDepRuleData, setValidtationMessage, setShowModal, setIsEditMode,  null, clearForm );
+     const url = `${BASE_URL}detailsDependency/update`;
+           const ids =formData.id; // The URL for form submission
+           updateForm( url,ids,updatedData, setPriceDetailsDepRuleData, setValidtationMessage, setShowModal, setIsEditMode,  null, clearForm );
     };
 
   // Handle Delete
@@ -113,6 +111,7 @@ const PriceDetailsDepRule = () => {
     handleDeleteItem({
       id,
       url: `${BASE_URL}detailsDependency/delete`,
+      setValidtationMessage,setShowModal,
       data: priceDetailsDepRuleData,
       setData: setPriceDetailsDepRuleData,
       itemKey: "id",

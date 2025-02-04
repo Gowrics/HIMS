@@ -6,7 +6,7 @@ import { docterColumn } from "../assets/ArrayData";
 import { CustomDataTable, filterData, handleDeleteItem } from "../ReusableComponent/Actions";
 // import { docterData } from "../assets/ArrayData";
 const DoctorForm = () => {
-  const { docterData,  setDocterData,  formData,  searchTerm, setSearchTerm, setFormData,   isEditMode,   setIsEditMode, } = useContext(FormContext);
+  const { docterData,  setDocterData,  formData,  searchTerm,BASE_URL, setValidtationMessage,setSearchTerm, setFormData,   isEditMode,   setIsEditMode, } = useContext(FormContext);
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -43,7 +43,8 @@ const DoctorForm = () => {
 const handleDelete = (id) => {
    handleDeleteItem({
           id,
-          url: "http://192.168.91.201:8082/doctor/delete",
+          url: `${BASE_URL}doctor/delete`,
+          setValidtationMessage,setShowModal,
           data: docterData,
           setData: setDocterData,
           itemKey: "doctorCode", // Key to identify the item in the dataset

@@ -85,7 +85,8 @@ const PriceListDetails = () => {
     const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/priceDetails/delete",
+      url: `${BASE_URL}priceDetails/delete`,
+      setValidtationMessage,setShowModal,
       data: priceListDetailsData,
       setData: setPriceListDeatilsData,
       itemKey: "id", // Key to identify the item in the dataset
@@ -148,8 +149,7 @@ const PriceListDetails = () => {
     };
   
     console.log("Updated Data:", updatedData);
-  
-          const url = `${BASE_URL}priceDetails/update`;
+            const url = `${BASE_URL}priceDetails/update`;
                 const ids =formData.id; // The URL for form submission
                 updateForm( url,ids,updatedData, setPriceListDeatilsData, setValidtationMessage, setShowModal, setIsEditMode,  null, clearForm );
 

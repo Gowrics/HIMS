@@ -86,33 +86,27 @@ export const handleDeleteItem = async ({
     url,
     data,
     setData,
-    itemKey,
+    itemKey,setValidtationMessage,setShowModal,  
     confirmationMessage = "Are you sure you want to delete?",
   }) => {
     const isConfirmed = window.confirm(confirmationMessage);
     if (!isConfirmed) return; // Exit if user cancels
-  
-    try {
+      try {
       const response = await axios.delete(`${url}/${id}`);
       console.log("Deleted successfully:", response.data);
   
       // Update the dataset by filtering out the deleted item
       const updatedData = data.filter((item) => item[itemKey] !== id);
       setData(updatedData);
-    } catch (error) {
-      const message = error.response?.data || "";
-  console.log()
-      // Check for the specific foreign key constraint violation in the error message
-      if (
-        message.includes(
-          ' violates foreign key constraint '
-        )
-      ) {
-        alert("This record cannot be deleted or modified because it is referenced in other tables.");
-        return;
+    } catch (err) {
+    //  const message = error.response?.data || "";
+      if (err.response && err.response.status === 500||400) {
+        setValidtationMessage("This value is present in the child table, so we cannot delete it from the parent table.");
+
+        setShowModal(true);
+      } else {
+        console.log("Error submitting form:", err);
       }
-      // General error handling
-      alert(`Error: ${error}`);
     }
   };
 

@@ -33,7 +33,8 @@ const PriceList = () => {
   const handleDelete = (id) => {
      handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/priceList/delete",
+      url: `${BASE_URL}priceList/delete`,
+setValidtationMessage,setShowModal,
       data: priceListData,
       setData: setPriceListData,
       itemKey: "priceListCode",

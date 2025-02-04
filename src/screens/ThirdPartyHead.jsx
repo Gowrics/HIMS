@@ -90,7 +90,7 @@ const ThirdPartyHead = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/tpahead/delete",
+      url: `${BASE_URL}tpahead/delete`,setValidtationMessage,setShowModal,
       data: thirdPartyHeadData,
       setData: setThirdPartyHead,
       itemKey: "tpaCode", // Key to identify the item in the dataset

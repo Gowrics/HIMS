@@ -119,7 +119,8 @@ submitForm(url, updatedFormData, setPoliciesSubPatient, setValidtationMessage, s
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/policiesCharge/delete",
+      url: `${BASE_URL}policiesCharge/delete`,
+      setValidtationMessage,setShowModal,
       data: policiesSubPatientData,
       setData: setPoliciesSubPatient,
       itemKey: "chargeCode", // Key to identify the item in the dataset

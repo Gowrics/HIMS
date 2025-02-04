@@ -37,6 +37,7 @@ const initialFormData ={
       handleDeleteItem({
         id,
         url: `${BASE_URL}nationality/delete`,
+        setValidtationMessage,setShowModal,
         data: nationalityData,
         setData: setNationalityData,
         itemKey: "nationalityCode", // Key to identify the item in the dataset

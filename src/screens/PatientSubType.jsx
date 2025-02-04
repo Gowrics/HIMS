@@ -133,7 +133,8 @@ const PatientSubType = () => {
       const handleDelete = (id) => {
       handleDeleteItem({
         id,
-        url: "http://192.168.91.201:8082/subcharge/delete",
+        url: `${BASE_URL}subcharge/delete`,
+        setValidtationMessage,setShowModal,
         data: patientsSubTypeData,
         setData: setPatientsSubTypeData,
         itemKey: "schgCode", // Key to identify the item in the dataset

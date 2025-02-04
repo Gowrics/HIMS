@@ -38,6 +38,7 @@ const initialFormData ={
     handleDeleteItem({
       id,
       url:`${BASE_URL}headcharge/delete`,
+      setValidtationMessage,setShowModal,
       data: patientsMainTypeData,
       setData: setPatientMainTypeData,
       itemKey: "hchgCode", // Key to identify the item in the dataset

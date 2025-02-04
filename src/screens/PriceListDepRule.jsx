@@ -41,7 +41,8 @@ const PriceListDepRule = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/priceListDependency/delete",
+      url: `${BASE_URL}priceListDependency/delete`,
+      setValidtationMessage,setShowModal,
       data: priceListDepRuleData,
       setData: setPriceListDepRuleData,
       itemKey: "depRuleNo", // Key to identify the item in the dataset

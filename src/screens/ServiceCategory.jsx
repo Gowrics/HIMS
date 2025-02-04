@@ -58,8 +58,9 @@ const ServiceCategory = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/serviceCategory/delete",
-      data: serviceCategoryData,
+      url: `${BASE_URL}serviceCategory/delete`,
+      setValidtationMessage,setShowModal,
+            data: serviceCategoryData,
       setData: setserviceCategoryData,
       itemKey: "serviceCategoryCode",
     });

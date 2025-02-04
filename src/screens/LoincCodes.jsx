@@ -44,7 +44,8 @@ const LoincCodes = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/loincCodes/delete",
+      url: `${BASE_URL}loincCodes/delete`,
+      setValidtationMessage,setShowModal,
       data: loincCodesData,
       setData: setLoincCodesData,
       itemKey: "loincCode",

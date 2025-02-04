@@ -45,10 +45,12 @@ const CptCodes = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/cptCodes/delete",
+      url: `${BASE_URL}cptCodes/delete`,
+      setValidtationMessage,setShowModal,
       data: cptCodesData,
       setData: setCptCodesData,
       itemKey: "cptCode",
+   
     });
   };
 

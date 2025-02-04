@@ -90,7 +90,7 @@ const SubPoliciesPatient = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: "http://192.168.91.201:8082/policySubCharge/delete",
+      url: `${BASE_URL}policySubCharge/delete`,setValidtationMessage,setShowModal,
       data: subPoliciesPatientData,
       setData: setSubPoliciesPatientData,
       itemKey: "policySubCode", // Key to identify the item in the dataset
