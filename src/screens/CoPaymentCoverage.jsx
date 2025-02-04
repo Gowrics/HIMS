@@ -1,28 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FormContext } from "../FormContext";
-import CustomDataTable from "../ReusableComponent/CustomDataTable";
-import {
-  coPaymentCoverageDataColumn,
-  policiesSubPatientDataColumn,
-  subTypePatientColumn,
-  thirdPartyHeadDataColumn,
-} from "../assets/ArrayData";
-import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
+import {coPaymentCoverageDataColumn} from "../assets/ArrayData";
+import { CustomDataTable, handleDeleteItem, submitForm, updateForm } from "../ReusableComponent/Actions";
+
 const CoPaymentCoverage = () => {
   const {
-    policiesSubPatientData, subPoliciesPatientData,
+    policiesSubPatientData, subPoliciesPatientData,BASE_URL,
     coPaymentCoverageData,setCoPaymentCoverageData,
-    serviceCategoryData, setPoliciesSubPatient,
-    setIsEditMode,isEditMode,
+    serviceCategoryData, setPoliciesSubPatient, validtationMessage, setValidtationMessage,
     searchTerm,setSearchTerm,
   } = useContext(FormContext);
-
+   const [isEditMode, setIsEditMode] = useState(false); 
+     const [showModal, setShowModal] = useState(false);
+      const [notEditMode, setNotEditMode] = useState(false);
   const initialFormData = {
     // policyCopayId: 0,
-    covered: null,
-    coPaymentPercent: null,
-    coPaymentAmt: null,
+    covered: "",
+    coPaymentPercent: "",
+    coPaymentAmt: "",
     policiesCharge: {
       chargeCode: "",
     },
@@ -34,50 +30,9 @@ const CoPaymentCoverage = () => {
     },
   };
 
-  console.log(serviceCategoryData);
   const [formData, setFormData] = useState(initialFormData);
-
-  const handleUpdateData = (id) => {
-    console.log(id);
-    const itemToUpdate = coPaymentCoverageData.find(
-      (item) => item.policyCopayId === id
-    );
-
-    if (itemToUpdate) {
-      setFormData({
-        policyCopayId: itemToUpdate.policyCopayId,
-        coPaymentAmt: itemToUpdate.coPaymentAmt,
-        coPaymentPercent: itemToUpdate.coPaymentPercent,
-        covered: itemToUpdate.covered,
-      
-        policiesCharge: {
-          chargeCode: itemToUpdate.policiesCharge?.chargeCode || 0,
-        },
-        policySubCharge: {
-          policySubCode: itemToUpdate.policySubCharge?.policySubCode || null,
-        },
-        serviceCategory: {
-          serviceCategoryCode:
-            itemToUpdate.serviceCategory?.serviceCategoryCode || null,
-        },
-      });
-      setIsEditMode(true); // Show update form
-    } else {
-      console.log("Item not found!");
-    }
-  };
-
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   // Handle patientMainTypeData changes (for select input)
-  const handlePatientTypeChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "chargeCode") {
@@ -113,6 +68,7 @@ const CoPaymentCoverage = () => {
         ...prevData,
         [name]: value,
       }));
+      setShowModal(false);
     }
   };
   // Clear the form
@@ -122,8 +78,7 @@ const CoPaymentCoverage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const updatedFormData = {
+          const updatedFormData = {
         ...formData,
         policiesCharge: {
           ...formData.policiesCharge,
@@ -139,37 +94,48 @@ const CoPaymentCoverage = () => {
             formData.serviceCategory.serviceCategoryCode
           ),
         },
-        coPaymentPercent:Number(formData.coPaymentPercent)
-   ,
-   coPaymentAmt:Number(formData.coPaymentAmt)
+        coPaymentPercent:Number(formData.coPaymentPercent)||null,
+        coPaymentAmt:Number(formData.coPaymentAmt)||null,
+        covered:formData.covered||null
+      }
         
-      };
+            console.log("Payload sent to API:", updatedFormData);
+       const url = `${BASE_URL}policySubCopay/create`; // The URL for form submission
+            submitForm(url, updatedFormData, setCoPaymentCoverageData, setValidtationMessage,setShowModal, clearForm);
 
-      console.log("Payload sent to API:", updatedFormData);
+  };
 
-      const response = await axios.post(
-        "http://192.168.91.201:8082/policySubCopay/create",
-        updatedFormData
-      );
+  const handleUpdateData = (id) => {
+    setNotEditMode(true)
+    const itemToUpdate = coPaymentCoverageData.find(
+      (item) => item.policyCopayId === id
+    );
 
-      alert("Form submitted successfully");
-
-      const { data } = await axios.get(
-        "http://192.168.91.201:8082/policySubCopay/getAll"
-      );
-
-      setCoPaymentCoverageData(data);
-      console.log(coPaymentCoverageData);
-
-      clearForm();
-    } catch (err) {
-      console.error("Error details:", err.response?.data || err.message);
-      alert(
-        "Error submitting form: " +
-          (err.response?.data?.message || "Check console for details")
-      );
+    if (itemToUpdate) {
+      setFormData({
+        policyCopayId: itemToUpdate.policyCopayId,
+        coPaymentAmt: itemToUpdate.coPaymentAmt,
+        coPaymentPercent: itemToUpdate.coPaymentPercent,
+        covered: itemToUpdate.covered,
+      
+        policiesCharge: {
+          chargeCode: itemToUpdate.policiesCharge?.chargeCode || 0,
+        },
+        policySubCharge: {
+          policySubCode: itemToUpdate.policySubCharge?.policySubCode || null,
+        },
+        serviceCategory: {
+          serviceCategoryCode:
+            itemToUpdate.serviceCategory?.serviceCategoryCode || null,
+        },
+      });
+      setIsEditMode(true); // Show update form
+    } else {
+      console.log("Item not found!");
     }
   };
+
+  
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
@@ -182,49 +148,34 @@ const CoPaymentCoverage = () => {
   
 
   const handleUpdate = () => {
-    const {
-      covered,
-      policyCopayId,
-      coPaymentPercent,
-    coPaymentAmt,
-      policiesCharge: { chargeCode },
-      policySubCharge: { policySubCode },
-    } = formData;
+    const convertEmptyToNull = (value) => (value === "" || value === undefined ? null : value);
+
     const updatedData = {
-      covered,
-      policyCopayId,
-     coPaymentPercent,coPaymentAmt,
-      policiesCharge: { chargeCode },
-      policySubCharge: { policySubCode },
+
+      covered: convertEmptyToNull(formData.covered),
+      policyCopayId: convertEmptyToNull(formData.policyCopayId),
+      coPaymentPercent: convertEmptyToNull (Number(formData.coPaymentPercent)),
+      coPaymentAmt: convertEmptyToNull(Number(formData.coPaymentAmt)),
+      policiesCharge: { chargeCode: convertEmptyToNull(Number(formData?.policiesCharge?.chargeCode)) },
+      policySubCharge: { policySubCode: convertEmptyToNull(Number(formData?.policySubCharge?.policySubCode) )},
+      serviceCategory:{serviceCategoryCode:convertEmptyToNull(Number(formData?.serviceCategory?.serviceCategoryCode))}
     };
     console.log(formData);
     console.log(updatedData);
+    
+      const url = `${BASE_URL}policySubCopay/update`;
+            const id =formData.policyCopayId; // The URL for form submission
+            updateForm( url,id,updatedData, setCoPaymentCoverageData, setValidtationMessage, setShowModal, setIsEditMode,  setNotEditMode, clearForm );
 
-    axios
-      .put(
-        `http://192.168.91.201:8082/policySubCopay/update/${formData.policyCopayId}`,
-        updatedData
-      )
-      .then((res) => {
-        console.log("Updated successfully:", res.data);
-        axios
-          .get("http://192.168.91.201:8082/policySubCopay/getAll")
-          .then((res) => {
-            setPoliciesSubPatient(res.data);
-            setIsEditMode(false); // Hide update form after successful update
-            clearForm();
-          })
-          .catch((err) => console.log("Error fetching data:", err));
-      })
-      .catch((err) =>
-        alert("The data is already present in another child table.", err)
-      );
   };
 
   return (
     <>
       <div className="container page-content">
-        <h2>CO PAYMENT AND COVERAGE FOR A SUB POLICY TYPE (not updatable)</h2>
+        <h2>CO PAYMENT AND COVERAGE FOR A SUB POLICY TYPE</h2>
+        <div tabIndex="-1" className={`alert alert-danger border border-danger small p-2 mt-2 ${showModal ? "d-block" : "d-none"}`} role="alert">
+          <h6 className="m-0">{validtationMessage}</h6>
+        </div>
         <form onSubmit={handleSubmit}>
           {/* Row 1 */}
           <div className="row mb-3">
@@ -232,29 +183,15 @@ const CoPaymentCoverage = () => {
               <label htmlFor="coPaymentPercent" className="form-label">
                 Co Payment Percent
               </label>
-              <input
-                className="form-control"
-                type="number"
-                id="coPaymentPercent"
-                name="coPaymentPercent"
-                min="1"
-                max="100"
-                value={formData.coPaymentPercent}
-                onChange={handleChange}
-                              ></input>
+              <input   className="form-control"   type="number"   id="coPaymentPercent"    name="coPaymentPercent" 
+               min="1"  max="100"  value={formData.coPaymentPercent}    onChange={handleChange}       ></input>
             </div>
 
             <div className="col-md-4">
               <label htmlFor="covered" className="form-label">
               Covered
               </label>
-              <select
-                className="form-control"
-                id="covered"
-                name="covered"
-                value={formData.covered}
-                onChange={handleChange}
-                            >
+              <select  className="form-control"  id="covered"   name="covered"   value={formData.covered} onChange={handleChange}  >
                 <option value="">Select an option </option>
                 <option value="YES">Y</option>
                 <option value="NO">N</option>
@@ -265,14 +202,8 @@ const CoPaymentCoverage = () => {
               <label htmlFor="policySubCode" className="form-label">
                 Sub PoliciesPatient Type (policySubCode)
               </label>
-              <select
-                className="form-control"
-                id="policySubCode"
-                name="policySubCode"
-                value={formData.policySubCharge.policySubCode}
-                onChange={handlePatientTypeChange}
-                required
-              >
+              <select  className="form-control"  id="policySubCode"  name="policySubCode" value={formData.policySubCharge.policySubCode} 
+              onChange={handleChange}  required  disabled={notEditMode}  >
                 <option value="">Select an option</option>
                 {subPoliciesPatientData.map((option) => (
                   <option
@@ -292,14 +223,7 @@ const CoPaymentCoverage = () => {
               <label htmlFor="chargeCode" className="form-label">
               Policy sub Patient Type (chargeCode)
               </label>
-              <select
-                className="form-control"
-                id="chargeCode"
-                name="chargeCode"
-                value={formData.policiesCharge.chargeCode}
-                onChange={handlePatientTypeChange}
-                required
-              >
+              <select   className="form-control"   id="chargeCode"   name="chargeCode" value={formData.policiesCharge.chargeCode}  onChange={handleChange}  required  disabled={notEditMode}  >
                 <option value="">Select an option</option>
                 {policiesSubPatientData.map((option) => (
                   <option key={option.chargeCode} value={option.chargeCode}>
@@ -313,14 +237,8 @@ const CoPaymentCoverage = () => {
               <label htmlFor="" className="form-label">
               Service Category Type (serviceCategoryCode)
               </label>
-              <select
-                className="form-control"
-                id="serviceCategoryCode"
-                name="serviceCategoryCode"
-                value={formData.serviceCategory.serviceCategoryCode}
-                onChange={handlePatientTypeChange}
-                required
-              >
+              <select   className="form-control"   id="serviceCategoryCode"  name="serviceCategoryCode" 
+               value={formData.serviceCategory.serviceCategoryCode} onChange={handleChange} required  disabled={notEditMode}  >
                 <option value="">Select an option</option>
                 {serviceCategoryData.map((option) => (
                   <option
@@ -337,32 +255,33 @@ const CoPaymentCoverage = () => {
               <label htmlFor="coPaymentAmt" className="form-label">
                 Co Payment Amt
               </label>
-              <input
-                className="form-control"
-                id="coPaymentAmt"
-                name="coPaymentAmt"
-                value={formData.coPaymentAmt}
-                onChange={handleChange}
-                
-              ></input>
+              <input className="form-control"  id="coPaymentAmt" name="coPaymentAmt" value={formData.coPaymentAmt}  onChange={handleChange} ></input>
             </div>
           </div>
 
-          {!isEditMode && (
-            <button type="submit" className="btn btn-primary">
-              Create+
-            </button>
-          )}
-          {isEditMode && (
-            <button
-              type="button"
-              onClick={handleUpdate}
-              className="btn btn-success"
-            >
-              Update
-            </button>
-          )}
+         
+          {!isEditMode ? (
+  <button type="submit" className="btn btn-primary">
+    Create+
+  </button>
+) : (
+  <>
+    <button type="button" onClick={handleUpdate} className="btn btn-success">
+      Update
+    </button>
+    <button type="button" onClick={() => { setIsEditMode(false); clearForm();setNotEditMode(false);}} className=" ms-4 btn btn-secondary">
+                Cancel
+              </button>
+  </>
+)}
         </form>
+          <input
+      type="text"
+      placeholder="Search hchgName"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="form-control my-2"
+    />
         <CustomDataTable
           columns={coPaymentCoverageDataColumn(handleUpdateData, handleDelete)}
           data={coPaymentCoverageData}
@@ -376,3 +295,49 @@ const CoPaymentCoverage = () => {
 };
 
 export default CoPaymentCoverage;
+
+
+    //   const response = await axios.post(
+    //     "http://192.168.91.201:8082/policySubCopay/create",
+    //     updatedFormData
+    //   );
+
+    //   alert("Form submitted successfully");
+
+    //   const { data } = await axios.get(
+    //     "http://192.168.91.201:8082/policySubCopay/getAll"
+    //   );
+
+    //   setCoPaymentCoverageData(data);
+    //   console.log(coPaymentCoverageData);
+
+    //   clearForm();
+    // } catch (err) {
+    //   console.error("Error details:", err.response?.data || err.message);
+    //   alert(
+    //     "Error submitting form: " +
+    //       (err.response?.data?.message || "Check console for details")
+    //   );
+     //}
+
+     
+    // axios
+    //   .put(
+    //     `http://192.168.91.201:8082/policySubCopay/update/${formData.policyCopayId}`,
+    //     updatedData
+    //   )
+    //   .then((res) => {
+    //     console.log("Updated successfully:", res.data);
+    //     axios
+    //       .get("http://192.168.91.201:8082/policySubCopay/getAll")
+    //       .then((res) => {
+    //         setCoPaymentCoverageData  (res.data);
+    //         setIsEditMode(false); // Hide update form after successful update
+    //         setNotEditMode(false)
+    //         clearForm();
+    //       })
+    //       .catch((err) => console.log("Error fetching data:", err));
+    //   })
+    //   .catch((err) =>
+    //     alert("The data is already present in another child table.", err)
+    //   );

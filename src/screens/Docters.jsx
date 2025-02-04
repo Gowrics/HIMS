@@ -1,37 +1,15 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import DocterFormComponent from "../Component/DocterFormComponent";
 import { FormContext } from "../FormContext";
-import { useNavigate } from "react-router-dom";
-import DataTable from "react-data-table-component";
 import Breadcrumbs from "../Component/BreadCrumbs";
+import { docterColumn } from "../assets/ArrayData";
+import { CustomDataTable, filterData, handleDeleteItem } from "../ReusableComponent/Actions";
 // import { docterData } from "../assets/ArrayData";
 const DoctorForm = () => {
-  const {
-    docterData,
-    setDocterData,
-    formData,
-    searchTerm,
-    setSearchTerm,
-    setFormData,
-    isEditMode,
-    setIsEditMode,
-  } = useContext(FormContext);
+  const { docterData,  setDocterData,  formData,  searchTerm, setSearchTerm, setFormData,   isEditMode,   setIsEditMode, } = useContext(FormContext);
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://192.168.91.201:8082/doctor/getAll")
-  //     .then((res) => {
-  //       setDocterData(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error fetching data:", err);
-  //     });
-  // }, []);
-
   const handleUpdateData = (id) => {
     handleCloseModal(); //when i am edit the button it go to update form
 
@@ -62,35 +40,16 @@ const DoctorForm = () => {
     }
   };
 
-  const handleDelete = (id) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete?");
-    if (isConfirmed) {
-      axios
-        .delete(`http://192.168.91.201:8082/doctor/delete/${id}`)
-        .then((res) => {
-          console.log("Deleted successfully:", res.data);
-          const updatedData = docterData.filter(
-            (item) => item.doctorCode !== id
-          );
-          setDocterData(updatedData);
-        })
-        .catch((err) => console.log("Error deleting data:", err));
-    }
-  };
-
-  // Handle search input change
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // Filter nationality data based on the search term
-  const filteredDocter = docterData.filter(
-    (item) =>
-      item.doctorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.drNameFl.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.drDesignation.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+const handleDelete = (id) => {
+   handleDeleteItem({
+          id,
+          url: "http://192.168.91.201:8082/doctor/delete",
+          data: docterData,
+          setData: setDocterData,
+          itemKey: "doctorCode", // Key to identify the item in the dataset
+        });
+      };
+  
   return (
     <>
       <div className="container page-content">
@@ -118,141 +77,14 @@ const DoctorForm = () => {
               <div className="modal-body">
                 <div className="table-responsive">
                   <h1>Docters Data</h1>
-                  <input
-                    type="text"
-                    placeholder="Search docter by docter name, docter designation"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    className="form-control my-2"
-                  />
-                  <DataTable
-                    className="table table-striped"
-                    columns={[
-                      {
-                        name: "  Doctor Code",
-                        selector: (row) => row.doctorCode,
-                        sortable: true,
-                      },
-                      {
-                        name: " Department Code",
-                        selector: (row) => row.department.deptCode,
-                        sortable: true,
-                      },
-                      {
-                        name: " Doctor Name",
-                        selector: (row) => row.doctorName,
-                        sortable: true,
-                      },
-                      {
-                        name: "  Doctor Name (FL)",
-                        selector: (row) => row.drNameFl,
-                        sortable: true,
-                      },
-                      {
-                        name: " Gender",
-                        selector: (row) => row.drGender,
-                        sortable: true,
-                      },
-                      {
-                        name: "  License No",
-                        selector: (row) => row.drLicNo,
-                        sortable: true,
-                      },
-                      {
-                        name: " Doctor Designation",
-                        selector: (row) => row.drDesignation,
-                        sortable: true,
-                      },
-                      {
-                        name: "   Doctor Designation (FL)",
-                        selector: (row) => row.drDesignationFl,
-                        sortable: true,
-                      },
-                      {
-                        name: "   Doctor Qualifications",
-                        selector: (row) => row.drQualifications,
-                        sortable: true,
-                      },
-                      {
-                        name: " Doctor Qualifications (FL)",
-                        selector: (row) => row.drQualificationsFl,
-                        sortable: true,
-                      },
-                      {
-                        name: " Sort Order",
-                        selector: (row) => row.drSrtOrd,
-                        sortable: true,
-                      },
-                      {
-                        name: "   Nationality Code",
-                        selector: (row) => row.nationality.nationalityCode,
-                        sortable: true,
-                      },
-                      {
-                        name: " Doctor Image (URL)",
-                        selector: (row) => row.drImg,
-                        sortable: true,
-                      },
-                      {
-                        name: "     Cost Center Code",
-                        selector: (row) => row.costCenterCode,
-                        sortable: true,
-                      },
-                      {
-                        name: " Docter Active",
-                        selector: (row) => row.drActive,
-                        sortable: true,
-                      },
-                      {
-                        name: "Action",
-                        cell: (row) => (
-                          <>
-                            <button
-                              className="btn btn-primary  btn-sm"
-                              onClick={() => handleUpdateData(row.doctorCode)}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              className="btn btn-danger btn-sm"
-                              onClick={() => handleDelete(row.doctorCode)}
-                            >
-                              Delete
-                            </button>
-                          </>
-                        ),
-                        ignoreRowClick: true,
-                        allowOverflow: true,
-                        button: true,
-                      },
-                    ]}
-                    data={filteredDocter}
-                    pagination
+                  <input  type="text"  placeholder="Search docter"  value={searchTerm}  onChange={(e) => setSearchTerm(e.target.value)} className="form-control my-2"  />
+                    <CustomDataTable
+                    columns={docterColumn(handleUpdateData, handleDelete)} // Pass functions as arguments
+                    data={filterData(docterData, searchTerm, ["doctorName","drDesignation"],)}
                     paginationPerPage={5}
-                    paginationRowsPerPageOptions={[3, 5, 10, 15, 20]}
-                    customStyles={{
-                      header: {
-                        style: {
-                          backgroundColor: "#343a40",
-                          color: "#ffffff",
-                        },
-                      },
-                      headCells: {
-                        style: {
-                          fontWeight: "bold",
-                          backgroundColor: "#6c757d",
-                          color: "#ffffff",
-                        },
-                      },
-                      cells: {
-                        style: {
-                          paddingLeft: "8px",
-                          paddingRight: "8px",
-                        },
-                      },
-                    }}
-                  />
-                </div>
+                    paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                                  />   
+                                    </div>
               </div>
               {/* Modal Footer */}
               <div className="modal-footer">

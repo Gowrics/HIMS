@@ -1,335 +1,220 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { FormContext } from "../FormContext";
-import CustomDataTable from "../ReusableComponent/CustomDataTable";
-import { policiesSubPatientDataColumn, priceDetailsDepRuleColumn, priceListDetailsColumn } from "../assets/ArrayData";
-import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
+import { priceDetailsDepRuleColumn } from "../assets/ArrayData";
+import { CustomDataTable, handleDeleteItem, submitForm, updateForm } from "../ReusableComponent/Actions";
+import { faL } from "@fortawesome/free-solid-svg-icons";
+
 const PriceDetailsDepRule = () => {
   const {
-        priceDetailsDepRuleData, setPriceDetailsDepRuleData,
-    priceListDepRuleData,
-        serviceMasterData,
-    priceListDetailsData, setPriceListDeatilsData,
-    setPoliciesSubPatient,
-    thirdPartyHeadData,
-    patientsSubTypeData,
-    setIsEditMode,
-    isEditMode,
-    searchTerm,
-    setSearchTerm,
+    priceDetailsDepRuleData, setPriceDetailsDepRuleData, BASE_URL, validtationMessage,
+    priceListDepRuleData, serviceMasterData, setValidtationMessage
   } = useContext(FormContext);
+
+  const [isEditMode, setIsEditMode] = useState(false); 
+  const [notEditMode, setNotEditMode] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   const initialFormData = {
-    numberOfDays:null,
-    serviceMaster: {
-      serviceCode: "",
-    },
-    dependencyServiceCode: {
-      serviceCode: "",
-    },
-    priceListDependency:  {
-      depRuleNo:null
-    }
+    numberOfDays: null,
+    serviceMaster: { serviceCode: "" },
+    dependencyServiceCode: { serviceCode: "" },
+    priceListDependency: { depRuleNo: null }
   };
-  
+
   const [formData, setFormData] = useState(initialFormData);
 
-  console.log(priceDetailsDepRuleData)
-  const handleUpdateData = (id) => {
-    console.log(id);
-    const itemToUpdate = priceDetailsDepRuleData.find(
-      (item) => item.id === id
-    );
-
-    if (itemToUpdate) {
-      setFormData({
-      id:itemToUpdate.id,
-       
-        numberOfDays: itemToUpdate.numberOfDays,
-
-        serviceMaster: {
-          serviceCode: itemToUpdate.serviceMaster?.serviceCode || "",
-        },
-        dependencyServiceCode: {
-          serviceCode: itemToUpdate.dependencyServiceCode?.serviceCode || "",
-        },
-        priceListDependency: {
-          depRuleNo: itemToUpdate.priceListDependency?.depRuleNo || null,
-        },
-      });
-      setIsEditMode(true); // Show update form
-    } else {
-      console.log("Item not found!");
-    }
-  };
-
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  // Handle patientMainTypeData changes (for select input)
-  const handlePatientTypeChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "serviceMaster") {
-      // Update serviceMaster
-      setFormData((prevData) => ({
-        ...prevData,
-        serviceMaster: {
-          ...prevData.serviceMaster,
-          serviceCode: value,
-        },
-      }));
-          } 
-    else if (name === "depRuleNo") {
-      // Update priceListDependency
-      setFormData((prevData) => ({
-        ...prevData,
-        priceListDependency: {
-          ...prevData.priceListDependency,
-          depRuleNo: value,
-        },
-      }));
-    }
-    else if (name === "dependencyServiceCode") {
-      // Update priceListDependency
-      setFormData((prevData) => ({
-        ...prevData,
-        dependencyServiceCode: {
-          ...prevData.dependencyServiceCode,
-          serviceCode: value,
-        },
-      }));
-    } else {
-      // Update top-level fields
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
-  // Clear the form
+  
+  // Clear form data
   const clearForm = () => {
     setFormData(initialFormData);
+    setIsEditMode(false);
+    setNotEditMode(false);
+      };
+
+  // Handle form field updates
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevData) => {
+      if (name === "serviceMaster") {
+        return { ...prevData, serviceMaster: { serviceCode: value } };
+      } else if (name === "depRuleNo") {
+        return { ...prevData, priceListDependency: { depRuleNo: Number(value) || null } };
+      } else if (name === "dependencyServiceCode") {
+        return { ...prevData, dependencyServiceCode: { serviceCode: value } };
+      } else {
+        return { ...prevData, [name]: value };
+      }
+    });
+    setShowModal(false);
   };
+
+
+  // Handle form submission (Create)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const updatedFormData = {
-        ...formData,
-               priceListDependency: {
-          ...formData.priceListDependency,
-          depRuleNo: formData.priceListDependency.depRuleNo
-          ? Number(formData.priceListDependency.depRuleNo)
+    const updatedFormData = {
+      ...formData,
+      numberOfDays: Number(formData.numberOfDays) || null,
+      priceListDependency: {
+        depRuleNo: formData.priceListDependency.depRuleNo 
+          ? Number(formData.priceListDependency.depRuleNo) 
           : null,
-              },
-              numberOfDays:Number(formData.numberOfDays),
-      
-      };
+      },
+    };
 
-      console.log("Payload sent to API:", updatedFormData);
+    console.log("Payload sent to API:", updatedFormData);
+    const url = `${BASE_URL}detailsDependency/create`;
 
-      const response = await axios.post(
-        "http://192.168.91.201:8082/detailsDependency/create",
-        updatedFormData
-      );
+    submitForm(url, updatedFormData, setPriceDetailsDepRuleData, setValidtationMessage, setShowModal, clearForm);
+  };
 
-      alert("Form submitted successfully");
+  // Handle data update
+  const handleUpdateData = (id) => {
+    setNotEditMode(true);
+    const itemToUpdate = priceDetailsDepRuleData.find((item) => item.id === id);
 
-      const { data } = await axios.get(
-        "http://192.168.91.201:8082/detailsDependency/getAll"
-      );
-
-      setPriceDetailsDepRuleData(data);
-   
-
-      clearForm();
-    } catch (err) {
-      console.error("Error details:", err.response?.data || err.message);
-      alert(
-        "Error submitting form: " +
-          (err.response?.data?.message || "Check console for details")
-      );
+    if (itemToUpdate) {
+      setFormData({
+        id: itemToUpdate.id,
+        numberOfDays: itemToUpdate.numberOfDays,
+        serviceMaster: { serviceCode: itemToUpdate.serviceMaster?.serviceCode || "" },
+        dependencyServiceCode: { serviceCode: itemToUpdate.dependencyServiceCode?.serviceCode || "" },
+        priceListDependency: { depRuleNo: itemToUpdate.priceListDependency?.depRuleNo || null },
+      });
+      setIsEditMode(true);
+    } else {
+      console.error("Item not found!");
     }
   };
 
-  const handleDelete = (id) => {
-    handleDeleteItem({
-      id,
-      url: "http://192.168.91.201:8082/detailsDependency/delete",
-      data: priceDetailsDepRuleData,
-      setData: setPriceDetailsDepRuleData,
-      itemKey: "id", // Key to identify the item in the dataset
-    });
-  };
-
+  // Handle Update
   const handleUpdate = () => {
-    const {
-      id,
-      numberOfDays,
-      serviceMaster: { serviceCode: serviceMasterCode },
-      dependencyServiceCode: { serviceCode: dependencyServiceCode },
-      priceListDependency: { depRuleNo },
-    } = formData;
-  
+    const { id, numberOfDays, serviceMaster, dependencyServiceCode, priceListDependency } = formData;
+
     const updatedData = {
       id,
       numberOfDays,
-      dependencyServiceCode: { serviceCode: dependencyServiceCode },
-      serviceMaster: { serviceCode: serviceMasterCode },
-      priceListDependency: { depRuleNo },
+      serviceMaster: { serviceCode: serviceMaster.serviceCode },
+      dependencyServiceCode: { serviceCode: dependencyServiceCode.serviceCode },
+      priceListDependency: { depRuleNo: priceListDependency.depRuleNo },
     };
-    console.log(formData.id);
-    console.log(updatedData);
 
-    axios
-      .put(
-        `http://192.168.91.201:8082/detailsDependency/update/${formData.id}`,
-        updatedData
-      )
-      .then((res) => {
-        console.log("Updated successfully:", res.data);
-        axios
-          .get("http://192.168.91.201:8082/detailsDependency/getAll")
-          .then((res) => {
-            setPriceDetailsDepRuleData(res.data);
-          
-            setIsEditMode(false); // Hide update form after successful update
-            clearForm();
-          })
-          .catch((err) => console.log("Error fetching data:", err));
-      })
-      .catch((err) =>
-        alert("The data is already present in another child table.", err)
-      );
+    
+            const url = `${BASE_URL}detailsDependency/update`;
+                        const ids =formData.id; // The URL for form submission
+                        updateForm( url,ids,updatedData, setPriceDetailsDepRuleData, setValidtationMessage, setShowModal, setIsEditMode,  null, clearForm );
+    };
+
+  // Handle Delete
+  const handleDelete = (id) => {
+    handleDeleteItem({
+      id,
+      url: `${BASE_URL}detailsDependency/delete`,
+      data: priceDetailsDepRuleData,
+      setData: setPriceDetailsDepRuleData,
+      itemKey: "id",
+    });
   };
 
   return (
-    <>
-      <div className="container page-content">
-        <h2>Price List Details Dependency</h2>
-        <form onSubmit={handleSubmit}>
-          {/* Row 1 */}
-          <div className="row mb-3">
-           
-
-           
-            {/* TPA head Type (priceListCode) Row */}
-            <div className="col-md-4">
-              <label htmlFor="depRuleNo" className="form-label">
-                Price List (depRuleNo)
-              </label>
-              <select
-                className="form-control"
-                id="depRuleNo"
-                name="depRuleNo"
-                value={formData.priceListDependency.depRuleNo}
-                onChange={handlePatientTypeChange}
-                required
-              >
-                <option value="">Select an option</option>
-                {priceListDepRuleData.map((option) => (
-                  <option key={option.depRuleNo} value={option.depRuleNo}>
-                    {option.depRuleNo}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Patient Main Type (serviceCode) Row */}
-          <div className="row mb-3">
-            <div className="col-md-4">
-              <label htmlFor="serviceCode" className="form-label">
-                Service Master (serviceCode)
-              </label>
-               <select
-                className="form-control"
-                id="serviceMaster"
-                name="serviceMaster"
-                value={formData.serviceMaster.serviceCode}
-                onChange={handlePatientTypeChange}
-               required
-              >
-                <option value="">Select an option</option>
-                {serviceMasterData.map((option) => (
-                  <option key={option.serviceCode} value={option.serviceCode}>
-                    {option.serviceCode}
-                  </option>
-                ))}
-              </select>
-            
-            </div>
-
-            <div className="col-md-4">
-              <label htmlFor="dependencyServiceCode" className="form-label">
-                Service Master (serviceCode)
-              </label>
-               <select
-                className="form-control"
-                id="dependencyServiceCode"
-                name="dependencyServiceCode"
-                value={formData.dependencyServiceCode.serviceCode}
-                onChange={handlePatientTypeChange}
-              required
-              >
-                <option value="">Select an option</option>
-                {serviceMasterData.map((option) => (
-                  <option key={option.serviceCode} value={option.serviceCode}>
-                    {option.serviceCode}
-                  </option>
-                ))}
-              </select>
-            
-            </div>
-
-            <div className="col-md-2">
-              <label htmlFor="numberOfDays" className="form-label">
-              numberOfDays
-              </label>
-              <input
-                type="number" // Corrected here
-                className="form-control"
-                id="numberOfDays"
-                name="numberOfDays"
-                value={formData.numberOfDays}
-                onChange={handleChange}
-                
-              />
-            </div>
-            
-          </div>
-
-
-          {!isEditMode && (
-            <button type="submit" className="btn btn-primary">
-              Create+
-            </button>
-          )}
-          {isEditMode && (
-            <button
-              type="button"
-              onClick={handleUpdate}
-              className="btn btn-success"
-            >
-              Update
-            </button>
-          )}
-        </form>
-        <CustomDataTable
-          columns={priceDetailsDepRuleColumn(handleUpdateData, handleDelete)}
-          data={priceDetailsDepRuleData}
-          paginationPerPage={5}
-          paginationRowsPerPageOptions={[5, 10, 15, 20]}
-        />
+    <div className="container page-content">
+      <h2>Price List Details Dependency</h2>
+      <div tabIndex="-1" className={`alert alert-danger border border-danger small p-2 mt-2 ${showModal ? "d-block" : "d-none"}`} role="alert">
+        <h6 className="m-0">{validtationMessage}</h6>
       </div>
-    </>
+      <form   onSubmit={handleSubmit}   onClick={() => {setShowModal(false);}}>
+        <div className="row mb-3">
+          <div className="col-md-4">
+            <label htmlFor="depRuleNo" className="form-label">Price List Detail Dep (depRuleNo)</label>
+            <select className="form-control" id="depRuleNo"  name="depRuleNo" value={formData.priceListDependency.depRuleNo || ""} onChange={handleChange} required disabled={notEditMode}>
+              <option value="">Select an option</option>
+              {priceListDepRuleData.map((option) => (
+                <option key={option.depRuleNo} value={option.depRuleNo}>{option.depRuleNo}</option>
+              ))}
+            </select>
+          </div>
+          <div className="col-md-4">
+    <label htmlFor="numberOfDays" className="form-label">Number of Days</label>
+    <input  type="number"  className="form-control" id="numberOfDays" name="numberOfDays"  value={formData.numberOfDays || ""} onChange={handleChange} required />
+  </div>
+        </div>
+
+        <div className="row mb-3">
+          <div className="col-md-4">
+            <label htmlFor="serviceMaster" className="form-label">Service Master (serviceCode)</label>
+            <select className="form-control"   id="serviceMaster"  name="serviceMaster"  value={formData.serviceMaster.serviceCode} onChange={handleChange} required  disabled={notEditMode}  >
+              <option value="">Select an option</option>
+              {serviceMasterData.map((option) => (
+                <option key={option.serviceCode} value={option.serviceCode}>{option.serviceCode}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="col-md-4">
+            <label htmlFor="dependencyServiceCode" className="form-label">Dependency Service Code (serviceCode)</label>
+            <select   className="form-control"  id="dependencyServiceCode"   name="dependencyServiceCode" value={formData.dependencyServiceCode.serviceCode}
+             onChange={handleChange}    required   disabled={notEditMode}       >
+              <option value="">Select an option</option>
+              {serviceMasterData.map((option) => (
+                <option key={option.serviceCode} value={option.serviceCode}>{option.serviceCode}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {!isEditMode ? (
+          <button type="submit" className="btn btn-primary">Create+</button>
+        ) : (
+          <>
+            <button type="button" onClick={handleUpdate} className="btn btn-success">Update</button>
+            <button type="button" onClick={clearForm} className="ms-4 btn btn-secondary">Cancel</button>
+          </>
+        )}
+      </form>
+
+      <CustomDataTable columns={priceDetailsDepRuleColumn(handleUpdateData, handleDelete)} data={priceDetailsDepRuleData} paginationPerPage={5} paginationRowsPerPageOptions={[5, 10, 15, 20]} />
+    </div>
   );
 };
 
 export default PriceDetailsDepRule;
+
+
+
+    //   const response = await axios.post(
+    //     "http://192.168.91.201:8082/detailsDependency/create",
+    //     updatedFormData
+    //   );
+
+    //   alert("Form submitted successfully");
+
+    //   const { data } = await axios.get(
+    //     "http://192.168.91.201:8082/detailsDependency/getAll"
+    //   );
+
+    //   setPriceDetailsDepRuleData(data);
+   
+
+    //   clearForm();
+    // } catch (err) {
+    //   console.error("Error details:", err.response?.data || err.message);
+    //   alert(
+    //     "Error submitting form: " +
+    //       (err.response?.data?.message || "Check console for details")
+    //   );
+    // }
+
+
+      // axios.put(`${BASE_URL}detailsDependency/update/${id}`, updatedData)
+    //   .then(() => {
+    //     axios.get(`${BASE_URL}detailsDependency/getAll`)
+    //       .then((res) => {
+    //         setPriceDetailsDepRuleData(res.data);
+    //         clearForm();
+    //       })
+    //       .catch((err) => console.error("Error fetching data:", err));
+    //   })
+    //   .catch((err) => alert("The data is already present in another child table.", err));

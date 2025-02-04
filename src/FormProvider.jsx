@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FormContext } from "./FormContext";
 import axios from "axios";
-import useFetchData from "./ReusableComponent/useFetchData";
+import { useFetchData } from "./ReusableComponent/Actions";
 
 export const FormProvider = ({ children }) => {
-  
+
+  const BASE_URL ="http://192.168.91.201:8082/"
   const [nationalityData, setNationalityData] = useState([]);
   const [departmentData, setDepartmentData] = useState([]); // Ensure it's an array
   const [docterData, setDocterData] = useState([]);
@@ -32,29 +33,36 @@ export const FormProvider = ({ children }) => {
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
   
- 
-  const [formData, setFormData] = useState({
-    docterCode: 0,
-    doctorName: "",
-    drNameFl: "",
-    drImg: "",
-    drActive: "",
-    drLicNo: "",
-    drDesignation: "",
-    drDesignationFl: "",
-    drQualifications: "",
-    drQualificationsFl: "",
-    drGender: "",
-    drSrtOrd: 0,
-    costCenterCode: "",
-    department: {
-      deptCode: 0,
-    },
-    nationality: {
-      nationalityCode: 0,
-    },
-  });
-
+ const initialFormData ={
+        docterCode: 0,
+        doctorName: "",
+        drNameFl: "",
+        drImg: "",
+        drActive: "",
+        drLicNo: "",
+        drDesignation: "",
+        drDesignationFl: "",
+        drQualifications: "",
+        drQualificationsFl: "",
+        drGender: "",
+        drSrtOrd: 0,
+        costCenterCode: "",
+        department: {
+          deptCode: 0,
+        },
+        nationality: {
+          nationalityCode: 0,
+        },
+      };
+      const [formData, setFormData] = useState(initialFormData);
+      const clearForm = () => {
+       setFormData(initialFormData);
+     };
+  
+  useFetchData(
+    " http://192.168.91.201:8082/nationality/getAll",
+    setNationalityData
+  );
   
   useFetchData(
     " http://192.168.91.201:8082/loincCodes/getAll",
@@ -136,7 +144,7 @@ export const FormProvider = ({ children }) => {
   return (
     <FormContext.Provider
       value={{
-        nationalityData,
+        nationalityData,clearForm,
         setNationalityData,
         patientsMainTypeData,
         validtationMessage,setValidtationMessage,
@@ -145,6 +153,7 @@ export const FormProvider = ({ children }) => {
         departmentData,
         searchTerm,
         setSearchTerm,
+        BASE_URL,
         patientsSubTypeData,
         subPoliciesPatientData,
         coPaymentCoverageData,

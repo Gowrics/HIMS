@@ -1,28 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FormContext } from "../FormContext";
-import CustomDataTable from "../ReusableComponent/CustomDataTable";
-import { policiesSubPatientDataColumn, priceListDetailsColumn } from "../assets/ArrayData";
-import { handleDeleteItem } from "../ReusableComponent/UseHandleDelete";
+import { CustomDataTable, handleDeleteItem, submitForm, updateForm } from "../ReusableComponent/Actions";
+import {priceListDetailsColumn } from "../assets/ArrayData";
 const PriceListDetails = () => {
-  const {
-   priceListData,
-    serviceMasterData, priceListDetailsData,
-    setPriceListDeatilsData,
-    setIsEditMode,isEditMode,
-    searchTerm, setSearchTerm,
-  } = useContext(FormContext);
+  const {priceListData,  serviceMasterData, priceListDetailsData, setPriceListDeatilsData, validtationMessage, setValidtationMessage,BASE_URL, searchTerm, setSearchTerm,  } = useContext(FormContext);
+    const [isEditMode, setIsEditMode] = useState(false); 
+    const [notEditMode, setNotEditMode] = useState(false);
+    const [showModal, setShowModal] = useState(false);
   const initialFormData = {
-    grossAmt: null,
-    discountAmt: null,
-    covered: null,
-    coPaymentPercent: null,
-    coPaymentAmt: null,
+    grossAmt: "",
+    discountAmt: "",
+    covered: "",
+    coPaymentPercent: "",
+    coPaymentAmt: "",
     serviceMaster: {
       serviceCode: "",
     },
     priceList:{
-      priceListCode:null,
+      priceListCode:"",
     }
   };
   
@@ -34,7 +30,7 @@ const PriceListDetails = () => {
   };
 
   // Handle patientMainTypeData changes (for select input)
-  const handlePatientTypeChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "serviceCode") {
@@ -61,6 +57,7 @@ const PriceListDetails = () => {
         ...prevData,
         [name]: value,
       }));
+      setShowModal(false);
     }
   };
   const handleSubmit = (e) => {
@@ -76,46 +73,16 @@ const PriceListDetails = () => {
       },
       grossAmt: Number(formData.grossAmt),
       discountAmt: Number(formData.discountAmt),
-      coPaymentAmt: Number(formData.coPaymentAmt),
-      coPaymentPercent: Number(formData.coPaymentPercent),
+      covered: formData.covered || null,
     };
   
     console.log("Payload sent to API:", updatedFormData);
-  
-    axios
-      .post("http://192.168.91.201:8082/priceDetails/create", updatedFormData)
-      .then(() => {
-        alert("Form submitted successfully");
-        clearForm();
-  
-        return axios.get("http://192.168.91.201:8082/priceDetails/getAll");
-      })
-      .then((response) => {
-        setPriceListDeatilsData(response.data);
-        setIsEditMode(false)
-        clearForm();
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.error("Error details:", err.response?.data || err.message);
-        alert(
-          "Error submitting form: " +
-            (err.response?.data?.message || "Check console for details")
-        );
-      });
+    const url = `${BASE_URL}priceDetails/create`; // The URL for form submission
+                  submitForm(url, updatedFormData, setPriceListDeatilsData, setValidtationMessage,setShowModal, clearForm);
+   
+    setIsEditMode(false)
   };
-  
-  
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleDelete = (id) => {
+    const handleDelete = (id) => {
     handleDeleteItem({
       id,
       url: "http://192.168.91.201:8082/priceDetails/delete",
@@ -126,7 +93,7 @@ const PriceListDetails = () => {
   };
   
   const handleUpdateData = (id) => {
-    console.log(id);
+    setNotEditMode(true)
 
     const itemToUpdate = priceListDetailsData.find(
       (item) => item.id === id
@@ -153,7 +120,9 @@ const PriceListDetails = () => {
     }
    };
 
-  const handleUpdate = () => {
+   const handleUpdate = () => {
+    const convertEmptyToNull = (value) => (value === "" || value === undefined ? null : value);
+  
     const {
       id,
       grossAmt,
@@ -161,103 +130,61 @@ const PriceListDetails = () => {
       covered,
       coPaymentPercent,
       coPaymentAmt,
-      serviceMaster: { serviceCode },
-      priceList: { priceListCode },
+      serviceMaster,
+      priceList,
+      policiesCharge,  // Added this for consistency
     } = formData;
   
-    // Check if ID exists before updating
-    if (!id) {
-      alert("Invalid ID");
-      return;
-    }
-  
     const updatedData = {
-      id,
-      grossAmt,
-      discountAmt,
-      covered,
-      coPaymentPercent,
-      coPaymentAmt,
-      serviceMaster: { serviceCode },
-      priceList: { priceListCode },
+      id: convertEmptyToNull(id),
+      grossAmt: convertEmptyToNull(grossAmt),
+      discountAmt: convertEmptyToNull(discountAmt),
+      covered: convertEmptyToNull(covered),
+      coPaymentPercent: convertEmptyToNull(coPaymentPercent),
+      coPaymentAmt: convertEmptyToNull(coPaymentAmt),
+      serviceMaster: { serviceCode: convertEmptyToNull(serviceMaster?.serviceCode) },
+      priceList: { priceListCode: convertEmptyToNull(priceList?.priceListCode) },
+      policiesCharge: { chargeCode: convertEmptyToNull(policiesCharge?.chargeCode) }, // Fixed consistency
     };
   
     console.log("Updated Data:", updatedData);
   
-    axios
-      .put(
-        `http://192.168.91.201:8082/priceDetails/update/${formData.id}`,
-        updatedData
-      )
-      .then((res) => {
-        console.log("Updated successfully:", res.data);
-  
-        // Fetch updated list after the update
-        axios
-          .get("http://192.168.91.201:8082/priceDetails/getAll")
-          .then((res) => {
-            // Clear form and reset the state
-            clearForm();
-            setPriceListDeatilsData(res.data);
-            setIsEditMode(false); // Hide update form after successful update
-          })
-          .catch((err) => console.log("Error fetching data:", err));
-      })
-      .catch((err) =>
-        alert("The data is already present in another child table.", err)
-      );
+          const url = `${BASE_URL}priceDetails/update`;
+                const ids =formData.id; // The URL for form submission
+                updateForm( url,ids,updatedData, setPriceListDeatilsData, setValidtationMessage, setShowModal, setIsEditMode,  null, clearForm );
+
   };
   
 
   return (
     <>
       <div className="container page-content">
-        <h2>HOLDS THE PRICES FOR EACH SERVICE CODE FOR A PRICE LIST (not updatable)</h2>
-        <form onSubmit={handleSubmit}>
+        <h2>HOLDS THE PRICES FOR EACH SERVICE CODE FOR A PRICE LIST (not update)</h2>
+        <div tabIndex="-1" className={`alert alert-danger border border-danger small p-2 mt-2 ${showModal ? "d-block" : "d-none"}`} role="alert">
+        <h6 className="m-0">{validtationMessage}</h6>
+      </div>
+      <form   onSubmit={handleSubmit}   onClick={() => {setShowModal(false);}}>
           {/* Row 1 */}
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="grossAmt" className="form-label">
               Gross Amt
               </label>
-              <input
-              type="number"
-                className="form-control"
-                id="grossAmt"
-                name="grossAmt"
-                value={formData.grossAmt}
-                onChange={handleChange}
-                required
-              ></input>
+              <input type="number" className="form-control" id="grossAmt" name="grossAmt" value={formData.grossAmt} onChange={handleChange}  required  ></input>
             </div>
 
             <div className="col-md-4">
             <label htmlFor="discountAmt" className="form-label">
             Discount Amt
               </label>
-              <input
-               type="number"
-                className="form-control"
-                id="discountAmt"
-                name="discountAmt"
-                value={formData.discountAmt}
-                onChange={handleChange}
-                required
-              ></input>
+              <input  type="number" className="form-control" id="discountAmt"  name="discountAmt" value={formData.discountAmt} onChange={handleChange} required  ></input>
             </div>
             {/* TPA head Type (priceListCode) Row */}
               <div className="col-md-4">
                 <label htmlFor="priceListCode" className="form-label">
                   Price List (priceListCode)
                 </label>
-                <select
-                  className="form-control"
-                  id="priceListCode"
-                  name="priceListCode"
-                  value={formData.priceList.priceListCode}
-                  onChange={handlePatientTypeChange}
-                  required
-                >
+                <select  className="form-control"    id="priceListCode"   name="priceListCode"   value={formData.priceList.priceListCode} onChange={handleChange} required disabled={notEditMode} >
                   <option value="">Select an option</option>
                   {priceListData.map((option) => (
                     <option key={option.priceListCode} value={option.priceListCode}>
@@ -274,14 +201,7 @@ const PriceListDetails = () => {
               <label htmlFor="serviceCode" className="form-label">
                 Service Master (serviceCode)
               </label>
-               <select
-                className="form-control"  
-                id="serviceCode"
-                name="serviceCode"
-                value={formData.serviceMaster.serviceCode}
-                onChange={handlePatientTypeChange}
-               required
-              >
+               <select  className="form-control"  id="serviceCode"   name="serviceCode" value={formData.serviceMaster.serviceCode} onChange={handleChange} required  disabled={notEditMode}  >
                 <option value="">Select an option</option>
                 {serviceMasterData.map((option) => (
                   <option key={option.serviceCode} value={option.serviceCode}>
@@ -296,30 +216,13 @@ const PriceListDetails = () => {
               <label htmlFor="policyNo" className="form-label">
               Co Payment Percent
               </label>
-              <input
-               type="number"
-                className="form-control"
-                id="coPaymentPercent"
-                min="1"
-                max="100"
-                name="coPaymentPercent"
-                value={formData.coPaymentPercent}
-                onChange={handleChange}
-                              ></input>
+              <input type="number"  className="form-control" id="coPaymentPercent"  min="1"  max="100" name="coPaymentPercent" value={formData.coPaymentPercent} onChange={handleChange} ></input>
             </div>
             <div className="col-md-2">
               <label htmlFor="coPaymentAmt" className="form-label">
               Co Payment Amt
               </label>
-              <input
-                type="number" // Corrected here
-                className="form-control"
-                id="coPaymentAmt"
-                name="coPaymentAmt"
-                value={formData.coPaymentAmt}
-                onChange={handleChange}
-                
-              />
+              <input  type="number" className="form-control" id="coPaymentAmt"  name="coPaymentAmt" value={formData.coPaymentAmt}  onChange={handleChange} />
             </div>
              <div className="col-md-2">
               <label htmlFor="coverd" className="form-label">
@@ -340,23 +243,17 @@ const PriceListDetails = () => {
           </div>
 
 
-          {!isEditMode && (
-            <button type="submit" className="btn btn-primary">
-              Create+
-            </button>
-          )}
-          {isEditMode && (
-            <button
-              type="button"
-              onClick={handleUpdate}
-              className="btn btn-success"
-            >
-              Update
-            </button>
-            
-            
-          )}
-        </form>
+          {!isEditMode ? (
+  <button type="submit" className="btn btn-primary">Create+</button>
+) : (
+  <>
+    <button type="button" onClick={handleUpdate} className="btn btn-success">Update</button>
+    <button type="button" onClick={() => {setIsEditMode(false);clearForm(); setShowModal(false); setNotEditMode(false);}} className=" ms-4 btn btn-secondary">
+      Cancel
+    </button>
+  </>
+)}
+  </form>
         <CustomDataTable
           columns={priceListDetailsColumn(handleUpdateData, handleDelete)}
           data={priceListDetailsData}
@@ -369,3 +266,53 @@ const PriceListDetails = () => {
 };
 
 export default PriceListDetails;
+
+
+
+ // axios
+    //   .post("http://192.168.91.201:8082/priceDetails/create", updatedFormData)
+    //   .then(() => {
+    //     alert("Form submitted successfully");
+    //     clearForm();
+  
+    //     return axios.get("http://192.168.91.201:8082/priceDetails/getAll");
+    //   })
+    //   .then((response) => {
+    //     setPriceListDeatilsData(response.data);
+    //     setIsEditMode(false)
+    //     clearForm();
+    //     console.log(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.error("Error details:", err.response?.data || err.message);
+    //     alert(
+    //       "Error submitting form: " +
+    //         (err.response?.data?.message || "Check console for details")
+    //     );
+    //   });
+
+
+        
+    // axios
+    //   .put(
+    //     `http://192.168.91.201:8082/priceDetails/update/${formData.id}`,
+    //     updatedData
+    //   )
+    //   .then((res) => {
+    //     console.log("Updated successfully:", res.data);
+  
+    //     // Fetch updated list after the update
+    //     axios
+    //       .get("http://192.168.91.201:8082/priceDetails/getAll")
+    //       .then((res) => {
+    //         // Clear form and reset the state
+    //         clearForm();
+    //         setPriceListDeatilsData(res.data);
+    //         setIsEditMode(false); // Hide update form after successful update
+    //                     setNotEditMode(false)
+    //       })
+    //       .catch((err) => console.log("Error fetching data:", err));
+    //   })
+    //   .catch((err) =>
+    //     alert("The data is already present in another child table.", err)
+    //   );

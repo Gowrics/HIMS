@@ -1,29 +1,28 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-
-import DataTable from "react-data-table-component";
+import React, { useContext, useState } from "react";
 import { FormContext } from "../FormContext";
 import Breadcrumbs from "../Component/BreadCrumbs";
+import { departmentColumn } from "../assets/ArrayData";
+import { CustomDataTable, filterData, handleDeleteItem, submitForm, updateForm } from "../ReusableComponent/Actions";
 // import { departmentData } from "../assets/ArrayData";
 
 const Departments = () => {
   const {
-    departmentData,
-    setDepartmentData,
-    searchTerm,
-    setSearchTerm,
-    isEditMode,
-    setIsEditMode,
+    departmentData,BASE_URL,validtationMessage, setValidtationMessage,
+    setDepartmentData, searchTerm, setSearchTerm,isEditMode, setIsEditMode,
   } = useContext(FormContext);
-
-  const [formData, setFormData] = useState({
+ const [showModal, setShowModal] = useState(false);
+  const initialFormData ={
     deptCode: 0,
     deptName: "", // Updated to deptName
     deptNameFl: "", // Updated to deptNameFl
     deptImage: "", // Updated to deptImg
-    deptGeneral: "Y", // Default to "Y"
-  });
-
+    deptGeneral: "", // Default to "Y"
+  }
+  const [formData, setFormData] =useState(initialFormData);
+  const clearForm = () => {
+    setFormData(initialFormData);
+  };
+ 
   const [errors, setErrors] = useState({
     deptCode: false,
     deptName: false, // Updated to deptName
@@ -33,7 +32,30 @@ const Departments = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setShowModal(false);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Validation
+    let validationErrors = { ...errors };
+    validationErrors.deptCode = !formData.deptCode;
+    validationErrors.deptName = !formData.deptName;
+    validationErrors.deptNameFl = !formData.deptNameFl;
+    validationErrors.deptImage = !formData.deptImage;
+    setErrors(validationErrors);
+    console.log(formData);
+    // If no errors, you can submit the form data
+    if (
+      // !validationErrors.deptCode &&
+      !validationErrors.deptName &&
+      !validationErrors.deptNameFl &&
+      !validationErrors.deptImage
+    ) {
+      console.log(formData)
+       const url = `${BASE_URL}department/create`; // The URL for form submission
+        submitForm(url, formData, setDepartmentData, setValidtationMessage, setShowModal, clearForm);
+         }
+    };
 
   const handleUpdateData = (id) => {
     const itemToUpdate = departmentData.find((item) => item.deptCode === id);
@@ -61,128 +83,41 @@ const Departments = () => {
       deptImage,
       deptGeneral,
     };
-
-    axios
-      .put(
-        `http://192.168.91.201:8082/department/update/${deptCode}`,
-        updatedData
-      )
-      .then((res) => {
-        console.log("Updated successfully:", res.data);
-        axios
-          .get("http://192.168.91.201:8082/department/getAll")
-          .then((res) => {
-            setDepartmentData(res.data);
-            setIsEditMode(false); // Hide update form after successful update
-            setFormData({
-              deptCode: 0,
-              deptName: "",
-              deptNameFl: "",
-              deptImage: "",
-              deptGeneral: "",
-            });
-          })
-          .catch((err) => console.log("Error fetching data:", err));
-      })
-      .catch((err) => console.log("Error updating data:", err));
+ console.log(updatedData);
+      const url = `${BASE_URL}department/update`;
+      const id =formData.deptCode; // The URL for form submission
+      updateForm( url,id,updatedData, setDepartmentData, setValidtationMessage,  setShowModal, setIsEditMode, false, clearForm );
+  
   };
-  const handleDelete = (id) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete?");
-    if (isConfirmed) {
-      axios
-        .delete(`http://192.168.91.201:8082/department/delete/${id}`)
-        .then((res) => {
-          console.log("Deleted successfully:", res.data);
-          const updatedData = departmentData.filter(
-            (item) => item.deptCode !== id
-          );
-          setDepartmentData(updatedData);
-        })
-        .catch((err) => console.log("Error deleting data:", err));
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Validation
-    let validationErrors = { ...errors };
-    validationErrors.deptCode = !formData.deptCode;
-    validationErrors.deptName = !formData.deptName;
-    validationErrors.deptNameFl = !formData.deptNameFl;
-    validationErrors.deptImage = !formData.deptImage;
-    setErrors(validationErrors);
-    console.log(formData);
-    // If no errors, you can submit the form data
-    if (
-      // !validationErrors.deptCode &&
-      !validationErrors.deptName &&
-      !validationErrors.deptNameFl &&
-      !validationErrors.deptImage
-    ) {
-      axios
-        .post("http://192.168.91.201:8082/department/create", formData)
-        .then((res) => {
-          console.log("Form submitted successfully:", res.data);
-          console.log("//////////////////");
-
-          alert("Form Submitted Successfully..");
+  
+const handleDelete = (id) => {
+   handleDeleteItem({
+          id,
+          url: "http://192.168.91.201:8082/department/delete",
+          data: departmentData,
+          setData: setDepartmentData,
+          itemKey: "deptCode", // Key to identify the item in the dataset
         });
-      axios.get("http://192.168.91.201:8082/department/getAll").then((res) => {
-        setDepartmentData(res.data); // Set the nationality data as an array
-        console.log(departmentData);
-      });
-    }
-    setFormData({
-      deptCode: 0,
-      deptName: "",
-      deptNameFl: "",
-      deptImage: "",
-      deptGeneral: "",
-    });
-  };
-
-  // Handle search input change
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // Filter nationality data based on the search term
-  const filteredDepartments = departmentData.filter(
-    (item) =>
-      item.deptName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.deptNameFl.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.deptImage.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      };
+  
 
   return (
     <>
       <div className="container  page-content">
         <h2>Department Form</h2>
-
-        <form onSubmit={handleSubmit}>
+        <div tabIndex="-1" className={`alert alert-danger border border-danger small p-2 mt-2 ${showModal ? "d-block" : "d-none"}`} role="alert">
+          <h6 className="m-0">{validtationMessage}</h6>
+        </div>
+        <form   onSubmit={handleSubmit}   onClick={() => {setShowModal(false);}}>
           <div className="row">
             {/* Dept Name */}
             <div className="col-md-3 mb-3">
               <label htmlFor="deptName" className="form-label">
                 Department Name
               </label>
-              <input
-                type="text"
-                className={`form-control ${
-                  errors.deptName ? "is-invalid" : ""
-                }`}
-                id="deptName"
-                name="deptName"
-                value={formData.deptName}
-                onChange={handleChange}
-                required
-              />
-              {errors.deptName && (
-                <div className="invalid-feedback">
-                  Department Name is required.
-                </div>
-              )}
+              <input   type="text"    className={`form-control ${errors.deptName ? "is-invalid" : ""    }`}  id="deptName"
+                name="deptName"    value={formData.deptName}   onChange={handleChange}      required    />
+              {errors.deptName && ( <div className="invalid-feedback">  Department Name is required.   </div> )}
             </div>
 
             {/* Dept Name (FL) */}
@@ -190,22 +125,9 @@ const Departments = () => {
               <label htmlFor="deptNameFl" className="form-label">
                 Department Name (FL)
               </label>
-              <input
-                type="text"
-                className={`form-control ${
-                  errors.deptNameFl ? "is-invalid" : ""
-                }`}
-                id="deptNameFl"
-                name="deptNameFl"
-                value={formData.deptNameFl}
-                onChange={handleChange}
-                required
-              />
-              {errors.deptNameFl && (
-                <div className="invalid-feedback">
-                  Department Name (FL) is required.
-                </div>
-              )}
+              <input   type="text" className={`form-control ${errors.deptNameFl ? "is-invalid" : ""  }`} id="deptNameFl"
+                name="deptNameFl" value={formData.deptNameFl} onChange={handleChange}   required     />
+              {errors.deptNameFl && (<div className="invalid-feedback"> Department Name (FL) is required.  </div>   )}
             </div>
           </div>
 
@@ -215,22 +137,9 @@ const Departments = () => {
               <label htmlFor="deptImage" className="form-label">
                 Department Image (URL)
               </label>
-              <input
-                type="url"
-                className={`form-control ${
-                  errors.deptImage ? "is-invalid" : ""
-                }`}
-                id="deptImage"
-                name="deptImage"
-                value={formData.deptImage}
-                onChange={handleChange}
-                required
-              />
-              {errors.deptImage && (
-                <div className="invalid-feedback">
-                  Department Image URL is required.
-                </div>
-              )}
+              <input type="url"  className={`form-control ${errors.deptImage ? "is-invalid" : ""  }`}
+                id="deptImage"   name="deptImage"  value={formData.deptImage} onChange={handleChange}  required  />
+              {errors.deptImage && (<div className="invalid-feedback"> Department Image URL is required.    </div>  )}
             </div>
 
             {/* Dept General */}
@@ -238,166 +147,98 @@ const Departments = () => {
               <label htmlFor="deptGeneral" className="form-label">
                 Department General
               </label>
-              <select
-                className="form-control"
-                id="deptGeneral"
-                name="deptGeneral"
-                value={formData.deptGeneral}
-                onChange={handleChange}
-              >
+              <select  className="form-control"  id="deptGeneral" name="deptGeneral"  value={formData.deptGeneral}  onChange={handleChange}  >
+                  <option value="">Select an Option</option>
                 <option value="YES">Yes</option>
                 <option value="NO">No</option>
               </select>
             </div>
           </div>
-          {!isEditMode && (
-            <button type="submit" className="btn btn-primary">
-              Create+
-            </button>
-          )}
-          {isEditMode && (
-            <button
-              type="button"
-              onClick={() => handleUpdate()}
-              className="btn btn-success"
-            >
-              Update
-            </button>
-          )}
+          {!isEditMode ? (
+  <button type="submit" className="btn btn-primary">
+    Create+
+  </button>
+) : (
+  <>
+    <button type="button" onClick={handleUpdate} className="btn btn-success">
+      Update
+    </button>
+    <button type="button" onClick={() => {setIsEditMode(false); setShowModal(false);clearForm();}} className=" ms-4 btn btn-secondary">
+      Cancel
+    </button>
+  </>
+)}
         </form>
         <h1>Department Data</h1>
-        <input
-          type="text"
-          placeholder="Search department"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          className="form-control my-2"
-        />
-        <DataTable
-          className="table table-striped"
-          columns={[
-            {
-              name: "Department Code",
-              selector: (row) => row.deptCode,
-              sortable: true,
-            },
-            {
-              name: "Department Name",
-              selector: (row) => row.deptName,
-              sortable: true,
-            },
-            {
-              name: "Department Name (FL)",
-              selector: (row) => row.deptNameFl,
-              sortable: true,
-            },
-            {
-              name: ",Department Image",
-              selector: (row) => row.deptImage,
-              sortable: true,
-            },
-            {
-              name: ",Department General",
-              selector: (row) => row.deptGeneral,
-              sortable: true,
-            },
-            {
-              name: "Action",
-              cell: (row) => (
-                <>
-                  <button
-                    className="btn btn-primary btn-sm"
-                    onClick={() => handleUpdateData(row.deptCode)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleDelete(row.deptCode)}
-                  >
-                    Delete
-                  </button>
-                </>
-              ),
-              ignoreRowClick: true,
-              allowOverflow: true,
-              button: true,
-            },
-          ]}
-          data={filteredDepartments}
-          pagination
-          paginationPerPage={5}
-          paginationRowsPerPageOptions={[5, 10, 15, 20]}
-          customStyles={{
-            header: {
-              style: {
-                backgroundColor: "#343a40",
-                color: "#ffffff",
-              },
-            },
-            headCells: {
-              style: {
-                fontWeight: "bold",
-                backgroundColor: "#6c757d",
-                color: "#ffffff",
-              },
-            },
-            cells: {
-              style: {
-                paddingLeft: "8px",
-                paddingRight: "8px",
-              },
-            },
-          }}
-        />
-
-        {/* 
-      <table className="table table-striped border">
-        <thead>
-          <tr>
-            <th className="bg-secondary text-white">Department Code</th>
-            <th className="bg-secondary text-white">Department Name</th>
-            <th className="bg-secondary text-white">Department Name (FL)</th>
-            <th className="bg-secondary text-white"> Department Image</th>
-            <th className="bg-secondary text-white">Department General</th>
-            <th className="bg-secondary text-white">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {departmentData.length > 0 ? (
-            departmentData.map((item) => (
-              <tr key={item.id}>
-                <td>{item.deptCode}</td>
-                <td>{item.deptName}</td>
-                <td>{item.deptNameFl}</td>
-                <td>{item.deptImage}</td>
-                <td>{item.deptGeneral}</td>
-                <td>
-                  <button
-                    className="btn btn-primary btn-sm me-2"
-                    onClick={() => handleUpdateData(item.deptCode)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleDelete(item.deptCode)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={4}>No user found</td>
-            </tr>
-          )}
-        </tbody>
-      </table> */}
-      </div>
+        <input  type="text"  placeholder="Search department"  value={searchTerm}  onChange={(e) => setSearchTerm(e.target.value)} className="form-control my-2"  />
+          <CustomDataTable
+            columns={departmentColumn(handleUpdateData, handleDelete)} // Pass functions as arguments
+            data={filterData(departmentData, searchTerm, ["deptName","deptNameFl"],)}
+            paginationPerPage={5}
+            paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                />
+                     </div>
     </>
   );
 };
-
 export default Departments;
+
+
+
+
+
+
+
+
+
+ // const handleDelete = (id) => {
+  //   const isConfirmed = window.confirm("Are you sure you want to delete?");
+  //   if (isConfirmed) {
+  //     axios
+  //       .delete(`http://192.168.91.201:8082/department/delete/${id}`)
+  //       .then((res) => {
+  //         console.log("Deleted successfully:", res.data);
+  //         const updatedData = departmentData.filter(
+  //           (item) => item.deptCode !== id
+  //         );
+  //         setDepartmentData(updatedData);
+  //       })
+  //       .catch((err) => console.log("Error deleting data:", err));
+  //   }
+  // };
+ // axios
+      //   .post("http://192.168.91.201:8082/department/create", formData)
+      //   .then((res) => {
+      //     console.log("Form submitted successfully:", res.data);
+      //     console.log("//////////////////");
+
+      //     alert("Form Submitted Successfully..");
+      //   });
+      // axios.get("http://192.168.91.201:8082/department/getAll").then((res) => {
+      //   setDepartmentData(res.data); // Set the nationality data as an array
+      //   console.log(departmentData);
+      // });
+
+        // axios
+    //   .put(
+    //     `http://192.168.91.201:8082/department/update/${deptCode}`,
+    //     updatedData
+    //   )
+    //   .then((res) => {
+    //     console.log("Updated successfully:", res.data);
+    //     axios
+    //       .get("http://192.168.91.201:8082/department/getAll")
+    //       .then((res) => {
+    //         setDepartmentData(res.data);
+    //         setIsEditMode(false); // Hide update form after successful update
+    //         setFormData({
+    //           deptCode: 0,
+    //           deptName: "",
+    //           deptNameFl: "",
+    //           deptImage: "",
+    //           deptGeneral: "",
+    //         });
+    //       })
+    //       .catch((err) => console.log("Error fetching data:", err));
+    //   })
+    //   .catch((err) => console.log("Error updating data:", err));

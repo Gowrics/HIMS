@@ -3,12 +3,17 @@ import React, { act, useContext, useState } from "react";
 import { FormContext } from "../FormContext";
 import docs from "../assets/download copy.jpg";
 import docsimg from "../assets/doctersimg.jpg";
-import { submitForm, updateForm } from "../ReusableComponent/Actions";
 const DocterFormComponent = (props) => {
   const {
-    departmentData, BASE_URL, setValidtationMessage, validtationMessage, docterData, nationalityData, setDocterData, formData, clearForm,
-    setFormData, isEditMode, setIsEditMode, } = useContext(FormContext);
-  const [showModal, setShowModal] = useState(false);
+    departmentData,
+    docterData,
+    nationalityData,
+    setDocterData,
+    formData,
+    setFormData,
+    isEditMode,
+    setIsEditMode,
+  } = useContext(FormContext);
   const [errors, setErrors] = useState({
     doctorName: false,
     drNameFl: false,
@@ -47,7 +52,6 @@ const DocterFormComponent = (props) => {
     } else {
       setFormData({ ...formData, [name]: value });
     }
-    setShowModal(false);
   };
 
   const handleUpdate = () => {
@@ -85,10 +89,40 @@ const DocterFormComponent = (props) => {
       department: { deptCode },
       nationality: { nationalityCode },
     };
-    console.log(updatedData);
-    const url = `${BASE_URL}doctor/update`;
-    const id = formData.doctorCode; // The URL for form submission
-    updateForm(url, id, updatedData, setDocterData, setValidtationMessage, setShowModal, setIsEditMode, false, clearForm);
+    console.log("ddddd", formData);
+    axios
+      .put(
+        `http://192.168.91.201:8082/doctor/update/${formData.doctorCode}`,
+        updatedData
+      )
+      .then((res) => {
+        console.log("Updated successfully:", res.data);
+        axios
+          .get("http://192.168.91.201:8082/doctor/getAll")
+          .then((res) => {
+            setDocterData(res.data);
+            setIsEditMode(false); // Hide update form after successful update
+            setFormData({
+              doctorCode: 0,
+              doctorName: "",
+              drNameFl: "",
+              drImg: "",
+              drActive: "",
+              drLicNo: "",
+              drDesignation: "",
+              drDesignationFl: "",
+              drQualifications: "",
+              drQualificationsFl: "",
+              drGender: "",
+              drSrtOrd: 0,
+              costCenterCode: "",
+              department: { deptCode: 0 },
+              nationality: { nationalityCode: 0 },
+            });
+          })
+          .catch((err) => console.log("Error fetching data:", err));
+      })
+      .catch((err) => console.log("Error updating data:", err));
   };
   const handleSubmit = (e) => {
     console.log("real", formData);
@@ -121,38 +155,78 @@ const DocterFormComponent = (props) => {
     formData.sortOrder = Number(formData.sortOrder);
     // If no errors, you can submit the form data
     if (!Object.values(validationErrors).includes(true)) {
-      console.log(formData)
-      const url = `${BASE_URL}doctor/create`; // The URL for form submission
-      submitForm(url, formData, setDocterData, setValidtationMessage, setShowModal, clearForm);
+      axios
+        .post("http://192.168.91.201:8082/doctor/create", formData)
+        .then(() => {
+          alert("Form Submitted Successfully.");
+          return axios.get("http://192.168.91.201:8082/doctor/getAll");
+        })
+        .then((res) => {
+          setDocterData(res.data);
+        })
+        .catch((err) => console.log("Error submitting form:", err));
+
+      // Reset form data
+      setFormData({
+        doctorName: "",
+        drNameFl: "",
+        drImg: "",
+        drActive: "",
+        drLicNo: "",
+        drDesignation: "",
+        drDesignationFl: "",
+        drQualifications: "",
+        drQualificationsFl: "",
+        drGender: "",
+        drSrtOrd: 0,
+        costCenterCode: "",
+        department: { deptCode: 0 },
+        nationality: { nationalityCode: 0 },
+      });
     }
   };
 
   return (
     <>
       <section className="h-100 ">
-        <div className="container  h-100">
+        <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col">
               <div className="card card-registration my-4">
                 <div className="row g-0">
                   <div className="col-xl-6 d-none d-xl-block">
-                    <img src={docsimg} alt="Sample photo" className="img-fluid" style={{ borderTopLeftRadius: ".25rem", width: "100%", height: "100%", borderBottomLeftRadius: ".25rem", }} />
+                    <img
+                      src={docsimg}
+                      alt="Sample photo"
+                      className="img-fluid"
+                      style={{
+                        borderTopLeftRadius: ".25rem",
+                        width: "100%",
+                        height: "100%",
+                        borderBottomLeftRadius: ".25rem",
+                      }}
+                    />
                   </div>
                   <div className="col-xl-6">
                     <div className="card-body p-md-5 text-black">
                       <h3 className="mb-5 text-uppercase">Docters Form</h3>
-                      <div tabIndex="-1" className={`alert alert-danger border border-danger small p-2 mt-2 ${showModal ? "d-block" : "d-none"}`} role="alert">
-                        <h6 className="m-0">{validtationMessage}</h6>
-                      </div>
-                      <form onSubmit={handleSubmit} onClick={() => { setShowModal(false); }}>
+                      <form onSubmit={handleSubmit}>
                         {/* Row 1 */}
                         <div className="row">
                           <div className="col-md-4 mb-3">
                             <label htmlFor="deptCode" className="form-label">
                               Department Code
                             </label>
-                            <select className={`form-control ${errors.deptCode ? "is-invalid" : ""}`} id="deptCode" name="deptCode"
-                              value={formData.deptCode} onChange={handleChange} required    >
+                            <select
+                              className={`form-control ${
+                                errors.deptCode ? "is-invalid" : ""
+                              }`}
+                              id="deptCode"
+                              name="deptCode"
+                              value={formData.deptCode}
+                              onChange={handleChange}
+                              required
+                            >
                               <option value="">Select Department</option>
                               {departmentData.map((dept) => (
                                 <option key={dept.id} value={dept.deptCode}>
@@ -172,8 +246,16 @@ const DocterFormComponent = (props) => {
                               Doctor Name
                             </label>
                             <input
-                              type="text" className={`form-control ${errors.doctorName ? "is-invalid" : ""}`} id="doctorName" name="doctorName"
-                              value={formData.doctorName} onChange={handleChange} required />
+                              type="text"
+                              className={`form-control ${
+                                errors.doctorName ? "is-invalid" : ""
+                              }`}
+                              id="doctorName"
+                              name="doctorName"
+                              value={formData.doctorName}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.doctorName && (
                               <div className="invalid-feedback">
                                 Doctor Name is required.
@@ -185,8 +267,17 @@ const DocterFormComponent = (props) => {
                             <label htmlFor="drNameFl" className="form-label">
                               Doctor Name (FL)
                             </label>
-                            <input type="text" className={`form-control ${errors.drNameFl ? "is-invalid" : ""}`} id="drNameFl" name="drNameFl" value={formData.drNameFl}
-                              onChange={handleChange} required />
+                            <input
+                              type="text"
+                              className={`form-control ${
+                                errors.drNameFl ? "is-invalid" : ""
+                              }`}
+                              id="drNameFl"
+                              name="drNameFl"
+                              value={formData.drNameFl}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.drNameFl && (
                               <div className="invalid-feedback">
                                 Doctor Name (FL) is required.
@@ -201,8 +292,16 @@ const DocterFormComponent = (props) => {
                             <label htmlFor="drGender" className="form-label">
                               Gender
                             </label>
-                            <select className={`form-control ${errors.drGender ? "is-invalid" : ""}`} id="drGender" name="drGender"
-                              value={formData.drGender} onChange={handleChange} required     >
+                            <select
+                              className={`form-control ${
+                                errors.drGender ? "is-invalid" : ""
+                              }`}
+                              id="drGender"
+                              name="drGender"
+                              value={formData.drGender}
+                              onChange={handleChange}
+                              required
+                            >
                               <option value="">Select Gender</option>
                               <option value="Male">Male</option>
                               <option value="Female">Female</option>
@@ -219,8 +318,17 @@ const DocterFormComponent = (props) => {
                             <label htmlFor="drLicNo" className="form-label">
                               License No
                             </label>
-                            <input type="text" className={`form-control ${errors.drLicNo ? "is-invalid" : ""}`}
-                              id="drLicNo" name="drLicNo" value={formData.drLicNo} onChange={handleChange} required />
+                            <input
+                              type="text"
+                              className={`form-control ${
+                                errors.drLicNo ? "is-invalid" : ""
+                              }`}
+                              id="drLicNo"
+                              name="drLicNo"
+                              value={formData.drLicNo}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.drLicNo && (
                               <div className="invalid-feedback">
                                 License No is required.
@@ -235,8 +343,17 @@ const DocterFormComponent = (props) => {
                             >
                               Doctor Designation
                             </label>
-                            <input type="text" className={`form-control ${errors.drDesignation ? "is-invalid" : ""}`} id="drDesignation"
-                              name="drDesignation" value={formData.drDesignation} onChange={handleChange} required />
+                            <input
+                              type="text"
+                              className={`form-control ${
+                                errors.drDesignation ? "is-invalid" : ""
+                              }`}
+                              id="drDesignation"
+                              name="drDesignation"
+                              value={formData.drDesignation}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.drDesignation && (
                               <div className="invalid-feedback">
                                 Doctor Designation is required.
@@ -254,8 +371,17 @@ const DocterFormComponent = (props) => {
                             >
                               Doctor Designation (FL)
                             </label>
-                            <input type="text" className={`form-control ${errors.drDesignationFl ? "is-invalid" : ""}`} id="drDesignationFl"
-                              name="drDesignationFl" value={formData.drDesignationFl} onChange={handleChange} required />
+                            <input
+                              type="text"
+                              className={`form-control ${
+                                errors.drDesignationFl ? "is-invalid" : ""
+                              }`}
+                              id="drDesignationFl"
+                              name="drDesignationFl"
+                              value={formData.drDesignationFl}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.drDesignationFl && (
                               <div className="invalid-feedback">
                                 Doctor Name (FL) is required.
@@ -263,9 +389,23 @@ const DocterFormComponent = (props) => {
                             )}
                           </div>
                           <div className="col-md-4 mb-3">
-                            <label htmlFor="drQualifications" className="form-label"     >    Doctor Qualifications    </label>
-                            <input type="text" className={`form-control ${errors.drQualifications ? "is-invalid" : ""}`}
-                              id="drQualifications" name="drQualifications" value={formData.drQualifications} onChange={handleChange} required />
+                            <label
+                              htmlFor="drQualifications"
+                              className="form-label"
+                            >
+                              Doctor Qualifications
+                            </label>
+                            <input
+                              type="text"
+                              className={`form-control ${
+                                errors.drQualifications ? "is-invalid" : ""
+                              }`}
+                              id="drQualifications"
+                              name="drQualifications"
+                              value={formData.drQualifications}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.drQualifications && (
                               <div className="invalid-feedback">
                                 Doctor Qualifications are required.
@@ -274,9 +414,23 @@ const DocterFormComponent = (props) => {
                           </div>
 
                           <div className="col-md-4 mb-3">
-                            <label htmlFor="drQualificationsFl" className="form-label"  >  Doctor Qualifications (FL)  </label>
-                            <input type="text" className={`form-control ${errors.drQualificationsFl ? "is-invalid" : ""}`} id="drQualificationsFl"
-                              name="drQualificationsFl" value={formData.drQualificationsFl} onChange={handleChange} required />
+                            <label
+                              htmlFor="drQualificationsFl"
+                              className="form-label"
+                            >
+                              Doctor Qualifications (FL)
+                            </label>
+                            <input
+                              type="text"
+                              className={`form-control ${
+                                errors.drQualificationsFl ? "is-invalid" : ""
+                              }`}
+                              id="drQualificationsFl"
+                              name="drQualificationsFl"
+                              value={formData.drQualificationsFl}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.drQualificationsFl && (
                               <div className="invalid-feedback">
                                 Doctor Qualifications (FL) are required.
@@ -291,8 +445,17 @@ const DocterFormComponent = (props) => {
                             <label htmlFor="drSrtOrd" className="form-label">
                               Sort Order
                             </label>
-                            <input type="number" className={`form-control ${errors.drSrtOrd ? "is-invalid" : ""}`} id="drSrtOrd"
-                              name="drSrtOrd" value={formData.drSrtOrd} onChange={handleChange} required />
+                            <input
+                              type="number"
+                              className={`form-control ${
+                                errors.drSrtOrd ? "is-invalid" : ""
+                              }`}
+                              id="drSrtOrd"
+                              name="drSrtOrd"
+                              value={formData.drSrtOrd}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.drSrtOrd && (
                               <div className="invalid-feedback">
                                 Sort Order is required.
@@ -301,9 +464,23 @@ const DocterFormComponent = (props) => {
                           </div>
 
                           <div className="col-md-4 mb-3">
-                            <label htmlFor="nationalityCode" className="form-label"   >    Nationality Code           </label>
-                            <select type="number" className={`form-control ${errors.nationalityCode ? "is-invalid" : ""}`} id="nationalityCode"
-                              name="nationalityCode" value={formData.nationalityCode} onChange={handleChange} required   >
+                            <label
+                              htmlFor="nationalityCode"
+                              className="form-label"
+                            >
+                              Nationality Code
+                            </label>
+                            <select
+                              type="number"
+                              className={`form-control ${
+                                errors.nationalityCode ? "is-invalid" : ""
+                              }`}
+                              id="nationalityCode"
+                              name="nationalityCode"
+                              value={formData.nationalityCode}
+                              onChange={handleChange}
+                              required
+                            >
                               <option value="">Select Nationality Code</option>
                               {nationalityData.map((nationality) => (
                                 <option
@@ -321,9 +498,20 @@ const DocterFormComponent = (props) => {
                             )}
                           </div>
                           <div className="col-md-4 mb-3">
-                            <label htmlFor="drImg" className="form-label">    Doctor Image (URL)        </label>
-                            <input type="url" className={`form-control ${errors.drImg ? "is-invalid" : ""}`} id="drImg"
-                              name="drImg" value={formData.drImg} onChange={handleChange} required />
+                            <label htmlFor="drImg" className="form-label">
+                              Doctor Image (URL)
+                            </label>
+                            <input
+                              type="url"
+                              className={`form-control ${
+                                errors.drImg ? "is-invalid" : ""
+                              }`}
+                              id="drImg"
+                              name="drImg"
+                              value={formData.drImg}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.drImg && (
                               <div className="invalid-feedback">
                                 Doctor Image URL is required.
@@ -335,9 +523,23 @@ const DocterFormComponent = (props) => {
                         {/* Active Status */}
                         <div className="row">
                           <div className="col-md-4 mb-3">
-                            <label htmlFor="costCenterCode" className="form-label" >  Cost Center Code         </label>
-                            <input type="text" className={`form-control ${errors.costCenterCode ? "is-invalid" : ""}`} id="costCenterCode"
-                              name="costCenterCode" value={formData.costCenterCode} onChange={handleChange} required />
+                            <label
+                              htmlFor="costCenterCode"
+                              className="form-label"
+                            >
+                              Cost Center Code
+                            </label>
+                            <input
+                              type="text"
+                              className={`form-control ${
+                                errors.costCenterCode ? "is-invalid" : ""
+                              }`}
+                              id="costCenterCode"
+                              name="costCenterCode"
+                              value={formData.costCenterCode}
+                              onChange={handleChange}
+                              required
+                            />
                             {errors.costCenterCode && (
                               <div className="invalid-feedback">
                                 Cost Center Code is required.
@@ -345,26 +547,34 @@ const DocterFormComponent = (props) => {
                             )}
                           </div>
                           <div className="col-md-4 mb-3">
-                            <label htmlFor="drActive" className="form-label">     Active      </label>
-                            <select className="form-control" id="drActive" name="drActive" value={formData.drActive} onChange={handleChange}  >
+                            <label htmlFor="drActive" className="form-label">
+                              Active
+                            </label>
+                            <select
+                              className="form-control"
+                              id="drActive"
+                              name="drActive"
+                              value={formData.drActive}
+                              onChange={handleChange}
+                            >
                               <option value="YES">Yes</option>
                               <option value="NO">No</option>
                             </select>
                           </div>
                         </div>
-                        {!isEditMode ? (
+                        {!isEditMode && (
                           <button type="submit" className="btn btn-primary">
                             Create+
                           </button>
-                        ) : (
-                          <>
-                            <button type="button" onClick={handleUpdate} className="btn btn-success">
-                              Update
-                            </button>
-                            <button type="button" onClick={() => { setIsEditMode(false); setShowModal(false); clearForm(); }} className=" ms-4 btn btn-secondary">
-                              Cancel
-                            </button>
-                          </>
+                        )}
+                        {isEditMode && (
+                          <button
+                            type="button"
+                            onClick={() => handleUpdate()}
+                            className="btn btn-success"
+                          >
+                            Update
+                          </button>
                         )}
                         <button
                           type="button"
