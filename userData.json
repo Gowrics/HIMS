@@ -37,6 +37,13 @@
       "email": "manics213@gmail.com",
       "password": "11aa11aa",
       "confirmPassword": "11aa11aa"
+    },
+    {
+      "id": "22b3",
+      "name": "Manisds",
+      "email": "sdsdds@gmail.com",
+      "password": "aaasss",
+      "confirmPassword": "aaasss"
     }
   ]
 }

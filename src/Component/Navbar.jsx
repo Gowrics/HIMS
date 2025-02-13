@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../assets/healthcare.png";
-import { UserContext } from "../FormContext";
+import { UserContext } from "../Context/Context";
+
 
 const Navbar = () => {
   const { setSingleUser, setUserData, singleUser, setUserAuth, UserAuth } =
@@ -55,7 +56,7 @@ const Navbar = () => {
         >
           <ul className="navbar-nav  ">
             <li className="nav-item">
-              <Link className="nav-link" to="/" onClick={handleMenuCollapse}>
+              <Link className="nav-link" to="/home" onClick={handleMenuCollapse}>
                 Home
               </Link>
             </li>
@@ -109,7 +110,9 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+      <Outlet></Outlet>
     </nav>
+
   );
 };
 

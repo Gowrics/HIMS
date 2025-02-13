@@ -2,7 +2,8 @@ import React, { useContext, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { UserContext } from "../FormContext";
+import { UserContext } from "../Context/Context";
+
 
 const Signup = () => {
     const {
@@ -29,7 +30,9 @@ const Signup = () => {
       console.log("Form Data:", formData);
        
       axios
-      .post("http://localhost:8084/users",formData)
+      // .post("http://localhost:8084/users",formData)
+       .post("http://localhost:8005/userData",formData)
+
       .then((res)=>{
         console.log("form submitted",res.data)
       })

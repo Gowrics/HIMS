@@ -9,7 +9,9 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { MdMedicalServices, MdHealthAndSafety } from "react-icons/md";
-import { UserContext } from "../FormContext";
+import { UserContext } from "../Context/Context";
+
+
 
 const Leftsidebar = () => {
   const { setSingleUser, setUserData, singleUser, setUserAuth, UserAuth } =
@@ -37,73 +39,38 @@ const Leftsidebar = () => {
       <div className="container-fluid d-flex flex-column">
         <ul className="nav flex-column w-100">
           <li className="nav-item mb-3">
-            <Link
-              className="nav-link d-flex align-items-center"
-              to="/"
-              onClick={handleMenuCollapse}
-            >
-              <FaHome className="me-2" />
-              <span className="d-none d-lg-inline">Home</span>
+            <Link className="nav-link d-flex align-items-center" to="/home" onClick={handleMenuCollapse} >
+              <FaHome className="me-2" />   <span className="d-none d-lg-inline">Home</span>
             </Link>
           </li>
           <li className="nav-item mb-3">
-            <Link
-              className="nav-link d-flex align-items-center"
-              to="/departmentview"
-              onClick={handleMenuCollapse}
-            >
-              <FaHospital className="me-2" />
-              <span className="d-none d-lg-inline">Departments</span>
+            <Link className="nav-link d-flex align-items-center" to="/departmentview" onClick={handleMenuCollapse}  >
+              <FaHospital className="me-2" />  <span className="d-none d-lg-inline">Departments</span>
             </Link>
           </li>
           <li className="nav-item mb-3">
-            <Link
-              className="nav-link d-flex align-items-center"
-              to="/docterview"
-              onClick={handleMenuCollapse}
-            >
-              <FaUserMd className="me-2" />
-              <span className="d-none d-lg-inline">Doctors</span>
+            <Link className="nav-link d-flex align-items-center" to="/docterview" onClick={handleMenuCollapse} >
+              <FaUserMd className="me-2" />  <span className="d-none d-lg-inline">Doctors</span>
             </Link>
           </li>
           {UserAuth && (
             <li className="nav-item dropdown mb-3">
-              <Link
-                className="nav-link dropdown-toggle d-flex align-items-center"
-                to="#"
-                id="servicesDropdown"
-                role="button"
-                data-bs-toggle="dropdown" // Required attribute
-                aria-expanded="false"
-              >
-                <MdMedicalServices className="me-2" />
-                <span className="d-none d-lg-inline">HIMS Services</span>
+              <Link className="nav-link dropdown-toggle d-flex align-items-center" to="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"   >
+                <MdMedicalServices className="me-2" />  <span className="d-none d-lg-inline">HIMS Services</span>
               </Link>
               <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
                 <li>
-                  <Link
-                    className="dropdown-item"
-                    to="/nationality"
-                    onClick={handleMenuCollapse}
-                  >
+                  <Link className="dropdown-item" to="/nationality" onClick={handleMenuCollapse}   >
                     Nationality
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className="dropdown-item"
-                    to="/department"
-                    onClick={handleMenuCollapse}
-                  >
+                  <Link className="dropdown-item" to="/department" onClick={handleMenuCollapse}  >
                     Departments
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className="dropdown-item"
-                    to="/docters"
-                    onClick={handleMenuCollapse}
-                  >
+                  <Link className="dropdown-item" to="/docters" onClick={handleMenuCollapse} >
                     Doctors
                   </Link>
                 </li>
@@ -111,154 +78,119 @@ const Leftsidebar = () => {
             </li>
           )}
           <li className="nav-item dropdown mb-3">
-            <Link
-              className="nav-link dropdown-toggle d-flex align-items-center"
-              to="#"
-              id="servicesDropdown"
-              role="button"
-              data-bs-toggle="dropdown" // Required attribute
-              aria-expanded="false"
-            >
+            <Link className="nav-link dropdown-toggle d-flex align-items-center" to="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
               <MdHealthAndSafety className="me-2" />
               <span className="d-none d-lg-inline">Patient Services</span>
             </Link>
             <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/patientmaintype"
-                  onClick={handleMenuCollapse}
-                >
+                <Link className="dropdown-item" to="/patientmaintype" onClick={handleMenuCollapse}  >
                   Patient Main Type
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/patientsubtype"
-                  onClick={handleMenuCollapse}
-                >
+                <Link className="dropdown-item" to="/patientsubtype" onClick={handleMenuCollapse}    >
                   Patient Sub Type
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/thirdpartyhead"
-                  onClick={handleMenuCollapse}
-                >
+                <Link className="dropdown-item" to="/thirdpartyhead" onClick={handleMenuCollapse}    >
                   ThirdParty Head
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/policiessubpatient"
-                  onClick={handleMenuCollapse}
-                >
+                <Link className="dropdown-item" to="/policiessubpatient" onClick={handleMenuCollapse}   >
                   Policies Sub type patient{" "}
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/subpoliciespatient"
-                  onClick={handleMenuCollapse}
-                >
+                <Link className="dropdown-item" to="/subpoliciespatient" onClick={handleMenuCollapse} >
                   Sub Policies type patient{" "}
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/copaycoverage"
-                  onClick={handleMenuCollapse}
-                >
+                <Link className="dropdown-item" to="/copaycoverage" onClick={handleMenuCollapse}  >
                   Co Payment & Coverage
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/pricelist"
-                  onClick={handleMenuCollapse}
-                >
-               Price List
+                <Link className="dropdown-item" to="/pricelist" onClick={handleMenuCollapse}    >
+                  Price List
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/pricelistdetails"
-                  onClick={handleMenuCollapse}
-                >
-               Price List Details 
+                <Link className="dropdown-item" to="/pricelistdetails" onClick={handleMenuCollapse} >
+                  Price List Details
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/pricelistdeprule"
-                  onClick={handleMenuCollapse}
-                >
-               Price List Dep Rule
+                <Link className="dropdown-item" to="/pricelistdeprule" onClick={handleMenuCollapse}   >
+                  Price List Dep Rule
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/pricedetailsdeprule"
-                  onClick={handleMenuCollapse}
-                >
-               Price details Dep Rule
+                <Link className="dropdown-item" to="/pricedetailsdeprule" onClick={handleMenuCollapse}   >
+                  Price details Dep Rule
                 </Link>
               </li>
               <li>
-                <Link
-                  className="dropdown-item"
-                  to="/servicecategory"
-                  onClick={handleMenuCollapse}
-                >
-             servicecategory
+                <Link className="dropdown-item" to="/servicecategory" onClick={handleMenuCollapse}    >
+                  servicecategory
                 </Link>
               </li>
-              
-                <li>
-                    <Link
-                  className="dropdown-item"
-                  to="/cptcodes"
-                  onClick={handleMenuCollapse}
-                >
-             cptcodes
+
+              <li>
+                <Link className="dropdown-item" to="/cptcodes" onClick={handleMenuCollapse}  >
+                  cptcodes
                 </Link>
               </li>
               <li>
-                    <Link
-                  className="dropdown-item"
-                  to="/loinccodes"
-                  onClick={handleMenuCollapse}
-                >
-             loinccodes
+                <Link className="dropdown-item" to="/loinccodes" onClick={handleMenuCollapse} >
+                  loinccodes
                 </Link>
               </li>
               <li>
-                    <Link
-                  className="dropdown-item"
-                  to="/servicemaster"
-                  onClick={handleMenuCollapse}
-                >
-             service master
+                <Link className="dropdown-item" to="/servicemaster" onClick={handleMenuCollapse}    >
+                  service master
                 </Link>
               </li>
             </ul>
           </li>
-          
+
+          <li className="nav-item dropdown mb-3">
+            <Link className="nav-link dropdown-toggle d-flex align-items-center" to="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"   >
+              <MdMedicalServices className="me-2" />  <span className="d-none d-lg-inline">Patient Info</span>
+            </Link>
+            <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
+              <li>
+                <Link className="dropdown-item" to="/doctypemaster" onClick={handleMenuCollapse}   >
+                  Document type
+                </Link>
+              </li>
+              <li>
+                <Link className="dropdown-item" to="/patientdatadaster" onClick={handleMenuCollapse}  >
+                  Patient Info data
+                </Link>
+              </li>
+              <li>
+                <Link className="dropdown-item" to="/patientregdocs" onClick={handleMenuCollapse} >
+                  Patient Registration Document
+                </Link>
+              </li>
+              <li>
+                <Link className="dropdown-item" to="/patientchgdep" onClick={handleMenuCollapse} >
+                  Patient Charge grp Dep
+                </Link>
+              </li>
+              <li>
+                <Link className="dropdown-item" to="/patientsystemnotes" onClick={handleMenuCollapse} >
+                  Patient system Notes
+                </Link>
+              </li>
+            </ul>
+          </li>
           <li className="nav-item">
-            <Link
-              className="nav-link d-flex align-items-center"
-              to="/about"
-              onClick={handleMenuCollapse}
-            >
+            <Link className="nav-link d-flex align-items-center" to="/about" onClick={handleMenuCollapse}  >
               <FaInfoCircle className="me-2" />
               <span className="d-none d-lg-inline">About</span>
             </Link>
@@ -274,10 +206,7 @@ const Leftsidebar = () => {
               <span className="d-none d-lg-inline">Sign Out</span>
             </button>
           ) : (
-            <Link
-              className="btn btn-dark btn-sm w-100 d-flex align-items-center justify-content-center"
-              to="/signin"
-            >
+            <Link className="btn btn-dark btn-sm w-100 d-flex align-items-center justify-content-center" to="/signin"    >
               <FaSignInAlt className="me-2" />
               <span className="d-none d-lg-inline">Sign In</span>
             </Link>

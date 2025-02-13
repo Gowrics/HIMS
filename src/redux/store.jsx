@@ -1,12 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-import nationalityReducer from "./slices/nationalitySlice";
-import departmentReducer from "./slices/departmentSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import dataReducer from './slices/dataSlice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    nationality: nationalityReducer,
-    department: departmentReducer,
-  },
+    data: dataReducer,
+  }
 });
-
-export default store;

@@ -96,7 +96,7 @@ section .firsthead h6 {
   flex-direction: column;
   justify-self: center;
   align-items: center;
-}
+  }
 .pagehead h6 {
   color: #E22454;
   font-size: 27px;
@@ -173,7 +173,7 @@ section .firsthead .btn:hover {
                        /*------------------ cards quality------------------- */
 
 .cards {
-  margin-top: 200px;
+
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
