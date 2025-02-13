@@ -1,7 +1,9 @@
 {
   "files": {
-    "main.css": "/HIMS/static/css/main.d73dbcc2.css",
-    "main.js": "/HIMS/static/js/main.e6b32af8.js",
+    "main.css": "/HIMS/static/css/main.5dac9b75.css",
+    "main.js": "/HIMS/static/js/main.4302c74f.js",
+    "static/js/213.94098256.chunk.js": "/HIMS/static/js/213.94098256.chunk.js",
+    "static/js/455.6b426a8c.chunk.js": "/HIMS/static/js/455.6b426a8c.chunk.js",
     "static/media/banner-img.png": "/HIMS/static/media/banner-img.8eab52a23f3b4af0cfbd.png",
     "static/media/doctor4.jpg": "/HIMS/static/media/doctor4.58fe580891a500783aaa.jpg",
     "static/media/docter1.jpg": "/HIMS/static/media/docter1.d46892244cdce104ac47.jpg",
@@ -13,11 +15,13 @@
     "static/media/doctersimg.jpg": "/HIMS/static/media/doctersimg.8df3a9696c4d9156efdb.jpg",
     "static/media/healthcare.png": "/HIMS/static/media/healthcare.106172eb1d57cfd2a396.png",
     "index.html": "/HIMS/index.html",
-    "main.d73dbcc2.css.map": "/HIMS/static/css/main.d73dbcc2.css.map",
-    "main.e6b32af8.js.map": "/HIMS/static/js/main.e6b32af8.js.map"
+    "main.5dac9b75.css.map": "/HIMS/static/css/main.5dac9b75.css.map",
+    "main.4302c74f.js.map": "/HIMS/static/js/main.4302c74f.js.map",
+    "213.94098256.chunk.js.map": "/HIMS/static/js/213.94098256.chunk.js.map",
+    "455.6b426a8c.chunk.js.map": "/HIMS/static/js/455.6b426a8c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d73dbcc2.css",
-    "static/js/main.e6b32af8.js"
+    "static/css/main.5dac9b75.css",
+    "static/js/main.4302c74f.js"
   ]
 }
