@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { CustomDataTable, filterData, handleDeleteItem, submitForm, updateForm } from "../utils/Actions";
-import { nationalityData, subTypePatientColumn } from "../assets/ArrayData";
 import CustomSelect from "../utils/CustomSelect";
 import ExportData from "../utils/Export";
 import ExportData1 from "../utils/Export1";
@@ -9,7 +8,7 @@ import { FormContext } from "../Context/Context";
 import { patientDataMasterDataColumn } from "../utils/ArrayData1";
 
 const PatientDataMaster = () => {
-  const { patientDataMasterData, setPatientDataMasterData,patientsSubTypeData, BASE_URL, setValidtationMessage, } = useContext(FormContext);
+  const { patientDataMasterData, nationalityData,setPatientDataMasterData,patientsSubTypeData, BASE_URL, setValidtationMessage, } = useContext(FormContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [notEditMode, setNotEditMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,7 +21,7 @@ const PatientDataMaster = () => {
     patientNameAr: "",
     patientMobileCountryCode: "", //number
     patientMobileNo: "",   //number
-    nationality: {
+    nationalityCode: {
       nationalityCode: 0,
     },
     patientDateOfBirth: "", //date
@@ -49,8 +48,8 @@ const PatientDataMaster = () => {
       if (name === "nationalityCode") {
         return {
           ...prevData,
-          nationality: {
-            ...prevData.nationality,
+          nationalityCode: {
+            ...prevData.nationalityCode,
             nationalityCode: value,
           },
         };
@@ -66,13 +65,13 @@ const PatientDataMaster = () => {
     // Ensure the payload matches the API's expected format
     const updatedFormData = {
       ...formData,
-      nationality: {
-        ...formData.nationality,
-        nationalityCode: Number(formData.nationality.nationalityCode),
+      nationalityCode: {
+        ...formData.nationalityCode,
+        nationalityCode: Number(formData.nationalityCode.nationalityCode),
       },
       patientMobileCountryCode: Number(formData.patientMobileCountryCode),
       patientMobileNo: Number(formData.patientMobileNo),
-      patientCode: Number(formData.patientCode),
+   
     };
 
     console.log("Payload sent to API:", updatedFormData);
@@ -102,8 +101,8 @@ const PatientDataMaster = () => {
         active: itemToUpdate.active,
         blackListed: itemToUpdate.blackListed,
 
-        nationality: {
-          nationalityCode: itemToUpdate.nationality?.nationalityCode || 0,
+        nationalityCode: {
+          nationalityCode: itemToUpdate.nationalityCode?.nationalityCode || 0,
         },
       });
       setIsEditMode(true); // Show update form
@@ -149,7 +148,7 @@ return (
             <label htmlFor="patientCode" className="form-label">
               patientCode
             </label>
-            <input className="form-control" type="number" id="patientCode" name="patientCode" value={formData.patientCode} onChange={handleChange} required   ></input>
+            <input className="form-control" type="text" id="patientCode" name="patientCode" value={formData.patientCode} onChange={handleChange} required   ></input>
           </div>
           <div className="col-md-4">
             <label htmlFor="patientName" className="form-label">
@@ -225,7 +224,7 @@ return (
               valueKey="nationalityCode"   // Dynamic value key
               labelKey="nationality"
               data={nationalityData}  // Pass the raw data, no need to map
-              value={formData.nationality.nationalityCode}
+              value={formData.nationalityCode.nationalityCode}
               onChange={handleChange}
               isDisabled={notEditMode}
               placeholder="Select an option"
@@ -294,33 +293,3 @@ return (
 
 
 export default PatientDataMaster
-
-
-
- //     Patient_code string 100 not null primary key
-    // Patient_name string 200 not null
-    // Patient_name_ar string 500 not null
-    // Patient_mobile_country_code number not null
-    // Patient_mobile_no number not null
-    // Nationality_code number(10) not null -- from table nationality_master
-    // Patient_date_of_birth date not null,
-    // Country_Id_no varchar2(20) not null,
-    // Passport_no varchar2(50) not null,
-    // Occupation varchar2(10) not null,
-    // Vip_patient (Y/N) not null
-    // Active (Y/N) not null
-    // Black_listed (Y/N) not null
-
-    const updatedData = {
-      // schaName: convertEmptyToNull(formData.schaName).trim(),
-      // schgCode: convertEmptyToNull(formData.schgCode),
-      // active: convertEmptyToNull(formData.active),
-      // clinicCredit: convertEmptyToNull(formData.clinicCredit),
-      // phCredit: convertEmptyToNull(formData.phCredit),
-      // optCredit: convertEmptyToNull(formData.optCredit),
-      // otherCredit: convertEmptyToNull(formData.otherCredit),
-      // icdVersion: convertEmptyToNull(formData.icdVersion),
-      // toothSystem: convertEmptyToNull(formData.toothSystem),
-      // // headCharge: { hchgCode: convertEmptyToNull(formData?.headCharge?.hchgCode) },
-      // // priceList: { priceListCode: convertEmptyToNull(formData?.priceList?.priceListCode) },
-    };

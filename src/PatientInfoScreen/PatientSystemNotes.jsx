@@ -1,27 +1,26 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
-import Select from "react-select";
-import { thirdPartyHeadDataColumn } from "../assets/ArrayData";
 import { CustomDataTable, filterData, handleDeleteItem, submitForm, updateForm } from "../utils/Actions";
 import CustomSelect from "../utils/CustomSelect";
 import ExportData from "../utils/Export";
 import { FormContext } from "../Context/Context";
+import { patientSystemNotesDataColumn } from "../utils/ArrayData1";
 const PatientSystemNotes = () => {
-
+  
   const {
-    setValidtationMessage, BASE_URL,
-    thirdPartyHeadData, setThirdPartyHead, patientsSubTypeData, } = useContext(FormContext);
+    setValidtationMessage, patientDataMasterData,BASE_URL,patientSystemNotesData, setPatientSystemNotesData,
+     patientsSubTypeData, } = useContext(FormContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [notEditMode, setNotEditMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [alert, setAlert] = useState({ show: false, type: "", message: "" });
   const initialFormData = {
-    //tpaCode
-    tpaName: "",
-    active: "",
-    subcharge: {
-      schgCode: "",
+    //id
+    patientDataMaster: {
+      patientCode: null,
     },
+    notesAddedBy: "",
+    active: "",
+    notesAddedDatetime:""
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -33,53 +32,45 @@ const PatientSystemNotes = () => {
   // Handle patientMainTypeData changes (for select input)
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "schgCode") {
-      setFormData((prevData) => ({
-        ...prevData,
-        subcharge: {
-          ...prevData.subcharge,
-          schgCode: value,
-        },
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-
-    }
+  
+    setFormData((prevData) => {
+      if (name === "patientCode") {
+        return {
+          ...prevData,
+          patientDataMaster: {
+            ...prevData.patientDataMaster,
+            patientCode: value,
+          },
+        };
+      } else {
+        return {
+          ...prevData,
+          [name]: value,
+        };
+      }
+    });
   };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Ensure the payload matches the API's expected format
-    const updatedFormData = {
-      ...formData,
-      subcharge: {
-        ...formData.subcharge,
-        schgCode: (formData.subcharge.schgCode), // Convert schgCode to a number
-      },
-      active: formData.active || null,
-      tpaName: (formData.tpaName).trim()
-    };
-
-    console.log("Payload sent to API:", updatedFormData);
-    const url = `${BASE_URL}tpahead/create`; // The URL for form submission
-    submitForm(url, updatedFormData, setThirdPartyHead, setValidtationMessage, setAlert, clearForm);
+    console.log("Payload sent to API:", formData);
+    const url = `${BASE_URL}patientSystemNotes/create`; // The URL for form submission
+    submitForm(url, formData, setPatientSystemNotesData, setValidtationMessage, setAlert, clearForm);
 
   };
   
   const handleUpdateData = (id) => {
     setNotEditMode(true)
-    const itemToUpdate = thirdPartyHeadData.find((item) => item.tpaCode === id);
+    const itemToUpdate = patientSystemNotesData.find((item) => item.tpaCode === id);
 
     if (itemToUpdate) {
       setFormData({
-        tpaCode: itemToUpdate.tpaCode,
-        tpaName: itemToUpdate.tpaName,
+        notesAddedBy: itemToUpdate.notesAddedBy,
+        notesAddedDatetime: itemToUpdate.notesAddedDatetime,
         active: itemToUpdate.active,
-        subcharge: {
-          schgCode: itemToUpdate.subcharge?.schgCode || 0,
+        patientDataMaster: {
+          patientCode: itemToUpdate.patientDataMaster?.patientCode || 0,
         },
       });
       setIsEditMode(true); // Show update form
@@ -91,39 +82,38 @@ const PatientSystemNotes = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: `${BASE_URL}tpahead/delete`, setValidtationMessage, setAlert,
-      data: thirdPartyHeadData,
-      setData: setThirdPartyHead,
-      itemKey: "tpaCode", // Key to identify the item in the dataset
+      url: `${BASE_URL}patientSystemNotes/delete`, setValidtationMessage, setAlert,
+      data: patientSystemNotesData,
+      setData: setPatientSystemNotesData,
+      itemKey: "id", // Key to identify the item in the dataset
     });
   };
 
   const handleUpdate = () => {
 
     const {
-      tpaName,
-      tpaCode,
+    
+      notesAddedBy,
+      notesAddedDatetime,
       active,
-      subcharge: { schgCode },
+      patientDataMaster: { patientCode },
     } = formData;
     const updatedData = {
-      tpaName: tpaName.trim(),
-      tpaCode,
+      notesAddedBy,
+      notesAddedDatetime,
       active,
-      subcharge: { schgCode },
+      patientDataMaster: { patientCode },
     };
     console.log(formData);
     console.log(updatedData);
-    const url = `${BASE_URL}tpahead/update`;
+    const url = `${BASE_URL}patientSystemNotes/update`;
     const id = formData.tpaCode; // The URL for form submission
-    updateForm(url, id, updatedData, setThirdPartyHead, setValidtationMessage, setIsEditMode, setNotEditMode, clearForm, setAlert);
-
+    updateForm(url, id, updatedData, setPatientSystemNotesData, setValidtationMessage, setIsEditMode, setNotEditMode, clearForm, setAlert);
   };
-
   return (
     <>
       <div className="container page-content">
-        <h2>THIRD PARTY AUDITORS FOR A SUB CLASSIFICATION PATIENT TYPE</h2>
+        <h2>Patient_System_notes </h2>
         {alert.show && (
           <div className={`alert alert-${alert.type}`} role="alert">
             {alert.message}
@@ -133,10 +123,10 @@ const PatientSystemNotes = () => {
           {/* Row 1 */}
           <div className="row mb-3">
             <div className="col-md-4">
-              <label htmlFor="tpaName" className="form-label">
-                Tpa Name
+              <label htmlFor="notesAddedBy" className="form-label">
+              notesAddedBy Name
               </label>
-              <input className="form-control" id="tpaName" name="tpaName" value={formData.tpaName} onChange={handleChange} required />
+              <input className="form-control" id="notesAddedBy" name="notesAddedBy" value={formData.notesAddedBy} onChange={handleChange} required />
             </div>
 
             <div className="col-md-4">
@@ -158,12 +148,12 @@ const PatientSystemNotes = () => {
       Patient Sub Type (schgCode)
     </label>
             <CustomSelect
-              id="schgCode"
-              name="schgCode"
-               valueKey="schgCode"   // Dynamic value key
-              labelKey="schaName"   
-              data={patientsSubTypeData}  // Pass the raw data, no need to map
-              value={formData.subcharge.schgCode}
+              id="patientCode"
+              name="patientCode"
+               valueKey="patientCode"   // Dynamic value key
+              labelKey="patientName"   
+              data={patientDataMasterData}  // Pass the raw data, no need to map
+              value={formData.patientDataMaster.patientCode}
               onChange={handleChange}
               isDisabled={notEditMode}
               placeholder="Select an option"
@@ -182,15 +172,14 @@ const PatientSystemNotes = () => {
         
         <input     type="text"      placeholder="Search hchgName"    value={searchTerm}    onChange={(e) => setSearchTerm(e.target.value)}     className="form-control my-2"     />
         <CustomDataTable
-          columns={thirdPartyHeadDataColumn(handleUpdateData, handleDelete)}
-          data={filterData(thirdPartyHeadData, searchTerm, ["tpaName", "tpaCode"],)}
+          columns={patientSystemNotesDataColumn(handleUpdateData, handleDelete)}
+          data={filterData(patientSystemNotesData, searchTerm, ["tpaName", "tpaCode"],)}
           paginationPerPage={5}
           paginationRowsPerPageOptions={[5, 10, 15, 20]}
         />
-     <ExportData   url={`${BASE_URL}tpahead/export`}   fileName="TPA_head"   previewData={patientsSubTypeData} />
+       <ExportData   url={`${BASE_URL}patientSystemNotes/export`}   fileName="Patient_System_notes"   previewData={patientsSubTypeData} />
       </div>
     </>
   );
 };
-
 export default PatientSystemNotes

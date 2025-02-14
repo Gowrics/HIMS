@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation  } from "react-router-dom";
 import { UserContext } from "../Context/Context";
 
 const Signin = () => {
@@ -12,7 +12,8 @@ const Signin = () => {
         userData, setUserData
       } = useContext(UserContext);
 
-      const navigate =useNavigate();
+      const navigate = useNavigate();
+      const location = useLocation();
 
   const handleChange = (e) => {
     setUserData({
@@ -29,8 +30,11 @@ const Signin = () => {
             email: "",
             password: "",
           });
-      navigate("/"); // Navigate to home page on successful login
-    }
+          const redirectTo = localStorage.getItem("redirectAfterLogin") || "/home";
+          localStorage.removeItem("redirectAfterLogin"); // Clear after use
+    
+          navigate(redirectTo); // Redirect to the original page
+          }
   };
 
  

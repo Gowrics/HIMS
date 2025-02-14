@@ -149,11 +149,26 @@ export const FormProvider = ({ children }) => {
     setserviceCategoryData
   );
   useFetchData( ` ${BASE_URL }doctor/getAll`, setDocterData);
-
+//------------------------------
   
   useFetchData(
     ` ${BASE_URL }documentMaster/getAll`,
     setDocTypeMasterData
+  );
+  
+  useFetchData(
+    ` ${BASE_URL }patientDataMaster/getAll`,
+    setPatientDataMasterData
+  );
+  
+  useFetchData(
+    ` ${BASE_URL }patientRegDocs/getAll`,
+    setPatientRegDocsData
+  );
+  
+  useFetchData(
+    ` ${BASE_URL }patientChgDep/getAll`,
+    setPatientChgDepData
   );
   return (
     <FormContext.Provider
@@ -183,7 +198,9 @@ export const FormProvider = ({ children }) => {
         formData, setFormData,
         docTypeMasterData, setDocTypeMasterData,
         patientDataMasterData, setPatientDataMasterData,
-        patientRegDocsData, setPatientRegDocsData
+        patientRegDocsData, setPatientRegDocsData,
+        patientChgDepData, setPatientChgDepData,
+        patientSystemNotesData, setPatientSystemNotesData
       }}
     >
       {children}

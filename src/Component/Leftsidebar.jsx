@@ -22,7 +22,7 @@ const Leftsidebar = () => {
   const handleLogout = () => {
     setSingleUser({});
     setUserAuth(false);
-    navigate("/");
+    navigate("/home");
     setUserData({
       username: "",
       password: "",
@@ -38,7 +38,7 @@ const Leftsidebar = () => {
     <nav className="navbar navbar-dark vh-70 d-flex flex-column align-items-start">
       <div className="container-fluid d-flex flex-column">
         <ul className="nav flex-column w-100">
-          <li className="nav-item mb-3">
+          {/* <li className="nav-item mb-3">
             <Link className="nav-link d-flex align-items-center" to="/home" onClick={handleMenuCollapse} >
               <FaHome className="me-2" />   <span className="d-none d-lg-inline">Home</span>
             </Link>
@@ -52,8 +52,15 @@ const Leftsidebar = () => {
             <Link className="nav-link d-flex align-items-center" to="/docterview" onClick={handleMenuCollapse} >
               <FaUserMd className="me-2" />  <span className="d-none d-lg-inline">Doctors</span>
             </Link>
-          </li>
-          {UserAuth && (
+          </li> 
+            <li className="nav-item">
+            <Link className="nav-link d-flex align-items-center" to="/about" onClick={handleMenuCollapse}  >
+              <FaInfoCircle className="me-2" />
+              <span className="d-none d-lg-inline">About</span>
+            </Link>
+          </li>*/}
+
+       {/*   {UserAuth && ( */}
             <li className="nav-item dropdown mb-3">
               <Link className="nav-link dropdown-toggle d-flex align-items-center" to="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"   >
                 <MdMedicalServices className="me-2" />  <span className="d-none d-lg-inline">HIMS Services</span>
@@ -76,7 +83,7 @@ const Leftsidebar = () => {
                 </li>
               </ul>
             </li>
-          )}
+          {/* )} */}
           <li className="nav-item dropdown mb-3">
             <Link className="nav-link dropdown-toggle d-flex align-items-center" to="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
               <MdHealthAndSafety className="me-2" />
@@ -189,12 +196,7 @@ const Leftsidebar = () => {
               </li>
             </ul>
           </li>
-          <li className="nav-item">
-            <Link className="nav-link d-flex align-items-center" to="/about" onClick={handleMenuCollapse}  >
-              <FaInfoCircle className="me-2" />
-              <span className="d-none d-lg-inline">About</span>
-            </Link>
-          </li>
+        
         </ul>
         <div className="mt-3 w-80">
           {singleUser && Object.keys(singleUser).length > 0 ? (

@@ -6,7 +6,7 @@ import CustomSelect from "../utils/CustomSelect";
 import ExportData from "../utils/Export";
 import ExportData1 from "../utils/Export1";
 import { FormContext } from "../Context/Context";
-import { patientDataMasterDataColumn } from "../utils/ArrayData1";
+import { patientDataMasterDataColumn, patientRegDocsDataColumn } from "../utils/ArrayData1";
 
 const PatientRegDocs = () => {
   const { patientDataMasterData,docTypeMasterData,patientRegDocsData, setPatientRegDocsData, BASE_URL, setValidtationMessage, } = useContext(FormContext);
@@ -14,28 +14,17 @@ const PatientRegDocs = () => {
   const [notEditMode, setNotEditMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [alert, setAlert] = useState({ show: false, type: "", message: "" });
-
-  console.log(docTypeMasterData);
-//   Patient_code -- not null from Patient_data_master table
-// Doc_type_code -- not null from doc_type_master
-// doc_attachment not null this is a url path to an attached file
-// expiry_date date not null
-// Active(Y/N) not null
-// Default (Y/N) not null
-// Passport_link_doc (Y/N) not null
-// Country_id_doc (Y/N) not null
-
   const initialFormData = {
-    patientRegCode:"",
+    //regNo:"",  
     patientDataMaster: {
-      patientCode: 0,
+      patientCode: null,
     },
-    documentMaster: {
-      docTypeCode: 0,
+    docTypeMaster: { 
+      docTypeCode: null,
     },
     docAttachment: "",
     expiryDate: "",
-    default: "", 
+    defaultDoc: "", 
     passportLinkDoc: "", 
     countryIdDoc: "", 
     active: "",
@@ -64,8 +53,8 @@ const PatientRegDocs = () => {
       else if(name === "docTypeCode") {
         return {
           ...prevData,
-          documentMaster: {
-            ...prevData.documentMaster,
+          docTypeMaster: {
+            ...prevData.docTypeMaster,
             docTypeCode: value,
           },
         };
@@ -82,18 +71,20 @@ const PatientRegDocs = () => {
     // Ensure the payload matches the API's expected format
     const updatedFormData = {
       ...formData,
-      patientDataMaster: {
-        ...formData.patientDataMaster,
-        patientCode: Number(formData.patientDataMaster.patientCode),
+      // patientDataMaster: {
+      //   ...formData.patientDataMaster,
+      //   patientCode: Number(formData.patientDataMaster.patientCode),
+      // },
+      docTypeMaster: {
+        ...formData.docTypeMaster,
+        docTypeCode: Number(formData.docTypeMaster.docTypeCode),
       },
-      documentMaster: {
-        ...formData.documentMaster,
-        docTypeCode: Number(formData.documentMaster.docTypeCode),
-      },
+    //  patientRegCode: Number(formData.patientRegCode),
+
       };
 
     console.log("Payload sent to API:", updatedFormData);
-    const url = `${BASE_URL}patientRegDocs/create`; // The URL for form submission
+    const url = `${BASE_URL}patientRegister/create`; // The URL for form submission
     submitForm(url, updatedFormData, setPatientRegDocsData, setValidtationMessage, setAlert, clearForm);
 
   };
@@ -101,36 +92,24 @@ const PatientRegDocs = () => {
   const handleUpdateData = (id) => {
     setNotEditMode(true)
     const itemToUpdate = patientRegDocsData.find(
-      (item) => item.patientRegCode === id
+      (item) => item.regNo === id
     );
 
     if (itemToUpdate) {
-      // patientRegCode:"",
-      // patientDataMaster: {
-      //   patientCode: 0,
-      // },
-      // documentMaster: {
-      //   docTypeCode: 0,
-      // },
-      // doc_attachment: "",
-      // expiry_date: "",
-      // Default: "", 
-      // Passport_link_doc: "", 
-      // Country_id_doc: "", 
-      // active: "",
+    
       setFormData({
-        patientRegCode: itemToUpdate.patientRegCode,
+        regNo: itemToUpdate.regNo,
         docAttachment: itemToUpdate.docAttachment,
         expiryDate: itemToUpdate.expiryDate,
-        default: itemToUpdate.default,
+        defaultDoc: itemToUpdate.defaultDoc,
         passportLinkDoc: itemToUpdate.passportLinkDoc,
         countryIdDoc: itemToUpdate.countryIdDoc,
         active: itemToUpdate.active,
         patientDataMaster: {
           patientCode: itemToUpdate.patientDataMaster?.patientCode || 0,
         },
-        documentMaster: {
-          docTypeCode: itemToUpdate.documentMaster?.docTypeCode || 0,
+        docTypeMaster: {
+          docTypeCode: itemToUpdate.docTypeMaster?.docTypeCode || 0,
         },
       });
       setIsEditMode(true); // Show update form
@@ -142,12 +121,12 @@ const PatientRegDocs = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: `${BASE_URL}patientRegDocs/delete`,
+      url: `${BASE_URL}patientRegister/delete`,
       setValidtationMessage,
       data: patientRegDocsData,
       setAlert,
       setData: setPatientRegDocsData,
-      itemKey: "patientRegCode", // Key to identify the item in the dataset
+      itemKey: "regNo", // Key to identify the item in the dataset
     });
   };
 
@@ -156,8 +135,8 @@ const PatientRegDocs = () => {
 
 
     console.log("Updated Data:", formData);
-    const url = `${BASE_URL}patientRegDocs/update`;
-    const id = formData.patientRegCode; // The URL for form submission
+    const url = `${BASE_URL}patientRegister/update`;
+    const id = formData.regNo; // The URL for form submission
     updateForm(url, id, formData, setPatientRegDocsData, setValidtationMessage, setIsEditMode, setNotEditMode, clearForm, setAlert);
   };
 return (
@@ -173,10 +152,10 @@ return (
         {/* Row 1 */}
         <div className="row mb-3">
           <div className="col-md-4">
-            <label htmlFor="patientRegCode" className="form-label">
+            <label htmlFor="regNo" className="form-label">
             patientRegCode
             </label>
-            <input className="form-control" type="number" id="patientRegCode" name="patientRegCode" value={formData.patientRegCode} onChange={handleChange} required   ></input>
+            <input className="form-control" type="number" id="regNo" name="regNo" value={formData.regNo} onChange={handleChange} required   disabled/>
           </div>
           <div className="col-md-3">
             <label htmlFor="priceList" className="form-label">
@@ -196,7 +175,7 @@ return (
           </div>
           <div className="col-md-3">
             <label htmlFor="priceList" className="form-label">
-            documentMaster (docTypeCode)
+            docTypeMaster (docTypeCode)
             </label>
             <CustomSelect
               id="docTypeCode"
@@ -204,10 +183,10 @@ return (
               valueKey="docTypeCode"   // Dynamic value key
               labelKey="docTypeName"
               data={docTypeMasterData}  // Pass the raw data, no need to map
-              value={formData.documentMaster.docTypeCode}
+              value={formData.docTypeMaster.docTypeCode}
               onChange={handleChange}
               isDisabled={notEditMode}
-              placeholder="Select an option"
+                placeholder="Select an option"
             />
           </div>
         </div>
@@ -226,10 +205,10 @@ return (
           </div>
 
           <div className="col-md-4">
-            <label htmlFor="default" className="form-label">
-            default
+            <label htmlFor="defaultDoc" className="form-label">
+            defaultDoc
             </label>
-            <select className="form-control" id="default" name="default" value={formData.default} onChange={handleChange}  >
+            <select className="form-control" id="defaultDoc" name="defaultDoc" value={formData.defaultDoc} onChange={handleChange}  >
               <option value="">Select an Option</option>
               <option value="YES">YES</option>
               <option value="NO">NO</option>
@@ -295,13 +274,13 @@ return (
         )}
       </form>
       <input type="text" placeholder="Search  by  patientCode,patientName , " value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="form-control my-2" />
-      {/* <CustomDataTable
-        columns={patientDataMasterDataColumn(handleUpdateData, handleDelete)}
-        data={filterData(patientDataMasterData, searchTerm, ["patientCode", "patientName"],)}
+      <CustomDataTable
+        columns={patientRegDocsDataColumn(handleUpdateData, handleDelete)}
+        data={filterData(patientRegDocsData, searchTerm, ["patientCode", "patientName"],)}
         paginationPerPage={10}
         paginationRowsPerPageOptions={[5, 10, 15, 20]}
-      /> */}
-      <ExportData url={`${BASE_URL}patientDataMaster/export`} fileName="Patient_data_master" previewData={patientDataMasterData} />
+      />
+      <ExportData url={`${BASE_URL}patientRegister/export`} fileName="Patient_reg_docs" previewData={patientDataMasterData} />
     </div>
   </>
 );

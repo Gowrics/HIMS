@@ -22,13 +22,16 @@ import PationMainType1 from '../ServiceScreens/PationMainType1';
 import ReportComponent from '../utils/ReportComponent';
  import Departments from '../ServiceScreens/Departments';
 import PatientInfoLayout from './PatientInfoLayout';
+import withAuth from '../withAuth';
 function ServiceLayout() {
 
+const ProtectedNationality = withAuth(Nationality);
+const ProtectedDepartmentst = withAuth(Departments);
   return (
     <div>
             <Routes>
-              <Route path="/nationality" element={<Nationality />} />
-              <Route path="/department" element={<Departments />} /> 
+              <Route path="/nationality" element={<ProtectedNationality />} />
+              <Route path="/department" element={<ProtectedDepartmentst />} /> 
               <Route path="/docters" element={<Doctors />} />
               <Route path="/patientmaintype" element={<PationMainType1 />} />   
               <Route path="/patientsubtype" element={<PatientSubType />} />   

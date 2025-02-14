@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "./Context";
+import { useFetchData } from "../utils/Actions";
 export const UserProvider = ({ children }) => {
   const [userCredential, setUsercredential] = useState([]);
   const [singleUser, setSingleUser] = useState({});
-  const [UserAuth, setUserAuth] = useState(true);
+  const [UserAuth, setUserAuth] = useState(false);
+  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -55,16 +58,16 @@ export const UserProvider = ({ children }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8005/userData")
-      .then((res) => {
-        setUsercredential(res.data); // Update the userCredential state with the fetched data
-        console.log("Fetched user data:", res.data); // Log the fetched data directly
-      })
-      .catch((err) => console.error("Error fetching user data:", err));
+
+
+  useFetchData(
+   "http://localhost:8005/adminData",
+   setUsercredential
+  );
+
+  
     console.log(userCredential);
-  }, []);
+  
   const handleLogin = () => {
     if (validateUser()) {
       const user = userCredential.find(
@@ -74,7 +77,7 @@ export const UserProvider = ({ children }) => {
 
       if (user) {
         setSingleUser(user); // Set user data on successful login
-        setUserAuth(true); // Set authentication status
+       // setUserAuth(true); // Set authentication status
         console.log("Login successful:", user);
         setUserData({
           email: "",
@@ -104,21 +107,16 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        formData,
-        setFormData,
-        validateUser,
-        singleUser,
-        errors,
-        setErrors,
-        UserAuth, // Pass the authentication status
-        setUserAuth,
+        formData,   setFormData,
+        validateUser,singleUser,
+        errors,    setErrors,
+        UserAuth,    setUserAuth,
         setSingleUser,
-        isSubmitted,
-        setIsSubmitted,
+        isSubmitted, setIsSubmitted,
         validateForm,
-        userData,
-        handleLogin,
-        setUserData,
+        userData, setUserData,
+        handleLogin
+
       }}
     >
       {children}

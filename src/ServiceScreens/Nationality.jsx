@@ -3,6 +3,7 @@ import { nationalityColumn } from "../assets/ArrayData";
 import { CustomDataTable, filterData, handleDeleteItem, submitForm, updateForm } from "../utils/Actions";
 import ExportData from "../utils/Export";
 import { FormContext } from "../Context/Context";
+import withAuth from "../withAuth";
 
 const Nationality = () => {
   const { nationalityData, BASE_URL, setValidtationMessage, setNationalityData, } = useContext(FormContext);
@@ -133,4 +134,4 @@ const Nationality = () => {
     </>
   );
 };
-export default Nationality; 
+export default withAuth( Nationality); 
