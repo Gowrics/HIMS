@@ -10,16 +10,22 @@ const Navbar = () => {
   const [isCollapsed, setIsCollapsed] = useState(true); // Manage collapse state
   const navigate = useNavigate();
 
+  // const handleLogout = () => {
+  //   setSingleUser({});
+  //   setUserAuth(false);
+  //   navigate("/");
+  //   setUserData({
+  //     username: "",
+  //     password: "",
+  //   });
+  //   console.log("logout", singleUser);
+  // };
   const handleLogout = () => {
-    setSingleUser({});
+    localStorage.removeItem("authToken");
     setUserAuth(false);
-    navigate("/");
-    setUserData({
-      username: "",
-      password: "",
-    });
-    console.log("logout", singleUser);
+    navigate("/signin");
   };
+  
 
   const handleMenuCollapse = () => {
     setIsCollapsed(true); // Collapse menu after click
@@ -28,7 +34,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-light fixed-top ">
       <div className="container-fluid ms-5">
-        <Link className="navbar-brand d-flex align-items-center" to="/">
+        <Link className="navbar-brand d-flex align-items-center" to="/home">
           <img
             src={logo}
             alt="Brand Logo"

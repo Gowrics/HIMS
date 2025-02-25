@@ -162,7 +162,7 @@ export const FormProvider = ({ children }) => {
   );
   
   useFetchData(
-    ` ${BASE_URL }patientRegDocs/getAll`,
+    ` ${BASE_URL }patientRegister/getAll`,
     setPatientRegDocsData
   );
   

@@ -1,5 +1,5 @@
 {
-  "homepage": "https://Gowrics.github.io/HIMS",
+  "homepage": "https://Gowrics.github.io/home",
   "name": "hims-app1",
   "version": "0.1.0",
   "private": true,
@@ -17,9 +17,11 @@
     "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
+    "country-telephone-data": "^0.6.3",
     "cra-template": "1.2.0",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
+    "i18n-iso-countries": "^7.14.0",
     "json2csv": "^6.0.0-alpha.2",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
@@ -37,6 +39,7 @@
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
     "react-select": "^5.10.0",
+    "react-select-country-list": "^2.2.3",
     "xlsx": "^0.18.5"
   },
   "scripts": {

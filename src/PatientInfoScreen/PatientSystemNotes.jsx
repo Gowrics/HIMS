@@ -5,10 +5,10 @@ import ExportData from "../utils/Export";
 import { FormContext } from "../Context/Context";
 import { patientSystemNotesDataColumn } from "../utils/ArrayData1";
 const PatientSystemNotes = () => {
-  
+
   const {
-    setValidtationMessage, patientDataMasterData,BASE_URL,patientSystemNotesData, setPatientSystemNotesData,
-     patientsSubTypeData, } = useContext(FormContext);
+    setValidtationMessage, patientDataMasterData, BASE_URL, patientSystemNotesData, setPatientSystemNotesData,
+    patientsSubTypeData, } = useContext(FormContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [notEditMode, setNotEditMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,7 +20,7 @@ const PatientSystemNotes = () => {
     },
     notesAddedBy: "",
     active: "",
-    notesAddedDatetime:""
+    notesAddedDatetime: ""
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -32,7 +32,7 @@ const PatientSystemNotes = () => {
   // Handle patientMainTypeData changes (for select input)
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     setFormData((prevData) => {
       if (name === "patientCode") {
         return {
@@ -50,7 +50,7 @@ const PatientSystemNotes = () => {
       }
     });
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -59,7 +59,7 @@ const PatientSystemNotes = () => {
     submitForm(url, formData, setPatientSystemNotesData, setValidtationMessage, setAlert, clearForm);
 
   };
-  
+
   const handleUpdateData = (id) => {
     setNotEditMode(true)
     const itemToUpdate = patientSystemNotesData.find((item) => item.tpaCode === id);
@@ -92,7 +92,7 @@ const PatientSystemNotes = () => {
   const handleUpdate = () => {
 
     const {
-    
+
       notesAddedBy,
       notesAddedDatetime,
       active,
@@ -124,7 +124,7 @@ const PatientSystemNotes = () => {
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="notesAddedBy" className="form-label">
-              notesAddedBy Name
+                notesAddedBy Name
               </label>
               <input className="form-control" id="notesAddedBy" name="notesAddedBy" value={formData.notesAddedBy} onChange={handleChange} required />
             </div>
@@ -144,21 +144,21 @@ const PatientSystemNotes = () => {
 
           <div className="row mb-3">
             <div className="col-md-4">
-    <label htmlFor="schgCode" className="form-label">
-      Patient Sub Type (schgCode)
-    </label>
-            <CustomSelect
-              id="patientCode"
-              name="patientCode"
-               valueKey="patientCode"   // Dynamic value key
-              labelKey="patientName"   
-              data={patientDataMasterData}  // Pass the raw data, no need to map
-              value={formData.patientDataMaster.patientCode}
-              onChange={handleChange}
-              isDisabled={notEditMode}
-              placeholder="Select an option"
-            />
-</div>
+              <label htmlFor="schgCode" className="form-label">
+                Patient Sub Type (schgCode)
+              </label>
+              <CustomSelect
+                id="patientCode"
+                name="patientCode"
+                valueKey="patientCode"   // Dynamic value key
+                labelKey="patientName"
+                data={patientDataMasterData}  // Pass the raw data, no need to map
+                value={formData.patientDataMaster.patientCode}
+                onChange={handleChange}
+                isDisabled={notEditMode}
+                placeholder="Select an option"
+              />
+            </div>
           </div>
           {!isEditMode ? (
             <button type="submit" className="btn btn-primary">      Create+         </button>
@@ -169,15 +169,15 @@ const PatientSystemNotes = () => {
             </>
           )}
         </form>
-        
-        <input     type="text"      placeholder="Search hchgName"    value={searchTerm}    onChange={(e) => setSearchTerm(e.target.value)}     className="form-control my-2"     />
+
+        <input type="text" placeholder="Search hchgName" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="form-control my-2" />
         <CustomDataTable
           columns={patientSystemNotesDataColumn(handleUpdateData, handleDelete)}
           data={filterData(patientSystemNotesData, searchTerm, ["tpaName", "tpaCode"],)}
           paginationPerPage={5}
           paginationRowsPerPageOptions={[5, 10, 15, 20]}
         />
-       <ExportData   url={`${BASE_URL}patientSystemNotes/export`}   fileName="Patient_System_notes"   previewData={patientsSubTypeData} />
+        <ExportData url={`${BASE_URL}patientSystemNotes/export`} fileName="Patient_System_notes" previewData={patientsSubTypeData} />
       </div>
     </>
   );

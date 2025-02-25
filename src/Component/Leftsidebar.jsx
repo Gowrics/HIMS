@@ -37,30 +37,20 @@ const Leftsidebar = () => {
   return (
     <nav className="navbar navbar-dark vh-70 d-flex flex-column align-items-start">
       <div className="container-fluid d-flex flex-column">
+          {/* <ul className="navbar-nav  ">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/himsservice" onClick={handleMenuCollapse}>
+                        HIMS Services
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/patientservice" onClick={handleMenuCollapse}>
+                        Patient Services
+                      </Link>
+                    </li>
+                    </ul> */}
         <ul className="nav flex-column w-100">
-          {/* <li className="nav-item mb-3">
-            <Link className="nav-link d-flex align-items-center" to="/home" onClick={handleMenuCollapse} >
-              <FaHome className="me-2" />   <span className="d-none d-lg-inline">Home</span>
-            </Link>
-          </li>
-          <li className="nav-item mb-3">
-            <Link className="nav-link d-flex align-items-center" to="/departmentview" onClick={handleMenuCollapse}  >
-              <FaHospital className="me-2" />  <span className="d-none d-lg-inline">Departments</span>
-            </Link>
-          </li>
-          <li className="nav-item mb-3">
-            <Link className="nav-link d-flex align-items-center" to="/docterview" onClick={handleMenuCollapse} >
-              <FaUserMd className="me-2" />  <span className="d-none d-lg-inline">Doctors</span>
-            </Link>
-          </li> 
-            <li className="nav-item">
-            <Link className="nav-link d-flex align-items-center" to="/about" onClick={handleMenuCollapse}  >
-              <FaInfoCircle className="me-2" />
-              <span className="d-none d-lg-inline">About</span>
-            </Link>
-          </li>*/}
-
-       {/*   {UserAuth && ( */}
+                {UserAuth && ( 
             <li className="nav-item dropdown mb-3">
               <Link className="nav-link dropdown-toggle d-flex align-items-center" to="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"   >
                 <MdMedicalServices className="me-2" />  <span className="d-none d-lg-inline">HIMS Services</span>
@@ -83,7 +73,8 @@ const Leftsidebar = () => {
                 </li>
               </ul>
             </li>
-          {/* )} */}
+         )}
+           {UserAuth && ( 
           <li className="nav-item dropdown mb-3">
             <Link className="nav-link dropdown-toggle d-flex align-items-center" to="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
               <MdHealthAndSafety className="me-2" />
@@ -163,7 +154,8 @@ const Leftsidebar = () => {
               </li>
             </ul>
           </li>
-
+           )}
+             {UserAuth && ( 
           <li className="nav-item dropdown mb-3">
             <Link className="nav-link dropdown-toggle d-flex align-items-center" to="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"   >
               <MdMedicalServices className="me-2" />  <span className="d-none d-lg-inline">Patient Info</span>
@@ -196,7 +188,31 @@ const Leftsidebar = () => {
               </li>
             </ul>
           </li>
-        
+             )}
+               {UserAuth && ( 
+            <li className="nav-item dropdown mb-3">
+              <Link className="nav-link dropdown-toggle d-flex align-items-center" to="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"   >
+                <MdMedicalServices className="me-2" />  <span className="d-none d-lg-inline">Invoice service</span>
+              </Link>
+              <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
+                <li>
+                  <Link className="dropdown-item" to="/patientbillingheader" onClick={handleMenuCollapse}   >
+                  Patient Billing Header 
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/patientbillingdetails" onClick={handleMenuCollapse}  >
+                  Patient Billing Details
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/docters" onClick={handleMenuCollapse} >
+                    Doctors
+                  </Link>
+                </li>
+              </ul>
+            </li>
+         )}
         </ul>
         <div className="mt-3 w-80">
           {singleUser && Object.keys(singleUser).length > 0 ? (

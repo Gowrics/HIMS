@@ -1,7 +1,7 @@
 import React from "react";
 import { quality } from "../assets/ArrayData";
 import PageHead from "../Component/PageHead";
-import { Link } from "react-router";
+import { Link, Outlet } from "react-router";
 
 const About = () => {
   return (
@@ -22,7 +22,7 @@ const About = () => {
               <Link className="btn btn-lg me-4" to="/departmentview">
                 View Departments
               </Link>
-              <Link className="btn btn-lg me-4" to="/about">
+              <Link className="btn btn-lg me-4" to="contact">
                 Contact Us
               </Link>
             </div>
@@ -53,6 +53,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      <Outlet/>
     </div>
   );
 };

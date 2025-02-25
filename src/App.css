@@ -313,7 +313,7 @@ section .firsthead .btn:hover {
      .breadcrumb {
       background-color: #f8f9fa; /* Light gray background */
       padding: 10px;   
-      margin-top: 90px;  
+      /* margin-top: 90px;   */
       position: fixed;       /* Padding around the breadcrumb */
       border-radius: 5px;   
       z-index: 3;    /* Rounded corners */
@@ -405,3 +405,178 @@ section .firsthead .btn:hover {
   font-size: 14px;
  }
 }
+/* ---------------------------------------------------------invoice ------------------------------------------------------------------------------ */
+
+.invoice-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.invoice-title {
+
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.invoice-header {
+  min-height: 40vh;  /* Changed from height: 50vh */
+  background-color: #e9ecef;
+  display: flex;
+  flex-wrap: wrap; /* Allows elements to wrap */
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+
+.invoice-details {
+  background-color: #dee2e6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.invoice-footer {
+  height: 10vh;
+  background-color: #adb5bd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.invoice-header-detail{
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items:center ;
+}
+.invoice-payment{display: flex;align-items: center;justify-content: center;}
+.invoice-main-details {
+  
+    font-size: 15px;
+
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  margin: 10px 0;
+}
+
+/* .invoice-header {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 0;
+  background-color: #f8f9fa;
+  color: #333;
+  border-bottom: 2px solid #ccc;
+}
+.invoice-header-detail {
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  color: #333;
+}
+
+.invoice-header-detail .form-label {
+  font-weight: bold;
+}
+
+.invoice-header-detail .form-control {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+
+.invoice-main-details {
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  margin: 10px 0;
+}
+
+.invoice-payment {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #e9ecef;
+  border-top: 2px solid #ccc;
+  color: #000;
+}
+
+ 
+.invoice{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+    margin-top: 45px;
+  border:2px solid gray;
+}
+ .invoiceHead{
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
+ }
+    
+.invoiceDetails{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+/*
+.billHead{
+  display: flex;
+  height: 10vh;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #d9dde0;  padding: 20px;
+}
+.billDetails{
+  display: flex;
+    flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  height: 30vh;
+  background-color: #dce9f3;
+  padding-bottom: 10px;
+
+}
+.billDetails1{
+  display: flex;
+    flex-direction: column;
+  justify-content: center;
+}
+
+.billDetails2{
+  display: flex;
+    flex-direction: column;
+  justify-content: center;
+}
+
+.billDetails3{
+  display: flex;
+    flex-direction: column;
+  justify-content: center;
+}
+
+.billDetails4{
+  display: flex;
+    flex-direction: column;
+  justify-content: center;
+} */  

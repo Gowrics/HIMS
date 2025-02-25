@@ -6,6 +6,7 @@ import { submitForm, updateForm } from "../utils/Actions";
 import { FormContext } from "../Context/Context";
 import { setAlert } from "../redux/slices/dataSlice";
 import CustomSelect from "../utils/CustomSelect";
+import { Link } from "react-router";
 const DocterFormComponent = (props) => {
   const { departmentData, BASE_URL, setValidtationMessage, validtationMessage, docterData, nationalityData, setDocterData, formData, clearForm,
     setFormData, isEditMode, setIsEditMode, } = useContext(FormContext);
@@ -126,6 +127,7 @@ const DocterFormComponent = (props) => {
                           {props.alert.message}
                         </div>
                       )}
+                      <Link to="contact">contact</Link>
                       <form onSubmit={handleSubmit}>
                         {/* Row 1 */}
                         <div className="row">

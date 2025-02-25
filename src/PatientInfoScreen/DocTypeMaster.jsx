@@ -9,6 +9,7 @@ import ExportData1 from "../utils/Export1";
 import { FormContext } from "../Context/Context";
 import { docTypeMasterDataColumn } from "../utils/ArrayData1";
 
+
 const DocTypeMaster = () => {
 
   const {docTypeMasterData, setDocTypeMasterData,setValidtationMessage, BASE_URL, } = useContext(FormContext);
@@ -111,7 +112,7 @@ const handleUpdate = () => {
           <div className="row">
             <div className="col-md-4 mb-3">
               <label htmlFor="docTypeCode" className="form-label">
-              docTypeCode
+              Document Type Code
               </label>
               <input
                 type="text"
@@ -128,7 +129,7 @@ const handleUpdate = () => {
             </div>
             <div className="col-md-4 mb-3">
               <label htmlFor="docTypeName" className="form-label">
-              docTypeName Name
+              Document Type Name
               </label>
               <input
                 type="text"

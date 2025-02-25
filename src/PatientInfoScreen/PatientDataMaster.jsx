@@ -7,6 +7,7 @@ import ExportData1 from "../utils/Export1";
 import { FormContext } from "../Context/Context";
 import { patientDataMasterDataColumn } from "../utils/ArrayData1";
 
+
 const PatientDataMaster = () => {
   const { patientDataMasterData, nationalityData,setPatientDataMasterData,patientsSubTypeData, BASE_URL, setValidtationMessage, } = useContext(FormContext);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -146,19 +147,19 @@ return (
         <div className="row mb-3">
           <div className="col-md-4">
             <label htmlFor="patientCode" className="form-label">
-              patientCode
+              Patient Code
             </label>
             <input className="form-control" type="text" id="patientCode" name="patientCode" value={formData.patientCode} onChange={handleChange} required   ></input>
           </div>
           <div className="col-md-4">
             <label htmlFor="patientName" className="form-label">
-              patientName
+              Patient Name
             </label>
             <input type="text" className="form-control" id="patientName" name="patientName" value={formData.patientName} onChange={handleChange} required />
           </div>
           <div className="col-md-4">
             <label htmlFor="patientNameAr" className="form-label">
-              patientNameAr
+              Patient Name Ar
             </label>
             <input className="form-control" id="patientNameAr" name="patientNameAr" value={formData.patientNameAr} onChange={handleChange} required   ></input>
           </div>
@@ -179,7 +180,7 @@ return (
 
           <div className="col-md-4">
             <label htmlFor="vipPatient" className="form-label">
-              vipPatient
+              Vip Patient
             </label>
             <select className="form-control" id="vipPatient" name="vipPatient" value={formData.vipPatient} onChange={handleChange}  >
               <option value="">Select an Option</option>
@@ -190,7 +191,7 @@ return (
 
           <div className="col-md-4">
             <label htmlFor="blackListed" className="form-label">
-              blackListed
+              Black Listed
             </label>
             <select className="form-control" id="blackListed" name="blackListed" value={formData.blackListed} onChange={handleChange} >
               <option value="">Select an Option</option>
@@ -204,10 +205,11 @@ return (
         <div className="row mb-3">
           <div className="col-md-4">
             <label htmlFor="patientMobileCountryCode" className="form-label">
-              patientMobileCountryCode
+              Patient Mobile Country Code
             </label>
             <input type="number" className="form-control" id="patientMobileCountryCode" name="patientMobileCountryCode" value={formData.patientMobileCountryCode} onChange={handleChange} required />
           </div>
+        
           <div className="col-md-4">
             <label htmlFor="patientMobileNo" className="form-label">
               patientMobileNo
@@ -230,6 +232,7 @@ return (
               placeholder="Select an option"
             />
           </div>
+          
         </div>
 
         <div className="row mb-3">

@@ -25,13 +25,11 @@ import PatientInfoLayout from './PatientInfoLayout';
 import withAuth from '../withAuth';
 function ServiceLayout() {
 
-const ProtectedNationality = withAuth(Nationality);
-const ProtectedDepartmentst = withAuth(Departments);
   return (
     <div>
             <Routes>
-              <Route path="/nationality" element={<ProtectedNationality />} />
-              <Route path="/department" element={<ProtectedDepartmentst />} /> 
+              <Route path="/nationality" element={<Nationality />} />
+              <Route path="/department" element={<Departments />} /> 
               <Route path="/docters" element={<Doctors />} />
               <Route path="/patientmaintype" element={<PationMainType1 />} />   
               <Route path="/patientsubtype" element={<PatientSubType />} />   
@@ -49,7 +47,7 @@ const ProtectedDepartmentst = withAuth(Departments);
               <Route path="/servicemaster" element={<ServiceMaster/>} />  
               <Route path="/export" element={<ReportComponent/>} />  
               <Route path="/export" element={<ReportComponent/>} />  
-              <Route path="/*" element={<PatientInfoLayout />} /> {/* Fixed wildcard route */}
+              <Route path="/*" element={<PatientInfoLayout />} /> 
               </Routes>
             </div>
   );

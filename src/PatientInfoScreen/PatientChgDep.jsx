@@ -25,17 +25,17 @@ const PatientChgDep = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [alert, setAlert] = useState({ show: false, type: "", message: "" });
   const initialFormData = {
-    //id
-    patientDataMaster: {
+    //patientChargeCode
+    patientDataMaster: { //patientDataMaster
       patientCode: null,
     },
-    policiesCharge: {
+    policiesCharge: { //policiesCharge
       chargeCode: "",
     },
     cardAttachment: "",
     cardExpiryDate: "",
-    active: "",
-    default: ""
+    active: "",  //isActive
+    default: ""  //defaultStatus
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -120,8 +120,8 @@ const PatientChgDep = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
-      url: `${BASE_URL}patientChgDep/delete`, setValidtationMessage, setAlert,
       data: patientChgDepData,
+      url: `${BASE_URL}patientChgDep/delete`, setValidtationMessage, setAlert,
       setData: setPatientChgDepData,
       itemKey: "id", // Key to identify the item in the dataset
     });

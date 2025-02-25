@@ -21,21 +21,28 @@ const Signin = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(userData);
-    if (handleLogin()) {
-      setUserAuth(true);
-        setUserData({
-            email: "",
-            password: "",
-          });
-          const redirectTo = localStorage.getItem("redirectAfterLogin") || "/home";
-          localStorage.removeItem("redirectAfterLogin"); // Clear after use
-    
-          navigate(redirectTo); // Redirect to the original page
-          }
+    try {
+      const response = await axios.post("http://localhost:8084/login", userData);
+      const { token } = response.data;
+  
+      if (token) {
+        localStorage.setItem("authToken", token); // Store token in localStorage
+        setUserAuth(true);
+        setUserData({ email: "", password: "" });
+  
+        // Redirect after login
+        const redirectTo = localStorage.getItem("redirectAfterLogin") || "/home";
+        localStorage.removeItem("redirectAfterLogin");
+        navigate(redirectTo);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Invalid email or password");
+    }
   };
+  
 
  
   return (

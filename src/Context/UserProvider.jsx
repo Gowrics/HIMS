@@ -5,7 +5,7 @@ import { useFetchData } from "../utils/Actions";
 export const UserProvider = ({ children }) => {
   const [userCredential, setUsercredential] = useState([]);
   const [singleUser, setSingleUser] = useState({});
-  const [UserAuth, setUserAuth] = useState(false);
+  const [UserAuth, setUserAuth] = useState(true);
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -61,7 +61,7 @@ export const UserProvider = ({ children }) => {
 
 
   useFetchData(
-   "http://localhost:8005/adminData",
+   "http://localhost:8084/users",
    setUsercredential
   );
 

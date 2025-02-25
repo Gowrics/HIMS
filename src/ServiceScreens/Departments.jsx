@@ -4,6 +4,7 @@ import { departmentColumn } from "../assets/ArrayData";
 import { CustomDataTable, filterData, handleDeleteItem, submitForm, updateForm } from "../utils/Actions";
 import { FormContext } from "../Context/Context";
 import ExportData from "../utils/Export";
+import withAuth from "../withAuth";
 // import { departmentData } from "../assets/ArrayData";
 
 const Departments = () => {
@@ -162,4 +163,4 @@ const Departments = () => {
     </>
   );
 };
-export default Departments;
+export default withAuth( Departments);

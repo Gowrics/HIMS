@@ -17,7 +17,7 @@ const Breadcrumbs = () => {
   };
 
   return (
-    <div className="container-fluid breadcrumbsdiv">
+    <div className="container-fluid">
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">

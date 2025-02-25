@@ -4,6 +4,9 @@ import { CustomDataTable, filterData, handleDeleteItem, submitForm, updateForm }
 import ExportData from "../utils/Export";
 import { FormContext } from "../Context/Context";
 import withAuth from "../withAuth";
+import CountrySelector from "../utils/CountrySelector";
+import countryList from "react-select-country-list";
+
 
 const Nationality = () => {
   const { nationalityData, BASE_URL, setValidtationMessage, setNationalityData, } = useContext(FormContext);
@@ -19,6 +22,7 @@ const Nationality = () => {
   const clearForm = () => {
     setFormData(initialFormData);
   };
+  const options = countryList().getData(); // Get country list
   // const [errors, setErrors] = useState({
   //   nationality: false,
   //   nationalityFl: false,
@@ -28,7 +32,7 @@ const Nationality = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  
+
   const handleDelete = useCallback((id) => {
     handleDeleteItem({
       id,
@@ -40,7 +44,7 @@ const Nationality = () => {
       itemKey: "nationalityCode",
     });
   }, [BASE_URL, nationalityData, setNationalityData, setValidtationMessage]);
-  
+
 
   const handleUpdateData = (id) => {
     console.log(id);
@@ -77,32 +81,32 @@ const Nationality = () => {
     console.log(updatedData);
     const url = `${BASE_URL}nationality/update`;
     const id = formData.nationalityCode; // The URL for form submission
-    updateForm(url, id, updatedData, setNationalityData, setValidtationMessage, setIsEditMode, false, clearForm,setAlert);
+    updateForm(url, id, updatedData, setNationalityData, setValidtationMessage, setIsEditMode, false, clearForm, setAlert);
   };
-  const filteredData = useMemo(() => 
+  const filteredData = useMemo(() =>
     filterData(nationalityData, searchTerm, ["nationality"]),
-  [nationalityData, searchTerm]);
-  
+    [nationalityData, searchTerm]);
+
 
   return (
     <>
       <div className="container page-content ">
         <h2 className="mb-4">Nationality Form</h2>
         {alert.show && (
-        <div className={`alert alert-${alert.type}`} role="alert">
-          {alert.message}
-        </div>
-      )}
+          <div className={`alert alert-${alert.type}`} role="alert">
+            {alert.message}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} >
           <div className="row">
             <div className="col mb-3">
               <label htmlFor="nationality" className="form-label">     Nationality     </label>
-              <input type="text" className={`form-control`} id="nationality"
-                name="nationality" value={formData.nationality} onChange={handleChange} required />
-              {/* {errors.nationality && (<div className="invalid-feedback">Nationality is required</div>)} */}
-            </div>
-            <div className="col mb-3">
+             <input type="text" className={`form-control`} id="nationality"
+                name="nationality" value={formData.nationality} onChange={handleChange} required /> 
+                        </div>
+
+                <div className="col mb-3">
               <label htmlFor="nationalityFl" className="form-label">      Nationality FL   </label>
               <input type="text" className={`form-control`} id="nationalityFl"
                 name="nationalityFl" value={formData.nationalityFl} onChange={handleChange} required />
@@ -114,7 +118,7 @@ const Nationality = () => {
           ) : (
             <>
               <button type="button" onClick={handleUpdate} className="btn btn-success">    Update  </button>
-              <button type="button" onClick={() => { setIsEditMode(false);  clearForm(); }} className=" ms-4 btn btn-secondary">
+              <button type="button" onClick={() => { setIsEditMode(false); clearForm(); }} className=" ms-4 btn btn-secondary">
                 Cancel
               </button>
             </>
@@ -134,4 +138,4 @@ const Nationality = () => {
     </>
   );
 };
-export default withAuth( Nationality); 
+export default Nationality; 

@@ -309,3 +309,85 @@ export const patientSystemNotesDataColumn = (handleUpdateData, handleDelete) => 
     button: true,
   },
 ];
+
+
+//----------------------------------------------invoice Data----------------------------------------------
+export const serviceDataColumn = (handleUpdateData, handleDelete) => [
+  {
+    name: "Service Code",
+    selector: (row) => row.serviceMaster?.serviceCode || "N/A",
+    sortable: true,
+  },
+  {
+    name: "Quantity",
+    selector: (row) => row.quantity || "0",
+    sortable: true,
+  },
+  {
+    name: "Service Amount",
+    selector: (row) => row.serviceAmount || "0",
+    sortable: true,
+  },
+  {
+    name: "Service Discount",
+    selector: (row) => row.serviceDiscount || "0",
+    sortable: true,
+  },
+  {
+    name: "Special Discount",
+    selector: (row) => row.serviceSpecialDiscount || "0",
+    sortable: true,
+  },
+  {
+    name: "Service Paid",
+    selector: (row) => row.servicePaid || "0",
+    sortable: true,
+  },
+  {
+    name: "Service Credit",
+    selector: (row) => row.serviceCredid || "0",
+    sortable: true,
+  },
+  {
+    name: "Service Done",
+    selector: (row) => row.serviceDone || "No",
+    sortable: true,
+  },
+  {
+    name: "Service Cancelled",
+    selector: (row) => row.serviceCancelled || "No",
+    sortable: true,
+  },
+  {
+    name: "Return Number",
+    selector: (row) => row.ReturnNumber || "-",
+    sortable: true,
+  },
+  {
+    name: "Return Quantity",
+    selector: (row) => row.returnQuantity || "0",
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.id)}
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.id)}
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];

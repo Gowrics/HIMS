@@ -2,6 +2,9 @@ import React from "react";
 import banner from "../assets/banner-img.png";
 import { Link } from "react-router-dom"; // Updated to react-router-dom
 import About from "./About";
+import Authendicate from "../Authendicate";
+import AddUser from "../Adduser";
+
 
 const Home = () => {
   return (
@@ -32,6 +35,9 @@ const Home = () => {
         </div>
       </section>
       <About />
+<Authendicate/><AddUser/>
+
+    
     </>
   );
 };

@@ -3,9 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { UserContext } from "../Context/Context";
+import api from "./api";
 
 
-const Registration = () => {
+const Signup = () => {
     const {
         formData,
         setFormData,
@@ -28,25 +29,20 @@ const Registration = () => {
     if (validateForm()) {
       setIsSubmitted(true);
       console.log("Form Data:", formData);
-       
-      axios
-     .post("http://localhost:8084/users",formData)
-      //  .post("http://localhost:8005/adminData",formData)
-
-      .then((res)=>{
-        console.log("form submitted",res.data)
-        setFormData({
-          name: "",
-           email: "",
-          password: "",
-          confirmPassword: "",
-        });
+      api.post("/users", formData)
+      .then((res) => {
+        console.log("Form submitted", res.data);
+        setFormData(res.data);
       })
-       
+      .catch((error) => {
+        console.error("Signup error", error);
+      });
+    
       alert("Registration successful!");
       setFormData({
         name: "",
-         email: "",
+        
+        email: "",
         password: "",
         confirmPassword: "",
       });
@@ -134,5 +130,5 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default Signup;
 
