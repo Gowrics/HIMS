@@ -17,7 +17,7 @@ const PatientDataMaster = () => {
 
   const initialFormData = {
    
-    patientCode: "",
+    // patientCode: "",
     patientName: "",
     patientNameAr: "",
     patientMobileCountryCode: "", //number
@@ -72,6 +72,7 @@ const PatientDataMaster = () => {
       },
       patientMobileCountryCode: Number(formData.patientMobileCountryCode),
       patientMobileNo: Number(formData.patientMobileNo),
+      // patientCode: Number(formData. patientCode)
    
     };
 
@@ -145,12 +146,12 @@ return (
       <form onSubmit={handleSubmit} >
         {/* Row 1 */}
         <div className="row mb-3">
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <label htmlFor="patientCode" className="form-label">
               Patient Code
             </label>
             <input className="form-control" type="text" id="patientCode" name="patientCode" value={formData.patientCode} onChange={handleChange} required   ></input>
-          </div>
+          </div> */}
           <div className="col-md-4">
             <label htmlFor="patientName" className="form-label">
               Patient Name
@@ -212,7 +213,7 @@ return (
         
           <div className="col-md-4">
             <label htmlFor="patientMobileNo" className="form-label">
-              patientMobileNo
+              Patient Mobile No
             </label>
             <input type="number" className="form-control" id="patientMobileNo" name="patientMobileNo" value={formData.patientMobileNo} onChange={handleChange} required />
           </div>
@@ -238,19 +239,19 @@ return (
         <div className="row mb-3">
           <div className="col-md-4">
             <label htmlFor="patientDateOfBirth" className="form-label">
-              patientDateOfBirth
+              Patient Date Of Birth
             </label>
             <input type="date" className="form-control" id="patientDateOfBirth" name="patientDateOfBirth" value={formData.patientDateOfBirth} onChange={handleChange} required />
           </div>
           <div className="col-md-4">
             <label htmlFor="countryIdNo" className="form-label">
-              countryIdNo
+              Country Id
             </label>
             <input type="text" className="form-control" id="countryIdNo" name="countryIdNo" value={formData.countryIdNo} onChange={handleChange} required />
           </div>
           <div className="col-md-4">
             <label htmlFor="passportNo" className="form-label">
-            passportNo
+            Passport No
             </label>
             <input type="text" className="form-control" id="passportNo" name="passportNo" value={formData.passportNo} onChange={handleChange} required />
           </div>
@@ -259,7 +260,7 @@ return (
         <div className="row mb-3">
           <div className="col-md-4">
             <label htmlFor="occupation" className="form-label">
-            occupation
+            Occupation
             </label>
             <input type="text" className="form-control" id="occupation" name="occupation" value={formData.occupation} onChange={handleChange} required />
           </div>

@@ -8,14 +8,6 @@ import ExportData from "../utils/Export";
 import { FormContext } from "../Context/Context";
 import { patientChgDepDataColumn } from "../utils/ArrayData1";
 const PatientChgDep = () => {
-  // Patient_code -- not null from Patient_data_master table
-  // Chg_code -- not null from Chg_grp_policies table
-  // Card_attachment not null this is a url path to an attached file
-  // Card_expiry_date date not null
-  // Active(Y/N) not null
-  // Default (Y/N) not null
-  // Note: Patient_chg_dep table might have more than one record related to a
-  // patient_Data_master record.
 
   const {
     setValidtationMessage, BASE_URL, patientChgDepData, setPatientChgDepData,
@@ -34,8 +26,9 @@ const PatientChgDep = () => {
     },
     cardAttachment: "",
     cardExpiryDate: "",
+    cardExpiryDate: "",
     active: "",  //isActive
-    default: ""  //defaultStatus
+    defaultStatus: ""  //defaultStatus
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -89,21 +82,22 @@ const PatientChgDep = () => {
     };
 
     console.log("Payload sent to API:", updatedFormData);
-    const url = `${BASE_URL}patientChgDep/create`; // The URL for form submission
+    const url = `${BASE_URL}patientCharge/create`; // The URL for form submission
+    // const url = `http://localhost:8005/patientChgDepData`; // The URL for form submission
     submitForm(url, updatedFormData, setPatientChgDepData, setValidtationMessage, setAlert, clearForm);
 
   };
 
   const handleUpdateData = (id) => {
     setNotEditMode(true)
-    const itemToUpdate = patientChgDepData.find((item) => item.tpaCode === id);  //chag
-
+    const itemToUpdate = patientChgDepData.find((item) => item.patientChargeCode === id);  //chag
     if (itemToUpdate) {
       setFormData({
+        patientChargeCode: itemToUpdate.patientChargeCode,
         cardAttachment: itemToUpdate.cardAttachment,
         cardExpiryDate: itemToUpdate.cardExpiryDate,
         active: itemToUpdate.active,
-        default: itemToUpdate.default,
+        defaultStatus: itemToUpdate.defaultStatus,
         patientDataMaster: {
           patientCode: itemToUpdate.patientDataMaster?.patientCode || 0,
         },
@@ -120,36 +114,37 @@ const PatientChgDep = () => {
   const handleDelete = (id) => {
     handleDeleteItem({
       id,
+      url: `${BASE_URL}patientCharge/delete`,
+      setValidtationMessage,
       data: patientChgDepData,
-      url: `${BASE_URL}patientChgDep/delete`, setValidtationMessage, setAlert,
+        setAlert,
       setData: setPatientChgDepData,
-      itemKey: "id", // Key to identify the item in the dataset
+      itemKey: "patientChargeCode", // Key to identify the item in the dataset
     });
   };
 
   const handleUpdate = () => {
     const {
+      patientChargeCode,
       cardAttachment,
       cardExpiryDate,
       active,
-      default: isDefault, // renamed 'default' to avoid reserved keyword issues
+      defaultStatus, // renamed 'default' to avoid reserved keyword issues
       patientDataMaster,
       policiesCharge
     } = formData || {}; // Ensure formData is at least an empty object
 
     const updatedData = {
+      patientChargeCode,
       cardAttachment,
       cardExpiryDate,
       active,
-      default: isDefault,
+      defaultStatus: defaultStatus,
       patientDataMaster: { patientCode: patientDataMaster?.patientCode || "" },
       policiesCharge: { chargeCode: policiesCharge?.chargeCode || "" }
     };
-
-    console.log(formData);
-    console.log(updatedData);
-    const url = `${BASE_URL}patientChgDep/update`;
-    const id = formData.id; // The URL for form submission
+    const url = `${BASE_URL}patientCharge/update`;
+    const id = formData.patientChargeCode;
     updateForm(url, id, updatedData, setPatientChgDepData, setValidtationMessage, setIsEditMode, setNotEditMode, clearForm, setAlert);
 
   };
@@ -169,7 +164,7 @@ const PatientChgDep = () => {
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="patientCode" className="form-label">
-              patientDataMaster Sub Type (patientCode)
+                Patient Data Master Sub Type (Patient Code)
               </label>
               <CustomSelect
                 id="patientCode"
@@ -185,7 +180,7 @@ const PatientChgDep = () => {
             </div>
             <div className="col-md-4">
               <label htmlFor="patientCode" className="form-label">
-              policiesCharge Sub Type (chargeCode)
+                Policies Charge Sub Type (Charge Code)
               </label>
               <CustomSelect
                 id="chargeCode"
@@ -201,7 +196,7 @@ const PatientChgDep = () => {
             </div>
             <div className="col-md-4">
               <label htmlFor="cardAttachment" className="form-label">
-              cardAttachment
+                Card Attachment
               </label>
               <input className="form-control" type="url" id="cardAttachment" name="cardAttachment" value={formData.cardAttachment} onChange={handleChange} required />
             </div>
@@ -209,7 +204,7 @@ const PatientChgDep = () => {
 
 
           <div className="row mb-3">
-          <div className="col-md-4">
+            <div className="col-md-4">
               <label htmlFor="active" className="form-label">
                 Active
               </label>
@@ -220,10 +215,10 @@ const PatientChgDep = () => {
               </select>
             </div>
             <div className="col-md-4">
-              <label htmlFor="default" className="form-label">
-                Default
+              <label htmlFor="defaultStatus" className="form-label">
+                Default Status
               </label>
-              <select className="form-control" id="default" name="default" value={formData.default} onChange={handleChange}  >
+              <select className="form-control" id="defaultStatus" name="defaultStatus" value={formData.defaultStatus} onChange={handleChange}  >
                 <option value="">Select an Option</option>
                 <option value="YES">YES</option>
                 <option value="NO">NO</option>
@@ -231,7 +226,7 @@ const PatientChgDep = () => {
             </div>
             <div className="col-md-4">
               <label htmlFor="cardExpiryDate" className="form-label">
-              cardExpiryDate
+                Card Expiry Date
               </label>
               <input className="form-control" type="date" id="cardExpiryDate" name="cardExpiryDate" value={formData.cardExpiryDate} onChange={handleChange} required />
             </div>

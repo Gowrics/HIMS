@@ -14,12 +14,12 @@ const PatientSystemNotes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [alert, setAlert] = useState({ show: false, type: "", message: "" });
   const initialFormData = {
-    //id
+    //noteId
     patientDataMaster: {
       patientCode: null,
     },
     notesAddedBy: "",
-    active: "",
+    notesActive: "",
     notesAddedDatetime: ""
   };
 
@@ -32,7 +32,7 @@ const PatientSystemNotes = () => {
   // Handle patientMainTypeData changes (for select input)
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
     setFormData((prevData) => {
       if (name === "patientCode") {
         return {
@@ -42,6 +42,13 @@ const PatientSystemNotes = () => {
             patientCode: value,
           },
         };
+      } else if (name === "notesAddedDatetime") {
+        // Convert "YYYY-MM-DDTHH:mm" to "YYYY-MM-DDTHH:mm:ss"
+        const isoDateTime = `${value}:00`;
+        return {
+          ...prevData,
+          [name]: isoDateTime,
+        };
       } else {
         return {
           ...prevData,
@@ -50,7 +57,7 @@ const PatientSystemNotes = () => {
       }
     });
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -62,13 +69,14 @@ const PatientSystemNotes = () => {
 
   const handleUpdateData = (id) => {
     setNotEditMode(true)
-    const itemToUpdate = patientSystemNotesData.find((item) => item.tpaCode === id);
+    const itemToUpdate = patientSystemNotesData.find((item) => item.noteId === id);
 
     if (itemToUpdate) {
       setFormData({
+        noteId:itemToUpdate.noteId,
         notesAddedBy: itemToUpdate.notesAddedBy,
         notesAddedDatetime: itemToUpdate.notesAddedDatetime,
-        active: itemToUpdate.active,
+        notesActive: itemToUpdate.notesActive,
         patientDataMaster: {
           patientCode: itemToUpdate.patientDataMaster?.patientCode || 0,
         },
@@ -85,35 +93,36 @@ const PatientSystemNotes = () => {
       url: `${BASE_URL}patientSystemNotes/delete`, setValidtationMessage, setAlert,
       data: patientSystemNotesData,
       setData: setPatientSystemNotesData,
-      itemKey: "id", // Key to identify the item in the dataset
+      itemKey: "noteId", // Key to identify the item in the dataset
     });
   };
 
   const handleUpdate = () => {
 
     const {
-
+      noteId,
       notesAddedBy,
       notesAddedDatetime,
-      active,
+      notesActive,
       patientDataMaster: { patientCode },
     } = formData;
     const updatedData = {
+      noteId,
       notesAddedBy,
       notesAddedDatetime,
-      active,
+      notesActive,
       patientDataMaster: { patientCode },
     };
     console.log(formData);
     console.log(updatedData);
     const url = `${BASE_URL}patientSystemNotes/update`;
-    const id = formData.tpaCode; // The URL for form submission
+    const id = formData.noteId; // The URL for form submission
     updateForm(url, id, updatedData, setPatientSystemNotesData, setValidtationMessage, setIsEditMode, setNotEditMode, clearForm, setAlert);
   };
   return (
     <>
       <div className="container page-content">
-        <h2>Patient_System_notes </h2>
+        <h2>Patient System notes </h2>
         {alert.show && (
           <div className={`alert alert-${alert.type}`} role="alert">
             {alert.message}
@@ -124,21 +133,38 @@ const PatientSystemNotes = () => {
           <div className="row mb-3">
             <div className="col-md-4">
               <label htmlFor="notesAddedBy" className="form-label">
-                notesAddedBy Name
+                Notes Added By Name
               </label>
               <input className="form-control" id="notesAddedBy" name="notesAddedBy" value={formData.notesAddedBy} onChange={handleChange} required />
             </div>
+            
 
             <div className="col-md-4">
-              <label htmlFor="active" className="form-label">
-                Active
+              <label htmlFor="notesActive" className="form-label">
+              Notes Active
               </label>
-              <select className="form-control" id="active" name="active" value={formData.active} onChange={handleChange}  >
+              <select className="form-control" id="notesActive" name="notesActive" value={formData.notesActive} onChange={handleChange}  >
                 <option value="">Select an Option</option>
                 <option value="YES">YES</option>
                 <option value="NO">NO</option>
               </select>
             </div>
+            <div className="col-md-4">
+  <label htmlFor="notesAddedDatetime" className="form-label">
+    Notes Added Date & Time
+  </label>
+  <input
+    type="datetime-local"
+    className="form-control"
+    id="notesAddedDatetime"
+    name="notesAddedDatetime"
+    value={formData.notesAddedDatetime ? formData.notesAddedDatetime.split(".")[0] : ""}
+    onChange={handleChange}
+    required
+  />
+</div>
+
+
           </div>
 
 

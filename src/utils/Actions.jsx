@@ -3,23 +3,83 @@ import DataTable from "react-data-table-component";
 import axios from "axios";
 //------------------------------------------------- Fetch Data Table ---------------------------------------------------
 
-export const CustomDataTable = ({
+// export const CustomDataTable = ({
+//   columns,
+//   data,
+//   pagination = true,
+//   paginationPerPage = 5,
+//   paginationRowsPerPageOptions = [5, 10, 15, 20],
+//   customStyles,
+//   onRowSelect, // Callback function for selected rows
+// }) => {
+//   const [selectedRows, setSelectedRows] = useState([]);
+
+//   const handleRowSelected = (selected) => {
+//     setSelectedRows(selected.selectedRows);
+//     if (onRowSelect) {
+//       onRowSelect(selected.selectedRows); // Pass selected rows to parent
+//           }
+//           console.log(selected.selectedRows)
+//   };
+
+//   const defaultStyles = {
+//     header: {
+//       style: {
+//         backgroundColor: "#343a40",
+//         color: "#ffffff",
+      
+//       },
+//     },
+//     headCells: {
+//       style: {
+//         fontWeight: "bold",
+//         backgroundColor: "#6c757d",
+//         color: "#ffffff",
+//           },
+//     },
+//     cells: {
+//       style: {
+//         paddingLeft: "8px",
+//         paddingRight: "8px",
+//       },
+//     },
+//   };
+
+//   return (
+//     <DataTable
+//       className="table table-striped"
+//       columns={columns}
+//       data={data}
+//       pagination={pagination}
+//       paginationPerPage={paginationPerPage}
+//       paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+//       customStyles={customStyles || defaultStyles}
+//       selectableRows
+//       onSelectedRowsChange={handleRowSelected}
+//     />
+//   );
+// };
+ //------------------------------------------------- Fetch Data---------------------------------------------------
+
+ export const CustomDataTable = ({
   columns,
   data,
   pagination = true,
   paginationPerPage = 5,
   paginationRowsPerPageOptions = [5, 10, 15, 20],
   customStyles,
-  onRowSelect, // Callback function for selected rows
+  onRowSelect,
+  expandableComponent = null, // Default to null (no expandable rows)
+  expandableRows = false, // Default to false (rows are not expandable)
 }) => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleRowSelected = (selected) => {
     setSelectedRows(selected.selectedRows);
     if (onRowSelect) {
-      onRowSelect(selected.selectedRows); // Pass selected rows to parent
-          }
-          console.log(selected.selectedRows)
+      onRowSelect(selected.selectedRows);
+    }
+    console.log(selected.selectedRows);
   };
 
   const defaultStyles = {
@@ -27,7 +87,6 @@ export const CustomDataTable = ({
       style: {
         backgroundColor: "#343a40",
         color: "#ffffff",
-      
       },
     },
     headCells: {
@@ -35,7 +94,7 @@ export const CustomDataTable = ({
         fontWeight: "bold",
         backgroundColor: "#6c757d",
         color: "#ffffff",
-          },
+      },
     },
     cells: {
       style: {
@@ -56,10 +115,11 @@ export const CustomDataTable = ({
       customStyles={customStyles || defaultStyles}
       selectableRows
       onSelectedRowsChange={handleRowSelected}
+      expandableRows={expandableRows} // Set default as false
+      expandableRowsComponent={expandableComponent} // Set default as null (no expansion)
     />
   );
 };
- //------------------------------------------------- Fetch Data---------------------------------------------------
 
  
 export const useFetchData = (url, setData) => {
@@ -96,7 +156,10 @@ export const useFetchData = (url, setData) => {
   
       // Update the dataset by filtering out the deleted item
       const updatedData = data.filter((item) => item[itemKey] !== id);
+      console.log(itemKey);
+      console.log(updatedData)
       setData(updatedData);
+      console.log(data)
     } catch (err) {
       if (err.response && (err.response.status === 500 || err.response.status === 400)) {
         setValidtationMessage("Cannot delete: Value exists in child table!");
@@ -115,13 +178,15 @@ export const useFetchData = (url, setData) => {
   };
   
    //------------------------------------------------- Filter Fuction---------------------------------------------------
-
-  export const filterData = (data, searchTerm, filterKeys) => {
+   export const filterData = (data, searchTerm, filterKeys) => {
     if (!searchTerm) return data; // Return all data if no search term
   
     return data.filter((item) =>
       filterKeys.some((key) => {
-        const value = item[key];
+        // Check for nested keys
+        const value = key.includes(".")
+          ? key.split(".").reduce((acc, part) => acc && acc[part], item)
+          : item[key];
   
         if (typeof value === "string") {
           return value.toLowerCase().includes(searchTerm.toLowerCase());
@@ -133,6 +198,7 @@ export const useFetchData = (url, setData) => {
       })
     );
   };
+  
   
    //------------------------------------------------- Submit  Data---------------------------------------------------
    

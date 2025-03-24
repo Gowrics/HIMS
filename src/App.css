@@ -1,19 +1,22 @@
 .App {
   text-align: center;
 }
+
 body {
-  overflow-x: hidden; /* Prevent horizontal overflow */
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
 }
+
 /* ----------------------------------------app.css layout styles------------------------------- */
-  /* Navbar */
+/* Navbar */
 .navbar {
-  height: 10vh;
+  height: 8vh;
 }
 
 
 /* Footer */
 .footer {
-  height: 10vh;
+  height: 6vh;
   background-color: #f8f9fa;
   display: flex;
   align-items: center;
@@ -22,12 +25,14 @@ body {
 
 /* Main Content Layout */
 .main-content-wrapper {
-  height: 80vh; /* Remaining height */
+  height: 86vh;
+  /* Remaining height */
   display: flex;
 }
 
 .left-sidebar {
-  width: 15%; /* 15% of total width */
+  width: 13%;
+  /* 15% of total width */
   background-color: #e9ecef;
   padding: 0.3rem;
 }
@@ -37,6 +42,7 @@ body {
     margin-left: -60px;
   }
 }
+
 @media (max-width: 412px) {
   .navbar .container-fluid .nav {
     margin-left: -60px;
@@ -44,27 +50,31 @@ body {
 }
 
 .right-sidebar {
-  width: 15%; /* 15% of total width */
+  width: 13%;
+  /* 15% of total width */
   background-color: #e9ecef;
   padding: 1rem;
 }
 
 .main-content {
-  width: 70%; /* Remaining 70% */
+  width: 74%;
+  /* Remaining 70% */
   padding: 1rem;
   background-color: #fff;
-  overflow-y: auto; /* Allow scrolling if content overflows */
+  overflow-y: auto;
+  /* Allow scrolling if content overflows */
 }
 
 
 /* ----------------------------------------app.css layout styles------------------------------- */
 
-                       /*--------------- styles.css ------------------*/
+/*--------------- styles.css ------------------*/
 @keyframes slideUp {
   from {
     transform: translateY(50px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -75,12 +85,13 @@ body {
   animation: slideUp 1s ease-out;
 }
 
-                               /*--------------- styles.css ------------------*/
-                       
-                               /* -----------------home -----------------------------*/
-h6{
-  color:#E22454 ;
+/*--------------- styles.css ------------------*/
+
+/* -----------------home -----------------------------*/
+h6 {
+  color: #E22454;
 }
+
 /* .home{
   height: fit-content;
   background-image: url("./assets/download.jpg");
@@ -91,67 +102,83 @@ section .firsthead h6 {
   color: #E22454;
   font-size: 30px;
 }
-.pagehead{
+
+.pagehead {
   display: flex;
   flex-direction: column;
   justify-self: center;
   align-items: center;
-  }
+}
+
 .pagehead h6 {
   color: #E22454;
   font-size: 27px;
 }
+
 .pagehead h1 {
   color: white;
-  font-weight:bold;
+  font-weight: bold;
   font-size: 40px;
 }
 
 .pagehead P {
-    font-size: 20px;
-    width: 80%;
+  font-size: 20px;
+  width: 80%;
 }
 
 section .firsthead p {
-  color:black;
-  font-size:25px;
+  color: black;
+  font-size: 25px;
 }
+
 section .firsthead .btn {
-  position: relative; /* Ensure proper positioning for pseudo-element */
-  background-color: #122738; /* Default background */
-  color: white; /* Default text color */
+  position: relative;
+  /* Ensure proper positioning for pseudo-element */
+  background-color: #122738;
+  /* Default background */
+  color: white;
+  /* Default text color */
   padding: 10px 20px;
   font-size: 16px;
   border: none;
-  overflow: hidden; /* Prevent pseudo-element from overflowing */
-  z-index: 1; /* Keeps the text above the pseudo-element */
-  transition: color 0.5s; /* Smooth transition for text, if needed */
+  overflow: hidden;
+  /* Prevent pseudo-element from overflowing */
+  z-index: 1;
+  /* Keeps the text above the pseudo-element */
+  transition: color 0.5s;
+  /* Smooth transition for text, if needed */
 }
 
 section .firsthead .btn::before {
   content: "";
   position: absolute;
   top: 0;
-  left: -100%; /* Initially off-screen */
+  left: -100%;
+  /* Initially off-screen */
   width: 100%;
   height: 100%;
-  background-color: #497ea8; /* Red background color for hover */
-  z-index: -1; /* Places the background below the text */
-  transition: left 0.5s; /* Smooth sliding animation */
+  background-color: #497ea8;
+  /* Red background color for hover */
+  z-index: -1;
+  /* Places the background below the text */
+  transition: left 0.5s;
+  /* Smooth sliding animation */
 }
 
 section .firsthead .btn:hover::before {
-  left: 0; /* Slide the red background into view */
+  left: 0;
+  /* Slide the red background into view */
 }
 
 section .firsthead .btn:hover {
   color: #122738;
-  
-  font-weight: bold; /* Ensure text remains white on hover */
+
+  font-weight: bold;
+  /* Ensure text remains white on hover */
 }
 
 
-.firsthead .col-md-6, 
+.firsthead .col-md-6,
 .firsthead .col-md-4 {
   display: flex;
   flex-direction: column;
@@ -159,18 +186,21 @@ section .firsthead .btn:hover {
   justify-content: center;
   align-items: center;
 }
-.quality{
+
+.quality {
   margin-top: 10px;
   margin-bottom: 100px;
 }
-.quality  .row .cards{
+
+.quality .row .cards {
   display: flex;
   flex-direction: row;
   gap: 300px;
 }
-                      /* -----------------home -----------------------------*/
 
-                       /*------------------ cards quality------------------- */
+/* -----------------home -----------------------------*/
+
+/*------------------ cards quality------------------- */
 
 .cards {
 
@@ -194,8 +224,8 @@ section .firsthead .btn:hover {
 }
 
 .cards .card img {
-  width: 20%; 
-  
+  width: 20%;
+
   transition: transform 0.5s ease-in-out;
 }
 
@@ -221,17 +251,19 @@ section .firsthead .btn:hover {
   color: #555;
   margin-bottom: 15px;
 }
-                       /*------------------ cards quality------------------- */
+
+/*------------------ cards quality------------------- */
 
 
 /* quality */
 
 
-                       /* ----------------------------------deptview -------------------------------------*/
+/* ----------------------------------deptview -------------------------------------*/
 
-.deptview{
+.deptview {
   background-color: #F4F9FD;
 }
+
 .deptview .card {
   border: none;
   align-items: center;
@@ -240,47 +272,54 @@ section .firsthead .btn:hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.deptview .col .card:hover{
-  background-color:#122738;
+.deptview .col .card:hover {
+  background-color: #122738;
   color: white;
 }
 
 
-.deptview .col .card:hover{
+.deptview .col .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+
 .card-registration .select-input.form-control[readonly]:not([disabled]) {
   font-size: 1rem;
   line-height: 2.15;
   padding-left: .75em;
   padding-right: .75em;
-  }
-  .card-registration .select-arrow {
-  top: 13px;
-  }
-                         /* ----------------------------------deptview -------------------------------------*/
-
-  /* ------------------navbar--------- */
-  
-.page-content{
-  padding-top: 140px;
 }
+
+.card-registration .select-arrow {
+  top: 13px;
+}
+
+/* ----------------------------------deptview -------------------------------------*/
+
+/* ------------------navbar--------- */
+
+.page-content {
+  padding-top: 60px;
+}
+
 .nav-link {
   color: black !important;
   margin-right: 50px !important;
   font-size: 17px !important;
 }
-.text-white{
+
+.text-white {
   font-size: 20px;
 }
-.navbar-brand{
+
+.navbar-brand {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
-.btns{
+
+.btns {
   display: flex;
   flex-direction: row;
 }
@@ -291,100 +330,119 @@ section .firsthead .btn:hover {
 }
 
 
-.navbar-nav .dropdown:hover > .dropdown-menu {
+.navbar-nav .dropdown:hover>.dropdown-menu {
   display: block;
-  margin-top: 0; /* Adjust if necessary for alignment */
+  margin-top: 0;
+  /* Adjust if necessary for alignment */
 }
 
-.navbar-nav .dropdown:hover > .nav-link {
-  color: #f8f9fa; /* Optional: Change color on hover */
+.navbar-nav .dropdown:hover>.nav-link {
+  color: #f8f9fa;
+  /* Optional: Change color on hover */
 }
 
 
 
 @media (max-width: 768px) {
 
-   .banner{
-     width: 70%; /* Adjust width for smaller screens */ }
-     }
-    
+  .banner {
+    width: 70%;
+    /* Adjust width for smaller screens */
+  }
+}
 
-     /* ==============bread grumbs================= */
-     .breadcrumb {
-      background-color: #f8f9fa; /* Light gray background */
-      padding: 10px;   
-      /* margin-top: 90px;   */
-      position: fixed;       /* Padding around the breadcrumb */
-      border-radius: 5px;   
-      z-index: 3;    /* Rounded corners */
-    }            set my background image and visible my text 
-    
-    
 
-.breadcrumb-text {
-  position: relative; /* To appear above the overlay */
+/* ==============bread grumbs================= */
+.breadcrumb {
+  background-color: #f8f9fa;
+  /* Light gray background */
+  padding: 10px;
+  /* margin-top: 90px;   */
+  position: fixed;
+  /* Padding around the breadcrumb */
+  border-radius: 5px;
+  z-index: 3;
+  /* Rounded corners */
+}
+
+set my background image and visible my text .breadcrumb-text {
+  position: relative;
+  /* To appear above the overlay */
   z-index: 2;
   padding-left: 20px;
-  color: #fff; /* White text for contrast */
- 
+  color: #fff;
+  /* White text for contrast */
+
   text-align: center;
-  line-height: 20vh; /* Vertically center the text */
+  line-height: 20vh;
+  /* Vertically center the text */
   font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
 }
 
 
-.breadcrumb a{
-  color: #007bff; /* Blue text for links */
- 
+.breadcrumb a {
+  color: #007bff;
+  /* Blue text for links */
+
 }
-.breadcrumb-item{
+
+.breadcrumb-item {
   color: white;
 }
- .footerfirst h3{
-  color:#E22454 ;
+
+.footerfirst h3 {
+  color: #E22454;
 }
-.footerfirst{
-  background-color:#122738 ;
+
+.footerfirst {
+  background-color: #122738;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  
+
   padding: 30px;
 }
-.footersecond{
-  background-color:white;
+
+.footersecond {
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   color: black;
-}.list-inline-item {
-  
-  width: 35px; 
-  height: 35px; 
+}
+
+.list-inline-item {
+
+  width: 35px;
+  height: 35px;
   background-color: #E22454;
-  border-radius: 50%; 
-  color: white; 
-  font-size: 20px; 
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
- }
- .list-inline-item a{
-  display:flex;
+}
+
+.list-inline-item a {
+  display: flex;
   flex-direction: column;
   align-items: center;
   color: white;
- }
+}
+
 /* Media Query for Small Screens (e.g., phones) */
 @media (max-width: 576px) {
   .list-inline-item {
-    width: 30px; /* Smaller size for small screens */
+    width: 30px;
+    /* Smaller size for small screens */
     height: 30px;
     line-height: 30px;
-    font-size: 14px; /* Adjust font size */
+    font-size: 14px;
+    /* Adjust font size */
   }
 }
 
@@ -394,24 +452,36 @@ section .firsthead .btn:hover {
     width: 25px;
     height: 25px;
     line-height: 25px;
-    font-size: 12px; /* Further reduce font size */
+    font-size: 12px;
+    /* Further reduce font size */
   }
 }
-@media (max-width: 576px) {
- .footerfirst,.footersecond{
-  text-align: start;
- }
- .time h5 {
-  font-size: 14px;
- }
-}
-/* ---------------------------------------------------------invoice ------------------------------------------------------------------------------ */
 
+@media (max-width: 576px) {
+
+  .footerfirst,
+  .footersecond {
+    text-align: start;
+  }
+
+  .time h5 {
+    font-size: 14px;
+  }
+}
+
+/* ---------------------------------------------------------invoice ------------------------------------------------------------------------------ */
 .invoice-container {
-  min-height: 100vh;
+  height: 77vh;
   display: flex;
   flex-direction: column;
+  background-color: #e9ecef;
 }
+
+.invoice-content {
+  flex-grow: 1; /* Allows the content area to take available space */
+  overflow-y: auto; /* Adds scrolling when content exceeds height */
+}
+
 
 .invoice-title {
 
@@ -421,19 +491,23 @@ section .firsthead .btn:hover {
   justify-content: center;
   font-weight: bold;
 }
+
 .invoice-header {
-  min-height: 40vh;  /* Changed from height: 50vh */
-  background-color: #e9ecef;
+
+  min-height: 40vh;
+  /* Changed from height: 50vh */
+  /* background-color: #e9ecef; */
   display: flex;
-  flex-wrap: wrap; /* Allows elements to wrap */
+  flex-wrap: wrap;
+  /* Allows elements to wrap */
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 0px;
 }
 
 
 .invoice-details {
-  background-color: #dee2e6;
+  /* background-color: #dee2e6; */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -450,133 +524,133 @@ section .firsthead .btn:hover {
   font-weight: bold;
 }
 
-.invoice-header-detail{
-  font-size: 14px;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items:center ;
-}
-.invoice-payment{display: flex;align-items: center;justify-content: center;}
-.invoice-main-details {
-  
-    font-size: 15px;
-
-  padding: 10px;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  margin: 10px 0;
-}
-
-/* .invoice-header {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px 0;
-  background-color: #f8f9fa;
-  color: #333;
-  border-bottom: 2px solid #ccc;
-}
 .invoice-header-detail {
   font-size: 14px;
-  text-align: center;
-  padding: 10px;
-  color: #333;
+  /* font-weight: bold; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.invoice-header-detail .form-label {
-  font-weight: bold;
-}
 
-.invoice-header-detail .form-control {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 5px;
-}
 
+.payment {
+  display: flex;
+  flex-direction:row;gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+.payment .form-control {
+  border: 1px solid black;  /* Dark border */
+  border-radius: 5px; /* Optional: rounded corners */
+
+}
 
 .invoice-main-details {
-  font-size: 16px;
+  position: sticky;
+  top: 60px; /* Adjust this value to match your navbar height */
+  z-index: 1000;
+
+  font-size: 15px;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 2px solid blac;
   background-color: #fff;
   margin: 10px 0;
 }
 
-.invoice-payment {
-  font-size: 18px;
-  font-weight: bold;
+
+/* -----------------------------------Bill--------------------------------- */
+
+.bill-container {
+  display: flex;
+  justify-content: space-between;
+  /* Adjust spacing */
+  gap: 20px;
+  /* Space between boxes */
+}
+
+.bill-container form {
+  display: flex;
+  /* Makes the boxes appear in one row */
+  gap: 20px;
+  /* Space between boxes */
+}
+
+.box {
+  width: 200px;
+  height: 100px;
+  background-color: lightblue;
+  border: 2px solid black;
+}
+
+
+.invoice-title {
   text-align: center;
-  padding: 10px;
-  margin-bottom: 10px;
-  background-color: #e9ecef;
-  border-top: 2px solid #ccc;
-  color: #000;
+  font-size: 24px;
+  margin-bottom: 15px;
 }
 
- 
-.invoice{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-    margin-top: 45px;
-  border:2px solid gray;
+.invoice-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
 }
- .invoiceHead{
+
+.header {
   display: flex;
-  flex-direction: column;
-  height: 40vh;
- }
-    
-.invoiceDetails{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 50vh;
-}
-/*
-.billHead{
-  display: flex;
-  height: 10vh;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: #d9dde0;  padding: 20px;
-}
-.billDetails{
-  display: flex;
-    flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-  height: 30vh;
-  background-color: #dce9f3;
-  padding-bottom: 10px;
-
-}
-.billDetails1{
-  display: flex;
-    flex-direction: column;
-  justify-content: center;
+  gap: 80px;
+  background: #e4e5e7;
+  border: 0.1px dotted gray;
 }
 
-.billDetails2{
-  display: flex;
-    flex-direction: column;
-  justify-content: center;
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
 }
 
-.billDetails3{
-  display: flex;
-    flex-direction: column;
-  justify-content: center;
+.service-table th,
+.service-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
-.billDetails4{
+.service-table th {
+  background: #f4f4f4;
+}
+
+.invoice-summary {
   display: flex;
-    flex-direction: column;
-  justify-content: center;
-} */  
+  flex-direction: column;
+  align-items: flex-end;
+  /* Aligns text to the left */
+  margin-top: 15px;
+  background: #e4e5e7;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  /* Ensures full width */
+}
+
+
+.invoice-summary h4 {
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
+.btn-grp{
+  position: sticky;
+  top: 0; /* Adjust this value to match your navbar height */
+  z-index: 1000;
+}
+
+.hide-on-print{
+  font-size: 23px;
+}

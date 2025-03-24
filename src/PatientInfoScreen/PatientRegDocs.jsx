@@ -153,13 +153,13 @@ return (
         <div className="row mb-3">
           <div className="col-md-4">
             <label htmlFor="regNo" className="form-label">
-            patientRegCode
+            Patient Reg Code
             </label>
             <input className="form-control" type="number" id="regNo" name="regNo" value={formData.regNo} onChange={handleChange} required   disabled/>
           </div>
           <div className="col-md-3">
             <label htmlFor="priceList" className="form-label">
-            patientDataMaster (patientCode)
+            Patient Data Master (Patient Code)
             </label>
             <CustomSelect
               id="patientCode"
@@ -175,7 +175,7 @@ return (
           </div>
           <div className="col-md-3">
             <label htmlFor="priceList" className="form-label">
-            docTypeMaster (docTypeCode)
+            Doc Type Master (Doc Type Code)
             </label>
             <CustomSelect
               id="docTypeCode"
@@ -206,7 +206,7 @@ return (
 
           <div className="col-md-4">
             <label htmlFor="defaultDoc" className="form-label">
-            defaultDoc
+            Default Doc
             </label>
             <select className="form-control" id="defaultDoc" name="defaultDoc" value={formData.defaultDoc} onChange={handleChange}  >
               <option value="">Select an Option</option>
@@ -217,7 +217,7 @@ return (
 
           <div className="col-md-4">
             <label htmlFor="passportLinkDoc" className="form-label">
-            passportLinkDoc
+            Passport Link Doc
             </label>
             <select className="form-control" id="passportLinkDoc" name="passportLinkDoc" value={formData.passportLinkDoc} onChange={handleChange} >
               <option value="">Select an Option</option>
@@ -231,13 +231,13 @@ return (
         <div className="row mb-3">
           <div className="col-md-4">
             <label htmlFor="docAttachment" className="form-label">
-            docAttachment
+            Doc Attachment
             </label>
             <input type="url" className="form-control" id="docAttachment" name="docAttachment" value={formData.docAttachment} onChange={handleChange} required />
           </div>
           <div className="col-md-4">
             <label htmlFor="expiryDate" className="form-label">
-            expiryDate
+            Expiry Date
             </label>
             <input type="date" className="form-control" id="expiryDate" name="expiryDate" value={formData.expiryDate} onChange={handleChange} required />
           </div>
@@ -247,7 +247,7 @@ return (
         <div className="row mb-3">
         <div className="col-md-4">
             <label htmlFor="countryIdDoc" className="form-label">
-            countryIdDoc
+            Country Id Doc
             </label>
             <select className="form-control" id="countryIdDoc" name="countryIdDoc" value={formData.countryIdDoc} onChange={handleChange} >
               <option value="">Select an Option</option>

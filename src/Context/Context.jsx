@@ -6,3 +6,7 @@ export const UserContext = createContext(null);
 
 
 export const InvoiceContext = createContext(null);
+
+
+
+export const AdvanceInvoiceContext = createContext(null);

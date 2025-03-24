@@ -1,138 +1,104 @@
-import React, { useContext, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useContext } from "react";
+import { TextField, Button, Container, Typography, Box, Grid } from "@mui/material";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { UserContext } from "../Context/Context";
 
-
 const Registration = () => {
-    const {
-        formData,
-        setFormData,
-        errors,
-        isSubmitted,
-        setIsSubmitted,
-        validateForm,
-      } = useContext(UserContext);
+    const {formData,  setFormData,  errors,   isSubmitted,  setIsSubmitted,  validateForm,  } = useContext(UserContext);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-    
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      setIsSubmitted(true);
-      console.log("Form Data:", formData);
-       
-      axios
-     .post("http://localhost:8084/users",formData)
-      //  .post("http://localhost:8005/adminData",formData)
-
-      .then((res)=>{
-        console.log("form submitted",res.data)
-        setFormData({
-          name: "",
-           email: "",
-          password: "",
-          confirmPassword: "",
-        });
-      })
-       
-      alert("Registration successful!");
-      setFormData({
-        name: "",
-         email: "",
-        password: "",
-        confirmPassword: "",
-      });
+    
+    try {
+      console.log(formData);
+        // Register user with correct data format
+      await axios.post("http://192.168.1.18:8082/loginPage/register", formData);
+  setIsSubmitted(true
+    
+  )
+      alert("Registration successful! Please log in.");
+    } catch (error) {
+      console.error("Registration error:", error);
     }
   };
-
+  
   return (
-    <div className="container page-content  mt-5">
-      <h2 className="text-center">Registration Form</h2>
-      <form onSubmit={handleSubmit} noValidate>
-        {/* Name Field */}
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            className={`form-control ${errors.name ? "is-invalid" : ""}`}
-            value={formData.name}
-            onChange={handleChange}
-          />
-          {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-        </div>
-        
-        {/* Email Field */}
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className={` form-control ${errors.email ? "is-invalid" : ""}`}
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && (
-            <div className="invalid-feedback">{errors.email}</div>
-          )}
-        </div>
+    <Container maxWidth="sm">
+      <Box sx={{ mt: 5, p: 3, boxShadow: 3, borderRadius: 2 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Registration Form
+        </Typography>
+        <form onSubmit={handleSubmit} noValidate>
+          <Grid container spacing={2}>
+            {/* Name Field */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="username"
+                name="username"
+                variant="outlined"
+                value={formData.username}
+                onChange={handleChange}
+                error={!!errors.username}
+                helperText={errors.username}
+              />
+            </Grid>
 
-        {/* Password Field */}
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className={`form-control ${errors.password ? "is-invalid" : ""}`}
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && (
-            <div className="invalid-feedback">{errors.password}</div>
-          )}
-        </div>
+            {/* Email Field */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Email"
+                name="email"
+                type="email"
+                variant="outlined"
+                value={formData.email}
+                onChange={handleChange}
+                error={!!errors.email}
+                helperText={errors.email}
+              />
+            </Grid>
 
-        {/* Confirm Password Field */}
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            className={`form-control ${
-              errors.confirmPassword ? "is-invalid" : ""
-            }`}
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          {errors.confirmPassword && (
-            <div className="invalid-feedback">{errors.confirmPassword}</div>
-          )}
-        </div>
+            {/* Password Field */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Password"
+                name="password"
+                type="password"
+                variant="outlined"
+                value={formData.password}
+                onChange={handleChange}
+                error={!!errors.password}
+                helperText={errors.password}
+              />
+            </Grid>
 
-        {/* Submit Button */}
-        <button type="submit" className="btn mt-4 btn-primary btn-block">
-          Register
-        </button>
-      </form>
+            {/* Submit Button */}
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary" fullWidth>
+                Register
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
 
-      {isSubmitted && <p className="text-success mt-3">Form submitted successfully!</p>}
-      <p>Already have an account?</p>
-      <Link to="/signin" className="btn btn-primary" > Sign In</Link>
-    </div>
+        {isSubmitted && <Typography color="success.main" mt={2}>Form submitted successfully!</Typography>}
+
+        <Typography mt={2}>Already have an account?</Typography>
+        <Button component={Link} to="/signin" variant="outlined" color="primary">
+          Sign In
+        </Button>
+      </Box>
+    </Container>
   );
 };
 
 export default Registration;
-

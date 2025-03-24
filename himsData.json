@@ -84,133 +84,48 @@
   ],
   "docters": [
     {
-      "deptCode": "34456",
-      "doctorName": "Ravi Saisa",
-      "doctorNameFl": "الدكتور جون دو",
-      "doctorImg": "data:image/jpeg;base64,/9j/4AAQ",
-      "licenseNo": "4353",
-      "doctorDesignation": "General Dentist",
-      "doctorDesignationFl": "طبيب أسنان عام",
-      "doctorQualifications": "BDS-FRCS",
-      "doctorQualificationsFl": "34456",
-      "gender": "Female",
-      "sortOrder": 2,
-      "nationalityCode": 56,
-      "costCenterCode": "300",
-      "active": "N",
-      "id": "bf72"
-    },
-    {
-      "deptCode": "34455",
-      "doctorName": "Dr. Mary Doe",
-      "doctorNameFl": "الدكتور جون دو",
-      "doctorImg": "https://www.istockphoto.com/search/2/image-film?phrase=indian+doctor",
-      "licenseNo": "5555",
-      "doctorDesignation": "General Dentist",
-      "doctorDesignationFl": "طبيب أسنان عام",
-      "doctorQualifications": "BDS-FRCS",
-      "doctorQualificationsFl": "34455",
-      "gender": "Female",
-      "sortOrder": 2,
-      "nationalityCode": 56,
-      "costCenterCode": "303",
-      "active": "Y",
-      "id": "9433"
-    },
-    {
-      "id": "9433",
-      "deptCode": "34454",
+      "doctorCode": 101,
       "doctorName": "Dr. John Doe",
-      "doctorNameFl": "الدكتور جون دو",
-      "doctorImg": "https://www.istockphoto.com/search/2/image-film?phrase=indian+doctor",
-      "licenseNo": "3434",
-      "doctorDesignation": "General Dentist",
-      "doctorDesignationFl": "طبيب أسنان عام",
-      "doctorQualifications": "BDS-FRCS",
-      "doctorQualificationsFl": "34454",
-      "gender": "Male",
-      "sortOrder": 1,
-      "nationalityCode": 56,
-      "costCenterCode": "303",
-      "active": "Y"
-    },
-    {
-      "id": "1234",
-      "deptCode": "4",
-      "doctorName": "Dr. Jane Smith",
-      "doctorNameFl": "الدكتورة جين سميث",
-      "doctorImg": "https://www.istockphoto.com/search/2/image-film?phrase=female+doctor",
-      "licenseNo": "67890",
-      "doctorDesignation": "Pediatrician",
-      "doctorDesignationFl": "طبيب ب",
-      "doctorQualifications": "MBBS-MD",
-      "doctorQualificationsFl": "بطبيبب",
-      "gender": "Female",
-      "sortOrder": 3,
-      "nationalityCode": 3,
-      "costCenterCode": "505",
-      "active": "Y"
-    },
-    {
-      "id": "ba1a",
-      "doctorCode": "",
-      "deptCode": "2",
-      "doctorName": "gowri",
-      "drNameFl": "",
-      "drImg": "",
-      "drLicNo": "",
-      "drDesignation": "",
-      "drDesignationFl": "",
-      "drQualifications": "",
-      "drQualificationsFl": "",
-      "drGender": "",
-      "drSrtOrd": 0,
-      "nationalityCode": 2,
-      "costCenterCode": "303",
+      "drNameFl": "جون دو",
+      "drImg": "https://example.com/images/dr_john_doe.png",
       "drActive": "Y",
-      "doctorNameFl": "الدكتور جون دو",
-      "gender": "Male",
-      "licenseNo": "43544",
-      "doctorDesignation": "General Dentist",
-      "doctorDesignationFl": "طبيب أسنان عام",
-      "doctorQualifications": "BDS-FRCS",
-      "doctorQualificationsFl": " الملكية للجراحين",
-      "sortOrder": 2,
-      "doctorImg": "https://www.istockphoto.com/search/2/image-film?phrase=indian+doctor",
-      "active": "N"
-    },
-    {
-      "id": "0ebc",
-      "doctorName": "Dr. Mary Doe",
-      "drNameFl": "",
-      "drImg": "",
-      "drActive": "",
-      "drLicNo": "",
-      "drDesignation": "",
-      "drDesignationFl": "",
-      "drQualifications": "",
-      "drQualificationsFl": "",
-      "drGender": "",
-      "drSrtOrd": 0,
-      "costCenterCode": "303",
+      "drLicNo": "LIC123456",
+      "drDesignation": "Consultant",
+      "drDesignationFl": "استشاري",
+      "drQualifications": "MBBS, MD",
+      "drQualificationsFl": "MBBS, MD",
+      "drGender": "M",
+      "drSrtOrd": 1,
+      "costCenterCode": "CC101",
       "department": {
-        "deptCode": 0
+        "deptCode": "DEP001"
       },
       "nationality": {
-        "nationalityCode": 0
+        "nationalityCode": "US"
       },
-      "deptCode": "1",
-      "gender": "Male",
-      "doctorNameFl": "الدكتور جون دو",
-      "licenseNo": "LIsds",
-      "doctorDesignation": "General Dentist",
-      "doctorDesignationFl": "طبيب أسssنان عام",
-      "doctorQualifications": "BDS-FRCS",
-      "doctorQualificationsFl": " الملكة للجراحين",
-      "sortOrder": 2,
-      "nationalityCode": 2,
-      "doctorImg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA0QMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAAAAQIGAwQFBwj/xAA9EAABAwMCAwQIBQMCBwEAAAABAAIDBAUREiEGMUETIlFhBxQycYGRobEjUlPB0UJy8CRDJTNigpPh8RX/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAgEDBAX/xAAdEQEBAAMAAwEBAAAAAAAAAAAAAQIDERIhMUEi/9oADAMBAAIRAxEAPwD2JJNJUwljcMrIkQgxNapBqkEwgQapaUwmgjpRhSWtcq6nttDNW1knZwwtLnOPggVXUQ0kLpqiRkcbRlznnAA81QLj6WrFT1MkFFBUV+n/AHIsBhPkTzXmHHPG1fxhWlh1QW6NxEMDTz83eJ+i4fqzw1oiONlFqpHszfSrRkj/AIZNp6/jNBXes3Gtiu5bEyq9XqCcdjUDST7jyPwK+ec1MLm9o0gHqASF0RI58GvMbg38mxCzqvF9L4BRpXlvo143drjs91mMjHHTTVDzu0/kd5eBXqmQeSqVNnCDU9KfVNaxDSgtU0FYMelLSshSKDHpUNKylRQYy1R0rKVEoMelNSQg6iSaSpgSKaCggmhMIGhJCBrxn08cRv7SmsFO/uFva1AB6dAfv8F7HK/RG5x6BfKXG1zdd+KrjWFxcx0xazP5W7D/ADzWVTSp8ZBz5K38K2NlbpnrS4x5wGcsqk0xc+VjR4r0yz10FDSxMk16iNmsbqJPkFw22yenfTjLfa/2u0W0wBkdHCGf25WWt4KsNcMyULY3Ee3CdB+i5",
-      "active": "N"
+      "id": "339e"
+    },
+    {
+      "doctorCode": 102,
+      "doctorName": "Dr. Jane Smith",
+      "drNameFl": "جين سميث",
+      "drImg": "https://example.com/images/dr_jane_smith.png",
+      "drActive": "Y",
+      "drLicNo": "LIC654321",
+      "drDesignation": "Senior Surgeon",
+      "drDesignationFl": "جراح كبير",
+      "drQualifications": "MBBS, MS",
+      "drQualificationsFl": "MBBS, MS",
+      "drGender": "F",
+      "drSrtOrd": 2,
+      "costCenterCode": "CC102",
+      "department": {
+        "deptCode": "DEP002"
+      },
+      "nationality": {
+        "nationalityCode": "UK"
+      },
+      "id": "6c19"
     }
   ],
   "patientMainTypeData": [
@@ -317,6 +232,544 @@
       "headCharge": {
         "hchgCode": 13
       }
+    }
+  ],
+  "patientChgDepData": [
+    {
+      "id": "134f",
+      "patientDataMaster": {
+        "patientCode": "P789012"
+      },
+      "policiesCharge": {
+        "chargeCode": 101
+      },
+      "cardAttachment": "https://github.com/Gowrics/HIMS/blob/main/src/assets/idcards/AadharCard.jpg",
+      "cardExpiryDate": "2027-06-09",
+      "active": "YES",
+      "defaultStatus": "YES"
+    },
+    {
+      "id": "eefa",
+      "patientDataMaster": {
+        "patientCode": "P123456"
+      },
+      "policiesCharge": {
+        "chargeCode": 102
+      },
+      "cardAttachment": "https://github.com/Gowrics/HIMS/blob/main/src/assets/idcards/AadharCard.jpg",
+      "cardExpiryDate": "2028-06-07",
+      "active": "YES",
+      "defaultStatus": "YES"
+    }
+  ],
+  "patientMasterData": [
+    {
+      "patientCode": 1,
+      "patientName": "Alice Smith",
+      "patientNameAr": "أليس سميث",
+      "patientMobileCountryCode": "+966",
+      "patientMobileNo": "551234567",
+      "nationalityCode": {
+        "nationalityCode": 2
+      },
+      "patientDateOfBirth": "1985-08-22",
+      "countryIdNo": "B987654321",
+      "passportNo": "M123456789",
+      "occupation": "Doctor",
+      "vipPatient": "N",
+      "active": "Y",
+      "blackListed": "N",
+      "id": "61ce"
+    },
+    {
+      "patientCode": 2,
+      "patientName": "John Doe",
+      "patientNameAr": "جون دو",
+      "patientMobileCountryCode": "+971",
+      "patientMobileNo": "501234567",
+      "nationalityCode": {
+        "nationalityCode": 1
+      },
+      "patientDateOfBirth": "1990-05-15",
+      "countryIdNo": "A123456789",
+      "passportNo": "N987654321",
+      "occupation": "Software Engineer",
+      "vipPatient": "Y",
+      "active": "Y",
+      "blackListed": "N",
+      "id": "276c"
+    }
+  ],
+  "policiCharge": [
+    {
+      "chargeCode": 101,
+      "chargeName": "Consultation Fee",
+      "policyNo": "POL123456",
+      "policyExpDate": "2025-12-31",
+      "active": "Y",
+      "subCharge": {
+        "schgCode": 201
+      },
+      "tpaHead": {
+        "tpaCode": 301
+      },
+      "id": "939b"
+    },
+    {
+      "chargeCode": 102,
+      "chargeName": "Lab Test Charges",
+      "policyNo": "POL654321",
+      "policyExpDate": "2026-06-30",
+      "active": "N",
+      "subCharge": {
+        "schgCode": 202
+      },
+      "tpaHead": {
+        "tpaCode": 302
+      },
+      "id": "82a4"
+    }
+  ],
+  "serviceMasterData": [
+    {
+      "serviceCode": "SVC001",
+      "serviceName": "General Consultation",
+      "serviceNameAr": "استشارة عامة",
+      "serviceCategoryCode": {
+        "serviceCategoryCode": "CAT001"
+      },
+      "serviceNotes": "This service includes a basic health checkup.",
+      "serviceFilt1": "Outpatient",
+      "serviceFilt2": "Primary Care",
+      "subscriptionTotalNoVisits": "10",
+      "subscriptionVisitsPerMonth": "2",
+      "active": "Yes",
+      "subscriptionService": "Yes",
+      "toothMandatory": "No",
+      "cptCodes": {
+        "cptCode": "CPT1001"
+      },
+      "loincCodes1": {
+        "loincCode": "LC101"
+      },
+      "loincCodes2": {
+        "loincCode": "LC102"
+      },
+      "id": "dc7c"
+    },
+    {
+      "serviceCode": "SVC002",
+      "serviceName": "Dental Cleaning",
+      "serviceNameAr": "تنظيف الأسنان",
+      "serviceCategoryCode": {
+        "serviceCategoryCode": "CAT002"
+      },
+      "serviceNotes": "Includes plaque removal and polishing.",
+      "serviceFilt1": "Dental",
+      "serviceFilt2": "Preventive Care",
+      "subscriptionTotalNoVisits": "5",
+      "subscriptionVisitsPerMonth": "1",
+      "active": "Yes",
+      "subscriptionService": "No",
+      "toothMandatory": "Yes",
+      "cptCodes": {
+        "cptCode": "CPT2002"
+      },
+      "loincCodes1": {
+        "loincCode": "LC201"
+      },
+      "loincCodes2": {
+        "loincCode": "LC202"
+      },
+      "id": "56cd"
+    }
+  ],
+  "priceListData": [
+    {
+      "priceListCode": 1,
+      "priceListName": "Standard Plan",
+      "active": "Yes",
+      "id": "84c1"
+    },
+    {
+      "priceListCode": 2,
+      "priceListName": "Premium Plan",
+      "active": "No",
+      "id": "6f68"
+    },
+    {
+      "priceListCode": 3,
+      "priceListName": "Basic Plan",
+      "active": "Yes",
+      "id": "af27"
+    }
+  ],
+  "priceListDetailsData": [
+    {
+      "grossAmt": 1000,
+      "discountAmt": 100,
+      "covered": "YES",
+      "coPaymentPercent": 20,
+      "coPaymentAmt": 180,
+      "serviceMaster": {
+        "serviceCode": "SVC001"
+      },
+      "priceList": {
+        "priceListCode": "PL001"
+      },
+      "id": "9ca1"
+    },
+    {
+      "grossAmt": 100,
+      "discountAmt": 10,
+      "covered": "YES",
+      "coPaymentPercent": 20,
+      "coPaymentAmt": 18,
+      "serviceMaster": {
+        "serviceCode": "SVC002"
+      },
+      "priceList": {
+        "priceListCode": "PL002"
+      },
+      "id": "72ca"
+    }
+  ],
+  "packagesMasterData": [
+    {
+      "packageActive": "YES",
+      "packageCode": "PKG001",
+      "packageCreditPortion": "5",
+      "packageEnDate": "2025-06-30",
+      "packageName": "Basic Health Plan",
+      "packagePaymentPortion": "20",
+      "packageRate": 500,
+      "packageStDate": "2025-01-01",
+      "id": "5acf"
+    },
+    {
+      "packageActive": "YES",
+      "packageCode": "PKG002",
+      "packageCreditPortion": "10",
+      "packageEnDate": "2025-12-31",
+      "packageName": "Advanced Health Plan",
+      "packagePaymentPortion": "50",
+      "packageRate": 2000,
+      "packageStDate": "2025-02-15",
+      "id": "684b"
+    },
+    {
+      "packageActive": "NO",
+      "packageCode": "PKG003",
+      "packageCreditPortion": "3",
+      "packageEnDate": "2024-11-30",
+      "packageName": "Dental Care Package",
+      "packagePaymentPortion": "25",
+      "packageRate": 750,
+      "packageStDate": "2024-06-01",
+      "id": "ba2d"
+    }
+  ],
+  "packagesDetailsData": [
+    {
+      "id": "1",
+      "packageMaster": {
+        "packageCode": "PKG001"
+      },
+      "serviceMaster": {
+        "serviceCode": "SRV123"
+      },
+      "packageRate": 1500,
+      "packagePaymentPortion": 1000,
+      "packageCreditPortion": 500
+    },
+    {
+      "id": "2",
+      "packageMaster": {
+        "packageCode": "PKG002"
+      },
+      "serviceMaster": {
+        "serviceCode": "SRV456"
+      },
+      "packageRate": 2000,
+      "packagePaymentPortion": 1500,
+      "packageCreditPortion": 500
+    }
+  ],
+  "patientBill": [
+    {
+      "id": "c102",
+      "patientBillingHeader": {
+        "patientDataMaster": {
+          "patientCode": "P123456"
+        },
+        "patientDataMasterName": "John Doe",
+        "patientDataMasterNameAr": "جون دو",
+        "doctor": {
+          "doctorCode": 101
+        },
+        "policiesCharge": {
+          "chargeCode": 102
+        },
+        "createdBy": "Admin",
+        "ccld": null,
+        "ccldBy": null,
+        "ccldAt": null,
+        "ccldDt": null,
+        "cashPaid": 300,
+        "cardPaid": 96,
+        "cardNo": 1234567891234567,
+        "pointsUsed": 20,
+        "paidFromAdvance": 1000,
+        "packageCode": "PKG002",
+        "emrNo": "EMR12345"
+      },
+      "patientBillingDetails": [
+        {
+          "slNo": 1,
+          "serviceMaster": {
+            "serviceCode": "SVC001"
+          },
+          "serviceMasterName": "General Consultation",
+          "quantity": 2,
+          "serviceAmount": 2000,
+          "serviceDiscount": 200,
+          "servicePaid": 360,
+          "serviceCredit": 1440,
+          "serviceDone": "YES",
+          "serviceCancelled": "NO",
+          "serviceComment1": "done",
+          "serviceComment2": null,
+          "baseAmount": 1000,
+          "baseDiscount": 100,
+          "basePaid": 180
+        },
+        {
+          "slNo": 2,
+          "serviceMaster": {
+            "serviceCode": "SVC002"
+          },
+          "serviceMasterName": "Dental Cleaning",
+          "quantity": 2,
+          "serviceAmount": 200,
+          "serviceDiscount": 20,
+          "servicePaid": 36,
+          "serviceCredit": 144,
+          "serviceDone": "YES",
+          "serviceCancelled": "NO",
+          "serviceComment1": null,
+          "serviceComment2": null,
+          "baseAmount": 100,
+          "baseDiscount": 10,
+          "basePaid": 18
+        }
+      ]
+    },
+    {
+      "id": "e8ab",
+      "patientBillingHeader": {
+        "patientDataMaster": {
+          "patientCode": "P123456",
+          "packageCode": "P123456"
+        },
+        "patientDataMasterName": "John Doe",
+        "patientDataMasterNameAr": "جون دو",
+        "doctor": {
+          "doctorCode": 102
+        },
+        "policiesCharge": {
+          "chargeCode": 102
+        },
+        "createdBy": "Gowri",
+        "ccld": null,
+        "ccldBy": null,
+        "ccldAt": null,
+        "ccldDt": null,
+        "cashPaid": 100,
+        "cardPaid": 80,
+        "cardNo": 1234567891234567,
+        "pointsUsed": 34,
+        "paidFromAdvance": 0,
+        "packageCode": "PKG001",
+        "emrNo": "EMR12345"
+      },
+      "patientBillingDetails": [
+        {
+          "slNo": 1,
+          "serviceMaster": {
+            "serviceCode": "SVC001"
+          },
+          "serviceMasterName": "General Consultation",
+          "quantity": 1,
+          "serviceAmount": 1000,
+          "serviceDiscount": 100,
+          "servicePaid": 180,
+          "serviceCredit": 720,
+          "serviceDone": "NO",
+          "serviceCancelled": "NO",
+          "serviceComment1": "done",
+          "serviceComment2": null,
+          "baseAmount": 1000,
+          "baseDiscount": 100,
+          "basePaid": 180
+        }
+      ]
+    },
+    {
+      "id": "43e9",
+      "patientBillingHeader": {
+        "patientDataMaster": {
+          "patientCode": "P123456",
+          "packageCode": "P123456"
+        },
+        "patientDataMasterName": "John Doe",
+        "patientDataMasterNameAr": "جون دو",
+        "doctor": {
+          "doctorCode": 101
+        },
+        "policiesCharge": {
+          "chargeCode": 102
+        },
+        "createdBy": "Admin",
+        "ccld": null,
+        "ccldBy": null,
+        "ccldAt": null,
+        "ccldDt": null,
+        "cashPaid": 300,
+        "cardPaid": 96,
+        "cardNo": 1234567891234567,
+        "pointsUsed": 34,
+        "paidFromAdvance": 1000,
+        "packageCode": "PKG001",
+        "emrNo": "EMR12345"
+      },
+      "patientBillingDetails": [
+        {
+          "slNo": 1,
+          "serviceMaster": {
+            "serviceCode": "SVC001"
+          },
+          "serviceMasterName": "General Consultation",
+          "quantity": 1,
+          "serviceAmount": 1000,
+          "serviceDiscount": 100,
+          "servicePaid": 180,
+          "serviceCredit": 720,
+          "serviceDone": "YES",
+          "serviceCancelled": "NO",
+          "serviceComment1": "df",
+          "serviceComment2": null,
+          "baseAmount": 1000,
+          "baseDiscount": 100,
+          "basePaid": 180
+        },
+        {
+          "slNo": 2,
+          "serviceMaster": {
+            "serviceCode": "SVC001"
+          },
+          "serviceMasterName": "General Consultation",
+          "quantity": 1,
+          "serviceAmount": 1000,
+          "serviceDiscount": 100,
+          "servicePaid": 180,
+          "serviceCredit": 720,
+          "serviceDone": "YES",
+          "serviceCancelled": "NO",
+          "serviceComment1": null,
+          "serviceComment2": null,
+          "baseAmount": 1000,
+          "baseDiscount": 100,
+          "basePaid": 180
+        },
+        {
+          "slNo": 3,
+          "serviceMaster": {
+            "serviceCode": "SVC002"
+          },
+          "serviceMasterName": "Dental Cleaning",
+          "quantity": 1,
+          "serviceAmount": 100,
+          "serviceDiscount": 10,
+          "servicePaid": 18,
+          "serviceCredit": 72,
+          "serviceDone": "YES",
+          "serviceCancelled": "NO",
+          "serviceComment1": null,
+          "serviceComment2": null,
+          "baseAmount": 100,
+          "baseDiscount": 10,
+          "basePaid": 18
+        },
+        {
+          "slNo": 4,
+          "serviceMaster": {
+            "serviceCode": "SVC002"
+          },
+          "serviceMasterName": "Dental Cleaning",
+          "quantity": 1,
+          "serviceAmount": 100,
+          "serviceDiscount": 10,
+          "servicePaid": 18,
+          "serviceCredit": 72,
+          "serviceDone": "YES",
+          "serviceCancelled": "NO",
+          "serviceComment1": null,
+          "serviceComment2": null,
+          "baseAmount": 100,
+          "baseDiscount": 10,
+          "basePaid": 18
+        }
+      ]
+    },
+    {
+      "id": "9534",
+      "patientBillingHeader": {
+        "patientDataMaster": {
+          "patientCode": "P789012",
+          "packageCode": "P789012"
+        },
+        "patientDataMasterName": "Alice Smith",
+        "patientDataMasterNameAr": "أليس سميث",
+        "doctor": {
+          "doctorCode": 101
+        },
+        "policiesCharge": {
+          "chargeCode": 101
+        },
+        "createdBy": "Admin",
+        "ccld": null,
+        "ccldBy": null,
+        "ccldAt": null,
+        "ccldDt": null,
+        "cashPaid": 100,
+        "cardPaid": 80,
+        "cardNo": 1234567891234567,
+        "pointsUsed": 2,
+        "paidFromAdvance": 2,
+        "packageCode": "PKG002",
+        "emrNo": "2"
+      },
+      "patientBillingDetails": [
+        {
+          "slNo": 1,
+          "serviceMaster": {
+            "serviceCode": "SVC001"
+          },
+          "serviceMasterName": "General Consultation",
+          "quantity": 1,
+          "serviceAmount": 1000,
+          "serviceDiscount": 100,
+          "servicePaid": 180,
+          "serviceCredit": 720,
+          "serviceDone": "YES",
+          "serviceCancelled": "NO",
+          "serviceComment1": null,
+          "serviceComment2": null,
+          "baseAmount": 1000,
+          "baseDiscount": 100,
+          "basePaid": 180
+        }
+      ]
     }
   ]
 }

@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 export const patientDataMasterDataColumn = (handleUpdateData, handleDelete) => [
   {
@@ -202,8 +204,8 @@ export const patientRegDocsDataColumn = (handleUpdateData, handleDelete) => [
 
 export const patientChgDepDataColumn = (handleUpdateData, handleDelete) => [
   {
-    name: "id",
-    selector: (row) => row.id,
+    name: "patientChargeCode",
+    selector: (row) => row.patientChargeCode,
     sortable: true,
   },
   {
@@ -243,13 +245,13 @@ export const patientChgDepDataColumn = (handleUpdateData, handleDelete) => [
       <>
         <button
           className="btn btn-primary btn-sm"
-          onClick={() => handleUpdateData(row.id)}
+          onClick={() => handleUpdateData(row.patientChargeCode)}
         >
           Edit
         </button>
         <button
           className="btn btn-danger btn-sm"
-          onClick={() => handleDelete(row.id)}
+          onClick={() => handleDelete(row.patientChargeCode)}
         >
           Delete
         </button>
@@ -292,13 +294,13 @@ export const patientSystemNotesDataColumn = (handleUpdateData, handleDelete) => 
       <>
         <button
           className="btn btn-primary btn-sm"
-          onClick={() => handleUpdateData(row.id)}
+          onClick={() => handleUpdateData(row.noteId)}
         >
           Edit
         </button>
         <button
           className="btn btn-danger btn-sm"
-          onClick={() => handleDelete(row.id)}
+          onClick={() => handleDelete(row.noteId)}
         >
           Delete
         </button>
@@ -312,60 +314,48 @@ export const patientSystemNotesDataColumn = (handleUpdateData, handleDelete) => 
 
 
 //----------------------------------------------invoice Data----------------------------------------------
-export const serviceDataColumn = (handleUpdateData, handleDelete) => [
+
+
+// -------------------------------------------------------------------
+export const packageMasterDataColumn = (handleUpdateData, handleDelete) => [
   {
-    name: "Service Code",
-    selector: (row) => row.serviceMaster?.serviceCode || "N/A",
+    name: "Package Code",
+    selector: (row) => row.packageCode || "N/A",
     sortable: true,
   },
   {
-    name: "Quantity",
-    selector: (row) => row.quantity || "0",
+    name: "Package Name",
+    selector: (row) => row.packageName || "N/A",
     sortable: true,
   },
   {
-    name: "Service Amount",
-    selector: (row) => row.serviceAmount || "0",
+    name: "Active Status",
+    selector: (row) => row.packageActive || "No",
     sortable: true,
   },
   {
-    name: "Service Discount",
-    selector: (row) => row.serviceDiscount || "0",
+    name: "Start Date",
+    selector: (row) => row.packageStDate || "-",
     sortable: true,
   },
   {
-    name: "Special Discount",
-    selector: (row) => row.serviceSpecialDiscount || "0",
+    name: "End Date",
+    selector: (row) => row.packageEnDate || "-",
     sortable: true,
   },
   {
-    name: "Service Paid",
-    selector: (row) => row.servicePaid || "0",
+    name: "Package Rate",
+    selector: (row) => row.packageRate || "0",
     sortable: true,
   },
   {
-    name: "Service Credit",
-    selector: (row) => row.serviceCredid || "0",
+    name: "Payment Portion",
+    selector: (row) => row.packagePaymentPortion || "0",
     sortable: true,
   },
   {
-    name: "Service Done",
-    selector: (row) => row.serviceDone || "No",
-    sortable: true,
-  },
-  {
-    name: "Service Cancelled",
-    selector: (row) => row.serviceCancelled || "No",
-    sortable: true,
-  },
-  {
-    name: "Return Number",
-    selector: (row) => row.ReturnNumber || "-",
-    sortable: true,
-  },
-  {
-    name: "Return Quantity",
-    selector: (row) => row.returnQuantity || "0",
+    name: "Credit Portion",
+    selector: (row) => row.packageCreditPortion || "0",
     sortable: true,
   },
   {
@@ -374,6 +364,191 @@ export const serviceDataColumn = (handleUpdateData, handleDelete) => [
       <>
         <button
           className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.packageCode)}
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.packageCode)}
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+
+export const invoiceColumns = (handleUpdateData, handleDelete) => [
+  {
+    name: "Bill No",
+    selector: (row) => row.patientBillingHeader.billNo,
+    sortable: true,
+  },
+  {
+    name: "Patient Code",
+    selector: (row) => row.patientBillingHeader.patientDataMaster.patientCode,
+    sortable: true,
+  },
+  {
+    name: "Patient Name",
+    selector: (row) => row.patientBillingHeader.patientDataMasterName,
+    sortable: true,
+  },
+  {
+    name: "Doctor Code",
+    selector: (row) => row.patientBillingHeader.doctor.doctorCode,
+    sortable: true,
+  },
+  {
+    name: "Charge Code",
+    selector: (row) => row.patientBillingHeader.policiesCharge.chargeCode,
+    sortable: true,
+  },
+  {
+    name: "Created By",
+    selector: (row) => row.patientBillingHeader.createdBy,
+    sortable: true,
+  },
+  {
+    name: "Cash Paid",
+    selector: (row) => row.patientBillingHeader.cashPaid,
+    sortable: true,
+  },
+  {
+    name: "Card Paid",
+    selector: (row) => row.patientBillingHeader.cardPaid,
+    sortable: true,
+  },
+  {
+    name: "Card No",
+    selector: (row) => row.patientBillingHeader.cardNo,
+    sortable: true,
+  },
+  {
+    name: "Package Code",
+    selector: (row) => row.patientBillingHeader.packageCode,
+    sortable: true,
+  },
+  {
+    name: "EMR No",
+    selector: (row) => row.patientBillingHeader.emrNo,
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => handleUpdateData(row.patientBillingHeader.patientDataMaster.patientCode)}
+        >
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(row.patientBillingHeader.patientDataMaster.patientCode)}
+        >
+          Delete
+        </button>
+      </>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+export const serviceColumns = (handleDelete) => [
+  {
+    name: "Sl No",
+    selector: (row) => row.slNo,
+    sortable: true,
+  },
+  {
+    name: "Service Code",
+    selector: (row) => row.serviceMaster.serviceCode,
+    sortable: true,
+  },
+  {
+    name: "Service Name",
+    selector: (row) => row.serviceMasterName,
+    sortable: true,
+  },
+  {
+    name: "Quantity",
+    selector: (row) => row.quantity,
+    sortable: true,
+  },
+  {
+    name: "Amount",
+    selector: (row) => row.serviceAmount,
+    sortable: true,
+  },
+  {
+    name: "Discount",
+    selector: (row) => row.serviceDiscount,
+    sortable: true,
+  },
+  {
+    name: "Paid",
+    selector: (row) => row.servicePaid,
+    sortable: true,
+  },
+  {
+    name: "Credit",
+    selector: (row) => row.serviceCredit,
+    sortable: true,
+  },
+   
+  {
+    name: "Actions",
+    cell: (row, index) => (
+      <>
+        <button className="btn btn-danger btn-sm me-2" onClick={() => handleDelete(index)}>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      </>
+    ),
+  },
+];
+
+export const packagesDetailsDataColumn = (handleUpdateData, handleDelete) => [
+  {
+    name: "Package Code",
+    selector: (row) => row.packageMaster?.packageCode || "N/A",
+    sortable: true,
+  },
+  {
+    name: "Service Code",
+    selector: (row) => row.serviceMaster?.serviceCode || "N/A",
+    sortable: true,
+  },
+  {
+    name: "Package Rate (₹)",
+    selector: (row) => row.packageRate || "0",
+    sortable: true,
+  },
+  {
+    name: "Payment Portion (₹)",
+    selector: (row) => row.packagePaymentPortion || "0",
+    sortable: true,
+  },
+  {
+    name: "Credit Portion (₹)",
+    selector: (row) => row.packageCreditPortion || "0",
+    sortable: true,
+  },
+  {
+    name: "Action",
+    cell: (row) => (
+      <>
+        <button
+          className="btn btn-primary btn-sm me-2"
           onClick={() => handleUpdateData(row.id)}
         >
           Edit

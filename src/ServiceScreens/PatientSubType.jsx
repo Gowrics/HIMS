@@ -98,7 +98,7 @@ const PatientSubType = () => {
     };
     
     console.log("Payload sent to API:", updatedFormData);
-   const url = 'http://192.168.91.201:8082/subcharge/create'; // The URL for form submission
+   const url =  `${BASE_URL}subcharge/create`; // The URL for form submission
     submitForm(url, updatedFormData, setPatientsSubTypeData, setValidtationMessage,setAlert,  clearForm);
    
   };
@@ -319,7 +319,7 @@ const PatientSubType = () => {
         <input   type="text"  placeholder="Search  by schg Name , schg Code" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="form-control my-2" />
         <CustomDataTable
           columns={subTypePatientColumn(handleUpdateData, handleDelete)}
-          data={filterData(patientsSubTypeData, searchTerm, ["schgCode","schaName"],)}
+          data={filterData(patientsSubTypeData, searchTerm, ["schgCode","schaName","priceList.priceListCode"],)}
           paginationPerPage={5}
           paginationRowsPerPageOptions={[5, 10, 15, 20]}
         />

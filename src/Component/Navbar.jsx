@@ -21,7 +21,7 @@ const Navbar = () => {
   //   console.log("logout", singleUser);
   // };
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
+    localStorage.removeItem("UserAuth");
     setUserAuth(false);
     navigate("/signin");
   };
@@ -98,7 +98,7 @@ const Navbar = () => {
             <li className="ms-5">
               {singleUser && Object.keys(singleUser).length > 0 ? (
                 <button
-                  className="btn btn-primary ms-1 btn-block"
+                  className="btn btn-dark ms-1 btn-block"
                   onClick={handleLogout}
                 >
                   Sign Out

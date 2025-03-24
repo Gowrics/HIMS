@@ -196,18 +196,21 @@ const Leftsidebar = () => {
               </Link>
               <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
                 <li>
-                  <Link className="dropdown-item" to="/patientbillingheader" onClick={handleMenuCollapse}   >
-                  Patient Billing Header 
+                  <Link className="dropdown-item" to="/patientbill" onClick={handleMenuCollapse}   >
+                  Patient Bill
+                  </Link>
+                  <Link className="dropdown-item" to="/advancereceipt" onClick={handleMenuCollapse}   >
+                  Patient Advance Receipt
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/patientbillingdetails" onClick={handleMenuCollapse}  >
-                  Patient Billing Details
+                  <Link className="dropdown-item" to="/packagemaster" onClick={handleMenuCollapse}  >
+                  Package Master Data
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/docters" onClick={handleMenuCollapse} >
-                    Doctors
+                  <Link className="dropdown-item" to="/packagedetails" onClick={handleMenuCollapse} >
+                    Package Details Data
                   </Link>
                 </li>
               </ul>

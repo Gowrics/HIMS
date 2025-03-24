@@ -28,8 +28,7 @@ const DocTypeMaster = () => {
    console.log(newDocTypeCode);
 
 const initialFormData ={
-  
-  docTypeCode: 0,
+    docTypeCode: null,
   docTypeName: "",
 }
   const [formData, setFormData] = useState(initialFormData);
@@ -123,7 +122,7 @@ const handleUpdate = () => {
                 value={formData.docTypeCode}
                 onChange={handleChange}
                 required
-                disabled
+                
               />
              
             </div>

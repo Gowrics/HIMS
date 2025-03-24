@@ -131,5 +131,45 @@
       "userId": "11",
       "UserName": "eee"
     }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "Admin",
+      "email": "admin@example.com",
+      "password": "1234",
+      "token": "ujtmp023zoq"
+    },
+    {
+      "id": "2",
+      "username": "user",
+      "email": "user@example.com",
+      "password": "5678",
+      "token": "1efu7legab3"
+    },
+    {
+      "id": "056c",
+      "name": "Accountant",
+      "email": "account@example.com",
+      "password": "accountpass",
+      "confirmPassword": "accountpass",
+      "token": "b4oi5x01wn9"
+    },
+    {
+      "id": "8a49",
+      "name": "Gowri",
+      "email": "gowrics2012@gmail.com",
+      "password": "gowrics2012",
+      "confirmPassword": "gowrics2012",
+      "token": "68dp1de0dom"
+    },
+    {
+      "id": "a7dd",
+      "name": "Ramesh",
+      "email": "Ramesh2012@gmail.com",
+      "password": "ramesh12",
+      "confirmPassword": "ramesh12",
+      "token": "4lvilt5pizq"
+    }
   ]
 }

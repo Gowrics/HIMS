@@ -1,30 +1,47 @@
-import React, { useMemo } from "react";
+import React, { useMemo, forwardRef } from "react";
 import Select from "react-select";
 
-const CustomSelect = React.memo(({ 
+const CustomSelect = forwardRef(({
   id, 
   name, 
-  data = [],  // Ensure default empty array to avoid errors
+  data = [],  
   value, 
   onChange, 
   isDisabled = false, 
-  placeholder = "Select an option", 
+  placeholder, 
   valueKey,  
-  labelKey  
-}) => {
-  console.log(`Rendering CustomSelect: ${name}`); // Debugging
+  labelKey,
+  additionalFields = [] // Additional fields like role, DOB, passport, etc.
+}, ref) => {
+  console.log(`Rendering CustomSelect: ${name}`);
 
-  // Memoize options to prevent re-computation
+  // ✅ Prepare options with all required fields
   const options = useMemo(() => 
-    data.map(option => ({
-      value: option[valueKey],  
-      label: option[labelKey] ? `${option[valueKey]} - ${option[labelKey]}` : `${option[valueKey]}`
-    })), 
-    [data, valueKey, labelKey]
+    data.map(option => {
+      // Extract values of all specified fields
+      const fieldValues = [
+        option[valueKey],   // Code
+        option[labelKey],   // Name
+        ...additionalFields.map(field => option[field] || "N/A") // Additional Fields (Role, DOB, Passport, etc.)
+      ];
+
+      return {
+        value: option[valueKey],  
+        label: fieldValues.join(" - "), // ✅ Display all fields in dropdown
+        searchString: fieldValues.join(" ").toLowerCase() // ✅ Make searchable
+      };
+    }), 
+    [data, valueKey, labelKey, additionalFields]
   );
+
+  // ✅ Custom filter function to search by any field
+  const customFilter = (option, inputValue) => {
+    return option.data.searchString.includes(inputValue.toLowerCase());
+  };
 
   return (
     <Select
+      ref={ref}
       id={id}
       name={name}
       options={options}
@@ -34,8 +51,9 @@ const CustomSelect = React.memo(({
       isSearchable={true}
       placeholder={placeholder}
       required
+      filterOption={customFilter}  
     />
   );
 });
 
-export default CustomSelect;
+export default React.memo(CustomSelect);

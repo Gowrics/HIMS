@@ -35,9 +35,8 @@ const PriceListDetails = () => {
   // Handle patientMainTypeData changes (for select input)
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
     if (name === "serviceCode") {
-      // Update serviceMaster
       setFormData((prevData) => ({
         ...prevData,
         serviceMaster: {
@@ -46,7 +45,6 @@ const PriceListDetails = () => {
         },
       }));
     } else if (name === "priceListCode") {
-      // Update priceList
       setFormData((prevData) => ({
         ...prevData,
         priceList: {
@@ -54,15 +52,38 @@ const PriceListDetails = () => {
           priceListCode: value,
         },
       }));
+    } else if (name === "discountAmt") {
+      const discountPercent = prompt("Enter discount percentage:", "10"); // Ask user for discount %
+  
+      if (discountPercent !== null) { // Check if user didn't cancel
+        const percentValue = parseFloat(discountPercent) || 0; // Convert to number
+        const grossAmount = parseFloat(formData.grossAmt) || 0; // Get current gross amount
+        const discountAmount = (grossAmount * percentValue) / 100; // Calculate discount
+  
+        setFormData((prevData) => ({
+          ...prevData,
+          discountAmt: discountAmount.toFixed(2), // Store calculated discount
+        }));
+      }
+    } else if (name === "coPaymentPercent") {
+      const grossAmount = parseFloat(formData.grossAmt) || 0; // Ensure grossAmt is valid
+      const discountAmount = parseFloat(formData.discountAmt) || 0; // Ensure discountAmt is valid
+      const coPaymentPercent = parseFloat(value) || 0; // Convert value to number
+      const coPaymentAmt = ((grossAmount - discountAmount) * coPaymentPercent) / 100; // Calculate co-payment
+  
+      setFormData((prevData) => ({
+        ...prevData,
+        coPaymentPercent: value,
+        coPaymentAmt: coPaymentAmt.toFixed(2), // Format to 2 decimal places
+      }));
     } else {
-      // Update top-level fields
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
       }));
-
     }
   };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -180,7 +201,7 @@ const PriceListDetails = () => {
 
             <div className="col-md-4">
               <label htmlFor="discountAmt" className="form-label">
-                Discount Amt
+                Discount Amt (₹)
               </label>
               <input type="number" className="form-control" id="discountAmt" name="discountAmt" value={formData.discountAmt} onChange={handleChange} required  ></input>
             </div>
@@ -227,13 +248,13 @@ const PriceListDetails = () => {
 
             <div className="col-md-2">
               <label htmlFor="policyNo" className="form-label">
-                Co Payment Percent
+                Co Payment Percent (%)
               </label>
               <input type="number" className="form-control" id="coPaymentPercent" min="1" max="100" name="coPaymentPercent" value={formData.coPaymentPercent} onChange={handleChange} ></input>
             </div>
             <div className="col-md-2">
               <label htmlFor="coPaymentAmt" className="form-label">
-                Co Payment Amt
+                Co Payment Amt (₹)
               </label>
               <input type="number" className="form-control" id="coPaymentAmt" name="coPaymentAmt" value={formData.coPaymentAmt} onChange={handleChange} />
             </div>

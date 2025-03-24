@@ -1,309 +1,243 @@
 import React, { useContext, useState } from 'react';
-import { FormContext, InvoiceContext } from '../Context/Context';
+import { FormContext, InvoiceContext, UserContext } from '../Context/Context';
 import CustomSelect from '../utils/CustomSelect';
 import ServiceList from './ServiceList';
+import { UserProvider } from '../Context/UserProvider';
+import { Link } from 'react-router';
+import { validateInvoiceData } from './ValidateForm';
+import axios from 'axios';
+import InvoiceModal from './PaymentModal';
+import Services from './ServicesForm';
 const InvoiceForm1 = () => {
-
-    const { setValidtationMessage, BASE_URL, thirdPartyHeadData, patientDataMasterData, patientsSubTypeData, serviceMasterData, setServiceMasterData } = useContext(FormContext);
-    const {  handleAddItem, invoiceData, setInvoiceData, serviceData, setServiceData, handleSubmit } = useContext(InvoiceContext);
+    const { docterData, policiesSubPatientData, BASE_URL, patientChgDepData, patientDataMasterData } = useContext(FormContext);
+    const { invoiceData, setInvoiceData, isInvoiceService, notEditMode, setNotEditMode, setIsInvoiceService, clearInvoice,isPriceChange, setIsPriceChange, packagesMasterData, enableInvoiceHeader, handleChange } = useContext(InvoiceContext);
+    const { singleUser } = useContext(UserContext);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [notEditMode, setNotEditMode] = useState(false);
-    console.log(serviceData)
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    console.log(invoiceData.patientBillingHeader.createdBy);
 
-        if (name === "patientCode") {
-            setInvoiceData((prevData) => ({
-                ...prevData,
-                patientDataMasterCode: {
-                    ...prevData.patientDataMasterCode,
-                    patientCode: value,
-                },
-            }));
-        } else if (name === "chgCode") {
-            setInvoiceData((prevData) => ({
-                ...prevData,
-                policiesCharge: {
-                    ...prevData.policiesCharge,
-                    chgCode: value,
-                },
-            }));
-        }
-        else if (name === "patientName") {
-            setInvoiceData((prevData) => ({
-                ...prevData,
-                patientDataMasterName: {
-                    ...prevData.patientDataMasterName,
-                    patientName: value,
-                },
-            }));
-        }
-        else if (name === "patientNameAr") {
-            setInvoiceData((prevData) => ({
-                ...prevData,
-                patientDataMasterNameAr: {
-                    ...prevData.patientDataMasterNameAr,
-                    patientNameAr: value,
-                },
-            }));
-        }
+    const handleinvoiceHeader = (e) => {
+        e.preventDefault(); // Prevent default Link behavior
 
-        else {
-            setInvoiceData((prevData) => ({
-                ...prevData,
-                [name]: value,
-            }));
+        const errors = validateInvoiceData(invoiceData);
 
+        if (Object.keys(errors).length > 0) {
+            console.log("Validation errors:", errors);
+            alert("Please fill all required fields before proceeding.");
+            return;
         }
+        setIsInvoiceService(true);
+        setNotEditMode(true); // Ensure state reflects the disabled mode
+
+        // Disable standard inputs, selects, and textareas
+        const headerFields = document.querySelectorAll(".invoice-main-details input, .invoice-main-details select, .invoice-main-details textarea");
+        headerFields.forEach(field => {
+            if (field.tagName === "SELECT") {
+                field.disabled = true;
+            } else {
+                field.readOnly = true;
+            }
+        });
+
+        console.log("Invoice header fields are now disabled.");
     };
-    const handleServiceChange = (e) => {
-        const { name, value } = e.target;
-        if (name === "serviceCode") {
-            setServiceData((prevData) => ({
-                ...prevData,
-                serviceMaster: {
-                    ...prevData.serviceMaster,
-                    serviceCode: value,
-                },
-            }));
-        } else {
-            setServiceData((prevData) => ({
-                ...prevData,
-                [name]: value,
-            }));
-        }
-    };
+
+
+
     return (
-        <div className=" page-content container-fluid invoice-container">
+        <div className=" invoice-container mt-5 container-fluid">
             {/* Invoice Title */}
-            <div className="row invoice-title text-center">
-                <h2>Invoice</h2>
-            </div>
-            <form>
+
+
+            <form className='invoice-container'>
                 {/* Invoice Header */}
-                <div className="row invoice-header d-flex align-items-center">
+                <div className="row invoice-header">
                     <div className="col-12">
 
-                        {/* Row 1 */}
-                        <div className="row invoice-header-detail ">
-                            <div className="col-md-3">
-                                <label htmlFor="billNo" className="form-label">
-                                    Bill No
-                                </label>
-                                <input type="text" className="form-control" id="billNo" name="billNo" value={invoiceData.billNo} onChange={handleChange} required />
-                            </div>
-                            <div className="col-md-3">
-                                <label htmlFor="billDate" className="form-label">
-                                    Bill Date
-                                </label>
-                                <input type="date" className="form-control" id="billDate" name="billDate" value={invoiceData.billDate} onChange={handleChange} required />
-                            </div>
-                            <div className="col-md-3">
-                                <label htmlFor="billTmStmp" className="form-label">
-                                    Bill Time Stamp
-                                </label>
-                                <input type="time" className="form-control" id="billTmStmp" name="billTmStmp" value={invoiceData.billTmStmp} onChange={handleChange} required />
-                            </div>
-                        </div>
+                        <div className="invoice-main-details ">
+                            <div className="row justify-content-between align-items-center text-center m-2">
+                                {/* Column 1: Company Info */}
+                                <div className="col-md-4 text-md-left text-center">
+                                    <h5 className="mb-1">BasilHut Private Limited</h5>
+                                    <address className="p-0 text-muted">123 Main Street, City, Country</address>
+                                </div>
 
-                        <div className="invoice-main-details">
-                            <div className=" row ">
-                                <div className="col-md-3">
+                                {/* Column 2: Title */}
+                                <div className="col-md-4 text-center">
+                                    <h3> Patient Invoice Form </h3>
+                                </div>
+
+                                {/* Column 3: Links */}
+                                <div className="col-md-4 text-md-right text-center">
+                                    <Link className='btn btn-secondary mx-1' to="billrules">Bill Rules</Link>
+                                    <Link className='btn btn-secondary mx-1' to="patientinvoices">Invoices</Link>
+                                </div>
+                            </div>
+                            <hr className='mt-0' />
+                            <div className=" row  mb-3 ">
+                                <div className="row invoice-header-detail">
+
+                                    <div className="col-md-12 mb-3">
+                                        {/* <label htmlFor="billNo">  Bill No
+                                     <input type="text" className="form-control" id="billNo" name="billNo" value={invoiceData.billNo} onChange={handleChange} required /></label> */}
+                                        <label  >
+                                            <b> Bill Date</b>
+                                            <input type="date" className="form-control" id="billDate" name="billDate" value={new Date().toISOString().split("T")[0]} onChange={handleChange} required /></label>
+                                        <label >
+                                            <b> Bill Time Stamp</b>
+                                            <input type="text" className="form-control" id="billTmStmp" name="billTmStmp" value={new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })} onChange={handleChange} required /></label>
+                                        <label htmlFor='patientCode' className='ms-5'>  <b>Patient Code:</b>
+                                            {/* <input type='text' className="form-control" id="patientCode" name="patientCode" value={invoiceData.patientDataMaster.patientCode} onChange={handleChange} required /> */}
+
+                                            <CustomSelect
+                                                id="patientCode"
+                                                name="patientCode"
+                                                valueKey="patientCode"
+                                                labelKey="patientName"
+                                                data={patientDataMasterData}
+                                                value={invoiceData.patientBillingHeader.patientDataMaster.patientCode}
+                                                onChange={handleChange}
+                                                isDisabled={notEditMode}
+                                                placeholder="Select Patient by Name,Ph no,Dob,Passport"
+                                                additionalFields={[null]}
+                                            />
+                                        </label>
+                                        <label htmlFor='drCode' className='ms-5'><b>Docter Code:</b>
+                                            {/* <input type='text' className="form-control" id="drCode" name="drCode" value={invoiceData.doctor.drCode} onChange={handleChange} required /> */}
+
+                                            <CustomSelect
+                                                id="doctorCode"
+                                                name="doctorCode"
+                                                valueKey="doctorCode"   // Dynamic value key
+                                                labelKey="doctorName"
+                                                data={docterData}  // Pass the raw data, no need to map
+                                                value={invoiceData.patientBillingHeader.doctor.doctorCode}
+                                                onChange={handleChange}
+                                                isDisabled={notEditMode}
+                                                placeholder="Select docter by name and designation"
+                                                additionalFields={["drDesignation"]}
+                                            /></label>
+                                    </div>
+                                </div>
+                                {/* <div className="col-md-2">
                                     <label htmlFor='patientCode'>Patient Code:</label>
-                                    <input type='text' className="form-control" id="patientCode" name="patientCode" value={invoiceData.patientDataMasterCode.patientCode} onChange={handleChange} required />
-                               
-                                    {/* <CustomSelect
+                                    {/* <input type='text' className="form-control" id="patientCode" name="patientCode" value={invoiceData.patientDataMaster.patientCode} onChange={handleChange} required /> */}
+                                {/* 
+                                    <CustomSelect
                                         id="patientCode"
                                         name="patientCode"
-                                        valueKey="patientCode"   // Dynamic value key
+                                        valueKey="patientCode"
                                         labelKey="patientName"
-                                        data={patientDataMasterData}  // Pass the raw data, no need to map
-                                        value={invoiceData.patientDataMasterCode.patientCode}
+                                        data={patientDataMasterData}
+                                        value={invoiceData.patientBillingHeader.patientDataMaster.patientCode}
+                                        onChange={handleChange}
+                                        isDisabled={notEditMode}
+                                        placeholder="Select Patient by Name,Ph no,Dob,Passport"
+                                        additionalFields={["patientMobileNo", "patientDateOfBirth", "passportNo"]}
+                                    />
+
+                                </div> */}
+                                <div className="col-md-2">
+                                    <label htmlFor='patientName'>Patient Name:</label>
+                                    <input type='text' className="form-control" id="patientName" name="patientName" value={invoiceData.patientBillingHeader.patientDataMasterName} onChange={handleChange} required />
+                                </div>
+                                <div className="col-md-2">   <label htmlFor='patientNameAr'>Patient Name (Ar):</label>
+                                    <input type='text' className="form-control" id="patientDataMasterNameAr" name="patientDataMasterNameAr" value={invoiceData.patientBillingHeader.patientDataMasterNameAr} onChange={handleChange} required /></div>
+
+                                <div className="col-md-2">
+                                    <label htmlFor='chargeCode'>Chg Code:</label>
+                                    {/* <input type='number' className="form-control" id="chargeCode" name="chargeCode" value={invoiceData.patientBillingHeader.policiesCharge.chargeCode} onChange={handleChange} required /></div> */}
+
+                                    <CustomSelect
+                                        id="chargeCode"
+                                        name="chargeCode"
+                                        valueKey="chargeCode"   // Dynamic value key
+                                        labelKey="chargeName"
+                                        data={policiesSubPatientData}  // Pass the raw data, no need to map
+                                        value={invoiceData.patientBillingHeader.policiesCharge.chargeCode}
                                         onChange={handleChange}
                                         isDisabled={notEditMode}
                                         placeholder="Select an option"
-                                    /> */}
-                                    {/* <input type='text' className="form-control" id="patientCode" name="patientCode" value={invoiceData.patientCode} onChange={handleChange} required /> */}
+                                    />
                                 </div>
-                                <div className="col-md-3">
-                                    <label htmlFor='patientName'>Patient Name:</label>
-                                    <input type='text' className="form-control" id="patientName" name="patientName" value={invoiceData.patientDataMasterName.patientName} onChange={handleChange} required />
-                                </div>
-                                <div className="col-md-3">   <label htmlFor='patientNameAr'>Patient Name (Ar):</label>
-                                    <input type='text' className="form-control" id="patientNameAr" name="patientNameAr" value={invoiceData.patientDataMasterNameAr.patientNameAr} onChange={handleChange} required /></div>
-                                <div className="col-md-3"> <label htmlFor='coCode'>Co Code:</label>
-                                    <input type='text' className="form-control" id="coCode" name="coCode" value={invoiceData.coCode} onChange={handleChange} required /></div>
-                            </div>
-
-                            {/* Row 2 */}
-                            <div className=" row  mb-3">
-                                <div className="col-md-3">  <label htmlFor='coCodeBr'>Co Code Br:</label>
-                                    <input type='text' className="form-control" id="coCodeBr" name="coCodeBr" value={invoiceData.coCodeBr} onChange={handleChange} required /></div>
-
-                                <div className="col-md-3">
-                                    <label htmlFor='refDeptCode'>Ref Dept Code:</label>
-                                    <input type='text' className="form-control" id="refDeptCode" name="refDeptCode" value={invoiceData.refDeptCode} onChange={handleChange} required /></div>
-                                <div className="col-md-3">
-                                    <label htmlFor='chargeCode'>Chg Code:</label>
-                                    <input type='text' className="form-control" id="chgCode" name="chgCode" value={invoiceData.policiesCharge.chgCode} onChange={handleChange} required /></div>
-                                <div className="col-md-3">
+                                <div className="col-md-2">
                                     <label htmlFor='createdBy'>Created By:</label>
-                                    <input type='text' className="form-control" id="createdBy" name="createdBy" value={invoiceData.createdBy} onChange={handleChange} required /></div>
+                                    <input type='text' className="form-control" id="createdBy" name="createdBy" value={invoiceData.patientBillingHeader.createdBy} onChange={handleChange} required /></div>
 
+                                <div className="col-md-2">   <label htmlFor='pointsUsed'>Points Used:</label>
+                                    <input type='number' className="form-control" id="pointsUsed" name="pointsUsed" value={invoiceData.patientBillingHeader.pointsUsed} onChange={handleChange} required /></div>
+
+                                {/* <div className="col-md-4">
+                                    <label htmlFor='drCode'>Docter Code:</label>
+                                    {/* <input type='text' className="form-control" id="drCode" name="drCode" value={invoiceData.doctor.drCode} onChange={handleChange} required /> */}
+
+                                {/* <CustomSelect
+                                        id="doctorCode"
+                                        name="doctorCode"
+                                        valueKey="doctorCode"   // Dynamic value key
+                                        labelKey="doctorName"
+                                        data={docterData}  // Pass the raw data, no need to map
+                                        value={invoiceData.patientBillingHeader.doctor.doctorCode}
+                                        onChange={handleChange}
+                                        isDisabled={notEditMode}
+                                        placeholder="Select docter by name and designation"
+                                        additionalFields={["drDesignation"]}
+                                    />
+                                </div> */}
                             </div>
+                            <div className="row">
 
-                            {/* Row 3 */}
-                            <div className="row  ">
+                                <div className="col-md-2"> <label htmlFor='paidFromAdvance'>Paid from Advance:</label>
+                                    <input type='text' className="form-control" id="paidFromAdvance" name="paidFromAdvance" value={invoiceData.patientBillingHeader.paidFromAdvance} onChange={handleChange} required /></div>
+                                <div className="col-md-2"> <label htmlFor='packageCode'>Package Code:</label>
 
-                                <div className="col-md-3">   <label htmlFor='cvcld'>Ccld:</label>
-                                    <select className="form-control" id="cvcld" name="cvcld" value={invoiceData.cvcld} onChange={handleChange}  >
-                                        <option value="">Select an Option</option>
-                                        <option value="YES">YES</option>
-                                        <option value="NO">NO</option>
-                                    </select></div>
-                                <div className="col-md-3">
-                                    <label htmlFor='ccldBy'>Ccld By:</label>
-                                    <input type='text' className="form-control" id="ccldBy" name="ccldBy" value={invoiceData.ccldBy} onChange={handleChange} required /></div>
-                                <div className="col-md-3">
-                                    <label htmlFor='ccldAt'>Ccld At:</label>
-                                    <input type='text' className="form-control" id="ccldAt" name="ccldAt" value={invoiceData.ccldAt} onChange={handleChange} required /></div>
-
-                                <div className="col-md-3">
-                                    <label htmlFor='ccldDt'>Ccld Dt:</label>
-                                    <input type='text' className="form-control" id="ccldDt" name="ccldDt" value={invoiceData.ccldDt} onChange={handleChange} required /></div>
-
-                            </div>
-                            <div className="row p-2">
-                                <div className="col-md-3">   <label htmlFor='pointsUsed'>Points Used:</label>
-                                    <input type='text' className="form-control" id="pointsUsed" name="pointsUsed" value={invoiceData.pointsUsed} onChange={handleChange} required /></div>
-                                <div className="col-md-3"> <label htmlFor='paidFromAdvance'>Paid from Advance:</label>
-                                    <input type='text' className="form-control" id="paidFromAdvance" name="paidFromAdvance" value={invoiceData.paidFromAdvance} onChange={handleChange} required /></div>
-                                <div className="col-md-3"> <label htmlFor='packageCode'>Package Code:</label>
-                                    <input type='text' className="form-control" id="packageCode" name="packageCode" value={invoiceData.packageCode} onChange={handleChange} required /></div>
-                                <div className="col-md-3"> <label htmlFor='emrNo'>Emr No:</label>
-                                    <input type='text' className="form-control" id="emrNo" name="emrNo" value={invoiceData.emrNo} onChange={handleChange} required /></div>
-                            </div>
-                            <div className='row mb-3 invoice-payment'>
-                                <div className="col-md-3">
-                                    <label htmlFor='cashPaid'>Cash Paid:</label>
-                                    <input type='number' className="form-control" id="cashPaid" name="cashPaid" value={invoiceData.cashPaid} onChange={handleChange} required />
+                                    <CustomSelect
+                                        id="packageCode"
+                                        name="packageCode"
+                                        valueKey="packageCode"   // Dynamic value key
+                                        labelKey="packageName"
+                                        data={packagesMasterData}  // Pass the raw data, no need to map
+                                        value={invoiceData.patientBillingHeader.packageCode}
+                                        onChange={handleChange}
+                                        isDisabled={notEditMode}
+                                        placeholder="Select an option"
+                                    />
                                 </div>
-                                <div className="col-md-3">
-                                    <label htmlFor='cardPaid'>Card Paid:</label>
-                                    <input type='number' className="form-control" id="cardPaid" name="cardPaid" value={invoiceData.cardPaid} onChange={handleChange} required />
-                                </div>
-                                <div className="col-md-3">
-                                    <label htmlFor='cardNo'>Card No:</label>
-                                    <input type='text' className="form-control" id="cardNo" name="cardNo" value={invoiceData.cardNo} onChange={handleChange} required />   </div>
+
+
+                                {/* <input type='text' className="form-control" id="packageCode" name="packageCode" value={invoiceData.patientBillingHeader.packageCode} onChange={handleChange} required /></div> */}
+                                <div className="col-md-2"> <label htmlFor='emrNo'>Emr No:</label>
+                                    <input type='text' className="form-control" id="emrNo" name="emrNo" value={invoiceData.patientBillingHeader.emrNo} onChange={handleChange} required /></div>
+                                <div className="col-md-3 text-end"> <button className=' m-3 btn btn-primary btn-sm' onClick={handleinvoiceHeader}>Add Services</button> </div>
                             </div>
+                            <hr></hr>
+                            {/* <button className='m-3 btn btn-primary btn-sm' onClick={handleRegister} type='button'>Register</button> */}
+
+
+                            <Services />
                         </div>
-
+                        <div className="table-responsive">
+                            <ServiceList />
+                        </div>
                     </div>
                 </div>
 
                 {/* Invoice Details */}
-                <div className="row invoice-details">
-                    <div className="col-12">
-                        <div className=" row p-2 ">
-                            <div className="col-md-3">
-                                <label htmlFor='serviceCode'>Service Code:</label>
-                                <input type='number' className="form-control" id="serviceCode" name="serviceCode" value={serviceData.serviceMaster.serviceCode} onChange={handleServiceChange} required />
-                  
-                                {/* <CustomSelect
-                                    id="serviceCode"
-                                    name="serviceCode"
-                                    valueKey="serviceCode"   // Dynamic value key
-                                    labelKey="serviceCode"
-                                    data={serviceMasterData}  // Pass the raw data, no need to map
-                                    value={serviceData.serviceMaster.serviceCode}
-                                    onChange={handleServiceChange}
-                                    isDisabled={notEditMode}
-                                    placeholder="Select an option"
-                                /> */}
-                            </div>
-                            <div className="col-md-3">
-                                <label htmlFor='quantity'>Quantity:</label>
-                                <input type='number' className="form-control" id="quantity" name="quantity" value={serviceData.quantity} onChange={handleServiceChange} required />
-                            </div>
-                            <div className="col-md-3">   <label htmlFor='serviceAmount'>Service Amount:</label>
-                                <input type='number' className="form-control" id="serviceAmount" name="serviceAmount" value={serviceData.serviceAmount} onChange={handleServiceChange} required /></div>
-                            <div className="col-md-3"> <label htmlFor='serviceDiscount'>Service Discount:</label>
-                                <input type='number' className="form-control" id="serviceDiscount" name="serviceDiscount" value={serviceData.serviceDiscount} onChange={handleServiceChange} required /></div>
-                        </div>
-                        <div className=" row p-2">
+                {isInvoiceService && (
 
-                            <div className="col-md-3">
-                                <label htmlFor='quantity'>Service Special Discount:</label>
-                                <input type='number' className="form-control" id="serviceSpecialDiscount" name="serviceSpecialDiscount" value={serviceData.serviceSpecialDiscount} onChange={handleServiceChange} required />
-                            </div>
-                            <div className="col-md-3">   <label htmlFor='servicePaid'>Service Paid:</label>
-                                <input type='number' className="form-control" id="servicePaid" name="servicePaid" value={serviceData.servicePaid} onChange={handleServiceChange} required /></div>
-                            <div className="col-md-3"> <label htmlFor='serviceCredid'>Service Credid:</label>
-                                <input type='number' className="form-control" id="serviceCredid" name="serviceCredid" value={serviceData.serviceCredid} onChange={handleServiceChange} required /></div>
-                            <div className="col-md-3"> <label htmlFor='serviceDone'>Service Done:</label>
-                                <select className="form-control" id="serviceDone" name="serviceDone" value={serviceData.serviceDone} onChange={handleServiceChange}  >
-                                    <option value="">Select an Option</option>
-                                    <option value="YES">YES</option>
-                                    <option value="NO">NO</option>
-                                </select></div>
+                    <InvoiceModal
+                        handleChange={handleChange}
+                    />
 
-                        </div>
-                        <div className=" row p-2 ">
 
-                            <div className="col-md-3">
-                                <label htmlFor='serviceCancelled'>Service Cancelled:</label>
-                                <select className="form-control" id="serviceCancelled" name="serviceCancelled" value={serviceData.serviceCancelled} onChange={handleServiceChange}  >
-                                    <option value="">Select an Option</option>
-                                    <option value="YES">YES</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                            </div>
-                            <div className="col-md-3">   <label htmlFor='ReturnNumber'>Return Number:</label>
-                                <input type='text' className="form-control" id="ReturnNumber" name="ReturnNumber" value={serviceData.ReturnNumber} onChange={handleServiceChange} required /></div>
-                            <div className="col-md-3"> <label htmlFor='returnQuantity'>Return Quantity:</label>
-                                <input type='number' className="form-control" id="returnQuantity" name="returnQuantity" value={serviceData.returnQuantity} onChange={handleServiceChange} required /></div>
-                                <div className='row mb-3 invoice-payment'>
-                                <div className="col-md-3">
-                                    <label htmlFor='cashPaid'>Cash Paid:</label>
-                                    <input type='number' className="form-control" id="cashPaid" name="cashPaid" value={invoiceData.cashPaid} onChange={handleChange} required />
-                                </div>
-                                <div className="col-md-3">
-                                    <label htmlFor='cardPaid'>Card Paid:</label>
-                                    <input type='number' className="form-control" id="cardPaid" name="cardPaid" value={invoiceData.cardPaid} onChange={handleChange} required />
-                                </div>
-                                <div className="col-md-3">
-                                    <label htmlFor='cardNo'>Card No:</label>
-                                    <input type='text' className="form-control" id="cardNo" name="cardNo" value={invoiceData.cardNo} onChange={handleChange} required />   </div>
-                            </div>
-                            <div className="col-md-3">
-                                <button
-                                    type="button"
-                                    onClick={handleAddItem}
-                                    className="btn m-1 btn-primary"
-                                >
-                                    Add Item
-                                </button>
-                                <button     onClick={handleSubmit}     type="button" className="btn m-1 btn-primary"    >
-                                submit                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
+                )}
             </form>
-            <div className="table-responsive">
-                <ServiceList />
-            </div>
-            {/* Invoice Footer */}
-            {/* <div className="row invoice-footer text-center">
-                <div className="col-12">
-                    <p>Footer Information</p>
-                </div>
-            </div> */}
+
         </div>
     );
+
 };
 
+
 export default InvoiceForm1;
+

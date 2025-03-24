@@ -1,19 +1,12 @@
-import React, { useContext, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
-import { Link, useNavigate,useLocation  } from "react-router-dom";
+import React, { useContext } from "react";
+import { Container, Grid, Paper, Typography, TextField, Button, Box } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/Context";
-
+import loginlogo from '../assets/loginlogo.jpg';
+import axios from "axios";
 const Signin = () => {
-    const {
-        handleLogin,
-        errors,setUserAuth,
-        isSubmitted,
-        userData, setUserData
-      } = useContext(UserContext);
-
-      const navigate = useNavigate();
-      const location = useLocation();
+  const {  setUserAuth,singleUser,setSingleUser, userData, setUserData } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserData({
@@ -21,51 +14,84 @@ const Signin = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(userData);
-    if (handleLogin()) {
-      setUserAuth(true);
-        setUserData({
-            email: "",
-            password: "",
-          });
-          const redirectTo = localStorage.getItem("redirectAfterLogin") || "/home";
-          localStorage.removeItem("redirectAfterLogin"); // Clear after use
-    
-          navigate(redirectTo); // Redirect to the original page
-          }
-  };
 
- 
-  return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-      <div className="card p-4 shadow" style={{ width: "300px" }}>
-        <h4 className="text-center mb-3">Login</h4>
-        <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            name="email"
-            className="form-control mb-2"
-            placeholder="Email"
-            value={userData.email}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            className="form-control mb-3"
-            placeholder="Password"
-            value={userData.password}
-            onChange={handleChange}
-          />
-          <button type="submit" className="btn btn-primary w-100">Sign In</button>
-        </form>
-        <div className="text-center mt-2">
-          <small>Don't have an account? <Link to="/signup">Register</Link></small>
-        </div>
-      </div>
-    </div>
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(userData)
+      const res = await axios.post("http://192.168.1.18:8082/loginPage/login", userData);
+      console.log(res.data)
+      if (res.data === "Login successful!") {
+        alert("Registration successful! Please log in.");
+        setUserAuth(true);
+        setUserData({ email: "", password: "" });
+        setSingleUser(userData)
+        const redirectTo = localStorage.getItem("redirectAfterLogin") || "/";
+            localStorage.removeItem("redirectAfterLogin"); // Clear after use
+            navigate(redirectTo);
+      }
+      else{
+        alert("Invalid username or password!")
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert("Registration failed. Please try again.");
+    }
+    
+  };
+    return (
+    <Box sx={{ minHeight: "81vh", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#f4f4f4" }}>
+      <Container maxWidth="md">
+        <Paper elevation={3} sx={{ p: 4, borderRadius: "15px" }}>
+          <Grid container spacing={3} alignItems="center">
+            
+            {/* Left Side - Image */}
+            <Grid item xs={12} md={6}>
+              <Box component="img"
+                src={loginlogo}
+                alt="Sign In"
+                sx={{ maxWidth: "100%", borderRadius: "15px" }}
+              />
+            </Grid>
+
+            {/* Right Side - Form */}
+            <Grid item xs={12} md={6}>
+              <Typography variant="h5" fontWeight="bold" textAlign="center" mb={2}>
+                Sign In
+              </Typography>
+              <form onSubmit={onSubmit}>
+                <TextField 
+                  fullWidth 
+                  label="Email" 
+                  name="email" 
+                  variant="outlined" 
+                  margin="normal" 
+                  value={userData.email} 
+                  onChange={handleChange} 
+                />
+                <TextField 
+                  fullWidth 
+                  label="Password" 
+                  name="password" 
+                  type="password" 
+                  variant="outlined" 
+                  margin="normal" 
+                  value={userData.password} 
+                  onChange={handleChange} 
+                />
+                <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 2 }}>
+                  Sign In
+                </Button>
+              </form>
+              <Typography variant="body2" textAlign="center" mt={2}>
+                Don't have an account? <Link to="/signup">Register</Link>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Container>
+    </Box>
   );
 };
 

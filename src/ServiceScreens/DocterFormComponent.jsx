@@ -99,9 +99,9 @@ const DocterFormComponent = (props) => {
     e.preventDefault();
   
 
-    formData.nationalityCode = Number(formData.nationalityCode);
-    formData.deptCode = Number(formData.deptCode);
-    formData.sortOrder = Number(formData.sortOrder);
+    // formData.nationalityCode = Number(formData.nationalityCode);
+    // formData.deptCode = Number(formData.deptCode);
+    // formData.sortOrder = Number(formData.sortOrder);
    
     console.log(formData)
     const url = `${BASE_URL}doctor/create`; // The URL for form submission

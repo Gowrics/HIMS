@@ -32,7 +32,9 @@ const Nationality = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
+ const handleCountryChange = (selectedOption) => {
+    setFormData((prev) => ({ ...prev, nationality: selectedOption.label }));
+  };
   const handleDelete = useCallback((id) => {
     handleDeleteItem({
       id,
@@ -104,6 +106,11 @@ const Nationality = () => {
               <label htmlFor="nationality" className="form-label">     Nationality     </label>
              <input type="text" className={`form-control`} id="nationality"
                 name="nationality" value={formData.nationality} onChange={handleChange} required /> 
+                
+                   {/* <CountrySelector
+                value={formData.nationality ? { label: formData.nationality } : null}
+                onChange={handleCountryChange}
+              /> */}
                         </div>
 
                 <div className="col mb-3">

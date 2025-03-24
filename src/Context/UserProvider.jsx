@@ -4,7 +4,7 @@ import { UserContext } from "./Context";
 import { useFetchData } from "../utils/Actions";
 export const UserProvider = ({ children }) => {
   const [userCredential, setUsercredential] = useState([]);
-  const [singleUser, setSingleUser] = useState({});
+  const [singleUser, setSingleUser] = useState([]);
   const [UserAuth, setUserAuth] = useState(true);
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
     // username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    // confirmPassword: "",
   });
   const [userData, setUserData] = useState({
     // username: "",
@@ -70,15 +70,15 @@ export const UserProvider = ({ children }) => {
   
   const handleLogin = () => {
     if (validateUser()) {
-      const user = userCredential.find(
+      const users = userCredential.find(
         (user) =>
           user.email === userData.email && user.password === userData.password
       );
-
-      if (user) {
-        setSingleUser(user); // Set user data on successful login
+console.log(users)
+      if (users) {
+        setSingleUser(users); // Set user data on successful login
        // setUserAuth(true); // Set authentication status
-        console.log("Login successful:", user);
+        console.log("Login successful:", singleUser);
         setUserData({
           email: "",
           password: "",
@@ -108,7 +108,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         formData,   setFormData,
-        validateUser,singleUser,
+        validateUser,singleUser,setSingleUser,
         errors,    setErrors,
         UserAuth,    setUserAuth,
         setSingleUser,
